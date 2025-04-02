@@ -2,32 +2,32 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-
 const register = async (req, res) => {
   try {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;  // Hiqim 'role' nga req.body
 
-    // Check if the email already exists
+    
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ error: 'Email already in use' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10); 
-    const user = await User.create({ username, email, password: hashedPassword, role });
+//patient by default
+    const user = await User.create({ username, email, password: hashedPassword, role: 'patient' });
+
     res.status(201).json({ message: 'User registered successfully', user });
   } catch (error) {
-    console.error('Registration error:', error); // Log error details
+    console.error('Registration error:', error);  
     res.status(400).json({ error: error.message });
   }
 };
-
 
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Sigurohuni që JWT_SECRET të ekzistojë
+
     if (!process.env.JWT_SECRET) {
       return res.status(500).json({ error: 'JWT_SECRET is not defined in environment variables' });
     }
@@ -45,7 +45,6 @@ const login = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 const getUserProfile = async (req, res) => {
   try {

@@ -14,15 +14,6 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post('http://localhost:5000/api/users/register', formData);
-  //     setMessage(response.data.message || 'Regjistrimi u krye me sukses!');
-  //   } catch (error) {
-  //     setMessage(error.response?.data?.message || 'Gabim gjatë regjistrimit.');
-  //   }
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -34,7 +25,6 @@ const Register = () => {
       setMessage(error.response?.data?.error || 'Gabim gjatë regjistrimit.');
     }
   };
-  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -68,16 +58,7 @@ const Register = () => {
             className="w-full p-2 border border-gray-300 rounded"
             required
           />
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-          >
-            <option value="patient">Patient</option>
-            <option value="doctor">Doctor</option>
-            <option value="admin">Admin</option>
-          </select>
+          {/* The select for role is removed, user is always registered as 'patient' */}
           <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
             Regjistrohu
           </button>
@@ -88,4 +69,4 @@ const Register = () => {
   );
 };
 
-export default Register; 
+export default Register;

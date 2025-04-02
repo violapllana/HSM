@@ -12,7 +12,12 @@ const UserProfile = () => {
         const response = await axios.get('http://localhost:5000/api/users/profile', { withCredentials: true });
         setUser(response.data.user);
       } catch (error) {
-        setMessage('Gabim gjatë ngarkimit të të dhënave të përdoruesit.');
+        if (error.response && error.response.status === 401) {
+          // Shembull, nëse përdoruesi nuk është i autentikuar
+          setMessage('Ju lutem logohuni për të parë profilin tuaj.');
+        } else {
+          setMessage('Gabim gjatë ngarkimit të të dhënave të përdoruesit.');
+        }
       } finally {
         setLoading(false);
       }
@@ -22,7 +27,7 @@ const UserProfile = () => {
   }, []);
 
   if (loading) {
-    return <div>Po ngarkohet...</div>;
+    return <div>Po ngarkohet...</div>; // Mund të shtoni një spinner këtu për të përmirësuar përvojën
   }
 
   if (message) {

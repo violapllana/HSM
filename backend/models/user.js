@@ -31,7 +31,7 @@ const User = sequelize.define('User', {
   },
   role: {
     type: DataTypes.STRING,
-    defaultValue: 'user'
+    defaultValue: 'patient' // Changed from 'user' to 'patient'
   }
 });
 
