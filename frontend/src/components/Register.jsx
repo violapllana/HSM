@@ -106,7 +106,7 @@ const Register = () => {
       <Header />
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold text-center text-blue-600">Regjistrohu</h2>
+          <h2 className="text-2xl font-semibold text-center text-blue-600">Register</h2>
 
           {message && <div className="text-red-500 text-sm mt-2 text-center">{message}</div>}
 
@@ -154,12 +154,12 @@ const Register = () => {
               type="submit"
               className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              Regjistrohu
+              Register
             </button>
           </form>
 
           <div className="mt-4 text-center">
-            <a href="/login" className="text-sm text-cyan-600 hover:text-cyan-800">Keni një llogari? Hyni këtu</a>
+            <a href="/login" className="text-sm text-cyan-600 hover:text-cyan-800">Already have an account?<a href="/login" className="text-blue-600 hover:text-blue-800">Log in here</a></a>
           </div>
         </div>
       </div>
