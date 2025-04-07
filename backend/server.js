@@ -1,68 +1,3 @@
-
-// require('dotenv').config();
-// const express = require('express');
-// const session = require('express-session');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
-// const helmet = require('helmet');
-// const rateLimit = require('express-rate-limit');
-// const cookieParser = require('cookie-parser');
-// const passport = require('passport');
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcryptjs');
-// const flash = require('connect-flash');
-// const sequelize = require('./db');
-// const userRoutes = require('./routes/userRoutes');
-
-// const app = express();
-
-// // Security Middleware
-// app.use(helmet());
-// app.use(rateLimit({
-//   windowMs: 15 * 60 * 1000, 
-//   max: 100, 
-// }));
-
-// // Middleware for parsing requests
-// app.use(cors({
-//   origin: 'http://localhost:3000', 
-//   credentials: true 
-// }));
-// app.use(bodyParser.json());
-// app.use(cookieParser());
-
-// // Session Configuration
-// app.use(session({
-//   secret: process.env.SESSION_SECRET || 'supersecret',
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: {
-//     httpOnly: true,
-//     secure: process.env.NODE_ENV === 'production',
-//     maxAge: 24 * 60 * 60 * 1000 
-//   }
-// }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(flash());
-
-// // User Routes
-// app.use('/api/users', userRoutes);
-
-// // Initialize Database and Start Server
-// const initializeDatabase = async () => {
-//   try {
-//     await sequelize.sync(); 
-//     app.listen(process.env.PORT || 5000, () => {
-//       console.log(`Server running on port ${process.env.PORT || 5000}`);
-//     });
-//   } catch (error) {
-//     console.error('Database initialization error:', error);
-//   }
-// };
-
-// initializeDatabase();
-
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
@@ -110,10 +45,34 @@ app.use(rateLimit({
 }));
 
 // Middleware for parsing requests
-app.use(cors({
-  origin: 'http://localhost:3000', 
+// app.use(cors({
+//   origin: 'http://localhost:3000', 
+//   credentials: true 
+// }));
+
+const corsOptions = {
+  origin: 'http://localhost:3000', // Lejo kërkesa nga frontend-i
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true 
-}));
+};
+app.use(cors(corsOptions));
+
+// Middleware shtesë për të vendosur header-a të veçantë
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true'); // Lejo cookies në frontend
+  next();
+});
+
+app.use(bodyParser.json());
+
+app.use(express.static('public'));
+
+
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 
@@ -137,6 +96,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // User Routes
 app.use('/api/users', userRoutes);
+
 
 // Initialize Database and Start Server
 const initializeDatabase = async () => {
