@@ -14,6 +14,8 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const sequelize = require('./db');
 const userRoutes = require('./routes/userRoutes');
+const contactRoutes = require('./routes/contactRoutes');
+const ContactForm = require('./models/contactform'); // Import the ContactForm model
 
 const app = express();
 
@@ -71,7 +73,7 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-
+app.use(express.json());
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -96,6 +98,29 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // User Routes
 app.use('/api/users', userRoutes);
+
+const createContact = async (req, res) => {
+  try {
+    console.log('Received data:', req.body); // Log the data received from frontend
+
+    const { firstName, lastName, email, phoneNumber, reason, messageContent } = req.body;
+
+    if (!firstName || !messageContent) {
+      return res.status(400).json({ message: 'First Name and Message are required.' });
+    }
+
+    const newContact = await ContactForm.create({ firstName, lastName, email, phoneNumber, reason, messageContent });
+    res.status(201).json({ message: 'Message created successfully', contact: newContact });
+  } catch (err) {
+    console.error('Error creating contact:', err); // Log any error that occurs
+    res.status(500).json({ message: 'Error creating message', error: err.message });
+  }
+};
+
+
+app.use(contactRoutes);
+
+
 
 
 // Initialize Database and Start Server
