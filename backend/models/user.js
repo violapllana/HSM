@@ -30,8 +30,9 @@ const User = sequelize.define('User', {
     }
   },
   role: {
-    type: DataTypes.STRING,
-    defaultValue: 'patient' // Changed from 'user' to 'patient'
+    type: DataTypes.ENUM('patient', 'doctor', 'admin'),  
+    defaultValue: 'patient', 
+    allowNull: false,
   }
 });
 

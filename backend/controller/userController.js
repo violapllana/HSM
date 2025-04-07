@@ -23,10 +23,32 @@ const register = async (req, res) => {
   }
 };
 
+// const login = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+
+//     if (!process.env.JWT_SECRET) {
+//       return res.status(500).json({ error: 'JWT_SECRET is not defined in environment variables' });
+//     }
+
+//     const user = await User.findOne({ where: { email } });
+//     if (!user) return res.status(404).json({ error: 'User not found' });
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
+
+//     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+//     res.json({ message: 'Login successful', token });
+//   } catch (error) {
+//     console.error('Login error:', error);
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
 
     if (!process.env.JWT_SECRET) {
       return res.status(500).json({ error: 'JWT_SECRET is not defined in environment variables' });
@@ -39,12 +61,15 @@ const login = async (req, res) => {
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ message: 'Login successful', token });
+    
+    // Ensure the response includes the user data
+    res.json({ message: 'Login successful', token, user: { id: user.id, role: user.role } }); // Include 'user' object explicitly
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 const getUserProfile = async (req, res) => {
   try {
