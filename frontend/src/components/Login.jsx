@@ -36,11 +36,11 @@ function Login() {
         localStorage.setItem('role', userRole);
 
         if (userRole === 'admin') {
-          navigate('/admin');
+          navigate('/adminsidebar');
         } else if (userRole === 'doctor') {
-          navigate('/doctor');
+          navigate('/doctorsidebar');
         } else if (userRole === 'patient') {
-          navigate('/patient');
+          navigate('/patientsidebar');
         } else {
           setErrorMessage('Unknown role!');
         }

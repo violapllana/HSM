@@ -61,7 +61,6 @@ router.post('/register', register);
  */
 router.post('/login', login);
 
-
 /**
  * @swagger
  * /api/users/profile:
@@ -128,5 +127,6 @@ router.get('/doctor', isAuthenticated, authorizeRoles('doctor'), (req, res) => {
 router.get('/patient', isAuthenticated, authorizeRoles('patient'), (req, res) => {
   res.json({ message: 'Welcome, Patient!' });
 });
+
 
 module.exports = router;

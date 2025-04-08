@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db'); // Import the sequelize instance
+const sequelize = require('../db'); 
 
 const ContactForm = sequelize.define('ContactForm', {
   firstName: {
@@ -28,10 +28,6 @@ const ContactForm = sequelize.define('ContactForm', {
   messageContent: {
     type: DataTypes.TEXT,
     allowNull: false,
-  },
-  statusi: {
-    type: DataTypes.STRING,
-    defaultValue: 'Pending',
   },
 });
 

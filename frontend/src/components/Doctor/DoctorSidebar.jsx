@@ -22,6 +22,18 @@ const DoctorSidebar = () => {
             My Account
           </Link>
         </li>
+         
+        <li>
+          <Link to="/doctor/account" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+            My Appointments
+          </Link>
+        </li>
+         
+        <li>
+          <Link to="/doctor/account" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+           Mrdicial
+          </Link>
+        </li>
       </ul>
     </div>
       {/* <footer className="border-t border-gray-700 bg-gray-800 text-gray-300 py-4 mt-8">
