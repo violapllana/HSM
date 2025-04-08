@@ -99,6 +99,17 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // User Routes
 app.use('/api/users', userRoutes);
 
+app.get('/api/users', async (req, res) => {
+  try {
+    // Simulimi i marrjes së të dhënave nga baza e të dhënave ose një burim tjetër
+    res.json(users);
+  } catch (error) {
+    console.error('Gabim gjatë marrjes së përdoruesve:', error);
+    res.status(500).json({ message: 'Ndodhi një gabim serveri' });
+  }
+});
+
+
 const createContact = async (req, res) => {
   try {
     console.log('Received data:', req.body); // Log the data received from frontend
@@ -118,8 +129,7 @@ const createContact = async (req, res) => {
 };
 
 
-app.use(contactRoutes);
-
+app.use('/contact', contactRoutes);
 
 
 
