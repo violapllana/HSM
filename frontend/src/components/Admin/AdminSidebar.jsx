@@ -36,8 +36,13 @@ const AdminSidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/admin/account" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
-              My Account
+            <Link to="/admins" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+              Manage Admins
+            </Link>
+          </li>
+          <li>
+            <Link to="/departments" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+              Departments
             </Link>
           </li>
         </ul>

@@ -6,11 +6,12 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Departments from './components/Departments/Departments'; 
 
 import AdminSidebar from './components/Admin/AdminSidebar'; // Corrected path
 import PatientSidebar from './components/Patient/PatientSidebar'; // Corrected path
 import DoctorSidebar from './components/Doctor/DoctorSidebar'; // Corrected path
-
+import DepartmentDetails from './components/Departments/DepartmentDetails'; 
 import ContactList from './components/ContactUs/ContactList';
 import ContactUs from './components/ContactUs/ContactUs'; // Corrected path
 import './App.css';
@@ -26,6 +27,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
+<Route path="/departments" element={<Departments />} />
+<Route path="/departments/:id" element={<DepartmentDetails />} />
 
         <Route path="/adminsidebar" element={<AdminSidebar />} />
         <Route path="/patientsidebar" element={<PatientSidebar />} />

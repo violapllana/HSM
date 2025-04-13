@@ -16,6 +16,8 @@ const sequelize = require('./db');
 const userRoutes = require('./routes/userRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const ContactForm = require('./models/contactform'); // Import the ContactForm model
+const departmentRoutes = require('./routes/departmentRoutes');
+const department = require('./models/department'); // Import the Department model
 
 const app = express();
 
@@ -99,6 +101,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // User Routes
 app.use('/api/users', userRoutes);
 
+
 app.get('/api/users', async (req, res) => {
   try {
     // Simulimi i marrjes së të dhënave nga baza e të dhënave ose një burim tjetër
@@ -130,6 +133,8 @@ const createContact = async (req, res) => {
 
 
 app.use('/contact', contactRoutes);
+
+app.use("/api/departments", require("./routes/departmentRoutes"));
 
 
 
