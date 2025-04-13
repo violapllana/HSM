@@ -6,14 +6,14 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Departments from './components/Departments/Departments'; 
+import Departments from './components/Departments/Index'; 
 
 import AdminSidebar from './components/Admin/AdminSidebar'; // Corrected path
 import PatientSidebar from './components/Patient/PatientSidebar'; // Corrected path
 import DoctorSidebar from './components/Doctor/DoctorSidebar'; // Corrected path
-import DepartmentDetails from './components/Departments/DepartmentDetails'; 
+import DepartmentDetails from './components/Departments/Details'; 
 import ContactList from './components/ContactUs/ContactList';
-import ContactUs from './components/ContactUs/ContactUs'; // Corrected path
+import ContactUs from './components/ContactUs/Form'; // Corrected path
 import './App.css';
 
 
