@@ -14,6 +14,8 @@ import DoctorSidebar from './components/Doctor/DoctorSidebar'; // Corrected path
 import DepartmentDetails from './components/Departments/Details'; 
 import ContactList from './components/ContactUs/ContactList';
 import ContactUs from './components/ContactUs/Form'; // Corrected path
+import Logout from './components/Logout'; // Corrected path
+
 import './App.css';
 
 
@@ -21,6 +23,8 @@ function App() {
   return (
     <Router>
       <Routes>
+    
+  
         <Route path="/" element={<Home />} />
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
@@ -33,6 +37,8 @@ function App() {
         <Route path="/adminsidebar" element={<AdminSidebar />} />
         <Route path="/patientsidebar" element={<PatientSidebar />} />
         <Route path="/doctorsidebar" element={<DoctorSidebar />} />
+
+        <Route path="/logout" element={<Logout />} />
 
   
          <Route path="/contactus" element={<ContactUs />} />
