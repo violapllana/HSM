@@ -113,26 +113,9 @@ app.get('/api/users', async (req, res) => {
 });
 
 
-const createContact = async (req, res) => {
-  try {
-    console.log('Received data:', req.body); // Log the data received from frontend
-
-    const { firstName, lastName, email, phoneNumber, reason, messageContent } = req.body;
-
-    if (!firstName || !messageContent) {
-      return res.status(400).json({ message: 'First Name and Message are required.' });
-    }
-
-    const newContact = await ContactForm.create({ firstName, lastName, email, phoneNumber, reason, messageContent });
-    res.status(201).json({ message: 'Message created successfully', contact: newContact });
-  } catch (err) {
-    console.error('Error creating contact:', err); // Log any error that occurs
-    res.status(500).json({ message: 'Error creating message', error: err.message });
-  }
-};
 
 
-app.use('/contact', contactRoutes);
+app.use('/api/contact', contactRoutes);
 
 app.use("/api/departments", require("./routes/departmentRoutes"));
 

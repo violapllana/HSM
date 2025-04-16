@@ -15,7 +15,7 @@ export default function ContactList() {
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/contact');
+      const res = await axios.get('http://localhost:5000/api/contact');
       setContacts(res.data);
     } catch (err) {
       setError('Error fetching messages');
@@ -31,7 +31,7 @@ export default function ContactList() {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/contact/${deleteId}`);
+      await axios.delete(`http://localhost:5000/api/contact/${deleteId}`);
       fetchContacts(); // Refresh the contact list after deletion
     } catch (error) {
       console.error('Error deleting message', error);

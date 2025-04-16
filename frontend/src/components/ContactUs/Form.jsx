@@ -36,7 +36,7 @@ const ContactUs = ({ onMessageAdded }) => {
     const newMessage = { firstName, lastName, email, phoneNumber, reason, messageContent };
     console.log('Sending message:', newMessage);
 
-    fetch('http://localhost:5000/contact', {
+    fetch('http://localhost:5000/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newMessage),
