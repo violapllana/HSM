@@ -18,6 +18,9 @@ const contactRoutes = require('./routes/contactRoutes');
 const ContactForm = require('./models/contactform'); // Import the ContactForm model
 const departmentRoutes = require('./routes/departmentRoutes');
 const department = require('./models/department'); // Import the Department model
+const adminRoutes = require('./routes/adminRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
+const patientRoutes = require('./routes/patientRoutes');
 
 const app = express();
 
@@ -99,7 +102,6 @@ app.use(flash());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // User Routes
-app.use('/api/users', userRoutes);
 
 
 app.get('/api/users', async (req, res) => {
@@ -112,11 +114,11 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
-
-
-
+app.use('/api/admin', adminRoutes);
+app.use('/api/doctor', doctorRoutes);
+app.use('/api/patient', patientRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/contact', contactRoutes);
-
 app.use("/api/departments", require("./routes/departmentRoutes"));
 
 

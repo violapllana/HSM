@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, getUserProfile } = require('../controller/userController');
+const { register, login, getUserProfile, getAdmins, deleteAdmin } = require('../controller/userController');
 const { isAuthenticated, authorizeRoles } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -61,72 +61,6 @@ router.post('/register', register);
  */
 router.post('/login', login);
 
-/**
- * @swagger
- * /api/users/profile:
- *   get:
- *     summary: Merr profilin e përdoruesit të identifikuar
- *     responses:
- *       200:
- *         description: Informacionet e profilit të përdoruesit
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 username:
- *                   type: string
- *                 role:
- *                   type: string
- *       401:
- *         description: Jo i autorizuar, përdoruesi nuk është identifikuar
- */
-router.get('/profile', isAuthenticated, getUserProfile);
-
-/**
- * @swagger
- * /api/users/admin:
- *   get:
- *     summary: Endpoint për përdoruesit me rol admin
- *     responses:
- *       200:
- *         description: Mesazh mirëseardhje për adminin
- *       403:
- *         description: Ndaluar për shkak të rolit të pamjaftueshëm
- */
-router.get('/admin', isAuthenticated, authorizeRoles('admin'), (req, res) => {
-  res.json({ message: 'Welcome, Admin!' });
-});
-
-/**
- * @swagger
- * /api/users/doctor:
- *   get:
- *     summary: Endpoint për përdoruesit me rol mjek
- *     responses:
- *       200:
- *         description: Mesazh mirëseardhje për mjekun
- *       403:
- *         description: Ndaluar për shkak të rolit të pamjaftueshëm
- */
-router.get('/doctor', isAuthenticated, authorizeRoles('doctor'), (req, res) => {
-  res.json({ message: 'Welcome, Doctor!' });
-});
-
-/**
- * @swagger
- * /api/users/patient:
- *   get:
- *     summary: Endpoint për përdoruesit me rol pacient
- *     responses:
- *       200:
- *         description: Mesazh mirëseardhje për pacientin
- *       403:
- *         description: Ndaluar për shkak të rolit të pamjaftueshëm
- */
-router.get('/patient', isAuthenticated, authorizeRoles('patient'), (req, res) => {
-  res.json({ message: 'Welcome, Patient!' });
-});
 
 
 module.exports = router;
