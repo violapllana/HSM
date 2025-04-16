@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const DepartmentsPanel = () => {
-  const [departments, setDepartments] = useState([]);
+const DepartmentForm = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [floor, setFloor] = useState('');
+  const [headOfDepartment, setHeadOfDepartment] = useState('');
+  const [isActive, setIsActive] = useState(true);
+  const [departments, setDepartments] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [currentDepId, setCurrentDepId] = useState(null);
-  const [showFormModal, setShowFormModal] = useState(false);
+  const [currentDepartmentId, setCurrentDepartmentId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [depToDelete, setDepToDelete] = useState(null);
+  const [departmentToDelete, setDepartmentToDelete] = useState(null);
+  const [showFormModal, setShowFormModal] = useState(false);
 
   const apiUrl = 'http://localhost:5000/api/department';
 
@@ -26,17 +29,11 @@ const DepartmentsPanel = () => {
     fetchDepartments();
   }, []);
 
-  const resetForm = () => {
-    setName('');
-    setDescription('');
-    setCurrentDepId(null);
-  };
-
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      const newDep = { name, description };
-      await axios.post(apiUrl, newDep);
+      const newDepartment = { name, description, floor, headOfDepartment, isActive };
+      await axios.post(apiUrl, newDepartment);
       fetchDepartments();
       setShowFormModal(false);
       resetForm();
@@ -47,22 +44,25 @@ const DepartmentsPanel = () => {
 
   const handleEdit = async (id) => {
     try {
-      const res = await axios.get(`${apiUrl}/${id}`);
-      setName(res.data.name);
-      setDescription(res.data.description);
-      setCurrentDepId(id);
+      const response = await axios.get(`${apiUrl}/${id}`);
+      setName(response.data.name);
+      setDescription(response.data.description);
+      setFloor(response.data.floor);
+      setHeadOfDepartment(response.data.headOfDepartment);
+      setIsActive(response.data.isActive);
+      setCurrentDepartmentId(id);
       setIsEditMode(true);
       setShowFormModal(true);
     } catch (error) {
-      console.error('Error fetching department:', error);
+      console.error('Error fetching department for edit:', error);
     }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const updatedDep = { name, description };
-      await axios.put(`${apiUrl}/${currentDepId}`, updatedDep);
+      const updatedDepartment = { name, description, floor, headOfDepartment, isActive };
+      await axios.put(`${apiUrl}/${currentDepartmentId}`, updatedDepartment);
       fetchDepartments();
       setIsEditMode(false);
       setShowFormModal(false);
@@ -74,7 +74,7 @@ const DepartmentsPanel = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${apiUrl}/${depToDelete}`);
+      await axios.delete(`${apiUrl}/${departmentToDelete}`);
       fetchDepartments();
       setShowDeleteModal(false);
     } catch (error) {
@@ -82,10 +82,19 @@ const DepartmentsPanel = () => {
     }
   };
 
+  const resetForm = () => {
+    setName('');
+    setDescription('');
+    setFloor('');
+    setHeadOfDepartment('');
+    setIsActive(true);
+    setCurrentDepartmentId(null);
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-semibold mb-4 flex justify-between">
-        Departments
+      <h2 className="text-2xl font-semibold mb-4 flex items-center justify-between">
+        Department List
         <button
           onClick={() => {
             setIsEditMode(false);
@@ -104,42 +113,46 @@ const DepartmentsPanel = () => {
             <th className="px-6 py-3">ID</th>
             <th className="px-6 py-3">Name</th>
             <th className="px-6 py-3">Description</th>
+            <th className="px-6 py-3">Floor</th>
+            <th className="px-6 py-3">Head of Department</th>
+            <th className="px-6 py-3">Status</th>
             <th className="px-6 py-3">Actions</th>
           </tr>
         </thead>
         <tbody className="text-sm text-gray-700">
-          {departments.length > 0 ? (
-            departments.map((dep, index) => (
-              <tr key={dep.id} className="border-b hover:bg-gray-50">
-                <td className="px-6 py-4">{index + 1}</td>
-                <td className="px-6 py-4">{dep.name}</td>
-                <td className="px-6 py-4">{dep.description}</td>
-                <td className="px-6 py-4 flex space-x-2">
-                  <button
-                    onClick={() => handleEdit(dep.id)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => {
-                      setDepToDelete(dep.id);
-                      setShowDeleteModal(true);
-                    }}
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" className="text-center py-6">
-                No departments to display.
+          {departments.map((department, index) => (
+            <tr key={department.id} className="border-b hover:bg-gray-50">
+              <td className="px-6 py-4">{index + 1}</td>
+              <td className="px-6 py-4">{department.name}</td>
+              <td className="px-6 py-4">{department.description}</td>
+              <td className="px-6 py-4">{department.floor}</td>
+              <td className="px-6 py-4">{department.headOfDepartment}</td>
+              <td className="px-6 py-4">
+                {department.isActive ? (
+                  <span className="text-green-500">Active</span>
+                ) : (
+                  <span className="text-red-500">Inactive</span>
+                )}
+              </td>
+              <td className="px-6 py-4 flex items-center space-x-2">
+                <button
+                  onClick={() => handleEdit(department.id)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => {
+                    setDepartmentToDelete(department.id);
+                    setShowDeleteModal(true);
+                  }}
+                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
 
@@ -153,13 +166,13 @@ const DepartmentsPanel = () => {
                 onClick={() => setShowDeleteModal(false)}
                 className="mr-4 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700"
               >
-                Cancel
+                No
               </button>
               <button
                 onClick={handleDelete}
                 className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700"
               >
-                Delete
+                Yes, Delete Department
               </button>
             </div>
           </div>
@@ -175,7 +188,7 @@ const DepartmentsPanel = () => {
             </h2>
             <form onSubmit={isEditMode ? handleUpdate : handleCreate}>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Name</label>
+                <label className="block text-sm font-medium text-gray-700">Department Name</label>
                 <input
                   type="text"
                   value={name}
@@ -186,12 +199,42 @@ const DepartmentsPanel = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">Description</label>
-                <textarea
+                <input
+                  type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                   required
                 />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Floor</label>
+                <input
+                  type="number"
+                  value={floor}
+                  onChange={(e) => setFloor(e.target.value)}
+                  className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Head of Department</label>
+                <input
+                  type="text"
+                  value={headOfDepartment}
+                  onChange={(e) => setHeadOfDepartment(e.target.value)}
+                  className="mt-1 p-2 w-full border border-gray-300 rounded-md"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={isActive}
+                    onChange={() => setIsActive(!isActive)}
+                    className="form-checkbox h-5 w-5 text-blue-600"
+                  />
+                  <span className="ml-2 text-sm">Active</span>
+                </label>
               </div>
               <div className="flex justify-end space-x-4">
                 <button
@@ -205,7 +248,7 @@ const DepartmentsPanel = () => {
                   type="submit"
                   className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
                 >
-                  {isEditMode ? 'Update Department' : 'Create Department'}
+                  {isEditMode ? 'Update' : 'Create'}
                 </button>
               </div>
             </form>
@@ -216,4 +259,4 @@ const DepartmentsPanel = () => {
   );
 };
 
-export default DepartmentsPanel;
+export default DepartmentForm;
