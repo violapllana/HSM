@@ -17,6 +17,7 @@ import DepartmentDetails from "./components/Departments/Details";
 import ContactList from "./components/ContactUs/ContactList";
 import ContactUs from "./components/ContactUs/Form"; 
 import Logout from "./components/Logout"; 
+import HospitalSurveyChart from "./components/HospitalSurveyChart";
 
 import "./App.css";
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/patientpanel" element={<PatientPanel />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/contactlist" element={<ContactList />} />
+        <Route path="/hospital-survey" element={<HospitalSurveyChart />} />
       </Routes>
     </Router>
   );
