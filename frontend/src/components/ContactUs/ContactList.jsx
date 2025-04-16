@@ -1,107 +1,143 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function ContactList() {
+export default function ContactPanel() {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [contactToDelete, setContactToDelete] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [selectedContact, setSelectedContact] = useState(null);
 
-  useEffect(() => {
-    fetchContacts();
-  }, []);
+  const apiUrl = 'http://localhost:5000/api/contact';
 
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const res = await axios.get('http://localhost:5000/api/contact');
-      setContacts(res.data);
-    } catch (err) {
-      setError('Error fetching messages');
+      const response = await axios.get(apiUrl);
+      setContacts(response.data);
+    } catch (error) {
+      console.error('Gabim në marrjen e kontakteve:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = (id) => {
-    setDeleteId(id);
-    setShowModal(true);
-  };
+  useEffect(() => {
+    fetchContacts();
+  }, []);
 
-  const confirmDelete = async () => {
+  const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/contact/${deleteId}`);
-      fetchContacts(); // Refresh the contact list after deletion
+      await axios.delete(`${apiUrl}/${contactToDelete}`);
+      fetchContacts();
+      setShowDeleteModal(false);
     } catch (error) {
-      console.error('Error deleting message', error);
-    } finally {
-      setShowModal(false);
+      console.error('Gabim gjatë fshirjes së kontaktit:', error);
     }
   };
 
-  const cancelDelete = () => setShowModal(false);
-
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold text-blue-800 mb-4">Contacts List</h1>
+    <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4 text-blue-800">Contact Messages</h2>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white shadow-md rounded overflow-hidden">
-          <thead className="bg-gray-800 text-white">
+      <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
+        <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
+          <tr>
+            <th className="px-6 py-3">Name</th>
+            <th className="px-6 py-3">Email</th>
+            <th className="px-6 py-3">Phone</th>
+            <th className="px-6 py-3">Reason</th>
+            <th className="px-6 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody className="text-sm text-gray-700">
+          {loading ? (
             <tr>
-              <th className="p-3 text-left">First Name</th>
-              <th className="p-3 text-left">Email</th>
-              <th className="p-3 text-left">Phone Number</th>
-              <th className="p-3 text-left">Reason</th>
-              <th className="p-3 text-left">Message</th>
-              <th className="p-3 text-left">Actions</th>
+              <td colSpan="6" className="text-center py-6">
+                Loading messages...
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="6" className="text-center p-4">Processing messages...</td>
+          ) : contacts.length > 0 ? (
+            contacts.map((contact) => (
+              <tr key={contact.id} className="border-b hover:bg-gray-50">
+                <td className="px-6 py-4">{contact.firstName} {contact.lastName}</td>
+                <td className="px-6 py-4">{contact.email}</td>
+                <td className="px-6 py-4">{contact.phoneNumber}</td>
+                <td className="px-6 py-4">{contact.reason}</td>
+                <td className="px-6 py-4 space-x-2">
+                  <button
+                    onClick={() => {
+                      setSelectedContact(contact);
+                      setShowDetailsModal(true);
+                    }}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+                  >
+                    Details
+                  </button>
+                  <button
+                    onClick={() => {
+                      setContactToDelete(contact.id);
+                      setShowDeleteModal(true);
+                    }}
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
-            ) : (
-              contacts.map((contact) => (
-                <tr key={contact.id} className="border-t">
-                  <td className="p-3">{contact.firstName} {contact.lastName}</td>
-                  <td className="p-3">{contact.email}</td>
-                  <td className="p-3">{contact.phoneNumber}</td>
-                  <td className="p-3">{contact.reason}</td>
-                  <td className="p-3">{contact.messageContent}</td>
-                  <td className="p-3 space-x-2">
-                    <button
-                      onClick={() => handleDelete(contact.id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6" className="text-center py-6">
+                No messages found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
 
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-          <div className="bg-white p-6 rounded shadow-lg">
-            <p>Are you sure you want to delete this message?</p>
-            <div className="flex justify-end gap-2 mt-4">
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h3 className="text-lg font-semibold">Are you sure you want to delete this message?</h3>
+            <div className="mt-4 flex justify-end">
               <button
-                onClick={confirmDelete}
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                onClick={() => setShowDeleteModal(false)}
+                className="mr-4 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700"
               >
-                Yes
+                Cancel
               </button>
               <button
-                onClick={cancelDelete}
-                className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                onClick={handleDelete}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700"
               >
-                No
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Details Modal */}
+      {showDetailsModal && selectedContact && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-[500px]">
+            <h3 className="text-xl font-bold mb-4 text-blue-700">Contact Details</h3>
+            <div className="space-y-2 text-gray-700">
+              <p><strong>Name:</strong> {selectedContact.firstName} {selectedContact.lastName}</p>
+              <p><strong>Email:</strong> {selectedContact.email}</p>
+              <p><strong>Phone:</strong> {selectedContact.phoneNumber}</p>
+              <p><strong>Reason:</strong> {selectedContact.reason}</p>
+              <p><strong>Message:</strong> {selectedContact.messageContent}</p>
+            </div>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => setShowDetailsModal(false)}
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Close
               </button>
             </div>
           </div>

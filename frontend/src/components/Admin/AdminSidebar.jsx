@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import AdminPanel from './ManageAdmins';
+import DoctorPanel from './ManageDoctors';
+import PatientPanel from './ManagePatients';
+import ContactList from '../ContactUs/ContactList';
+import Departments from '../Departments/Index';
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [activeTab, setActiveTab] = useState("admins");
 
   const handleLogout = () => {
-    // Add your logout logic here
+    // Shtoni logjikën tuaj të daljes këtu
     navigate('/logout');
   };
 
@@ -26,29 +32,44 @@ const AdminSidebar = () => {
       <div className="bg-gray-100 border-r-2 border-gray-300 p-4 h-screen fixed w-64 shadow-md">
         <ul className="space-y-2">
           <li>
-            <Link to="/adminpanel" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+            <button 
+              onClick={() => setActiveTab("adminpanel")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
               Manage Admins
-            </Link>
+            </button>
           </li>
           <li>
-            <Link to="/doctors" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+            <button 
+              onClick={() => setActiveTab("doctorpanel")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
               Manage Doctors
-            </Link>
+            </button>
           </li>
           <li>
-            <Link to="/patients" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+            <button 
+              onClick={() => setActiveTab("patientpanel")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
               Manage Patients
-            </Link>
+            </button>
           </li>
           <li>
-            <Link to="/contactlist" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+            <button 
+              onClick={() => setActiveTab("contactlist")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
               Contacts
-            </Link>
+            </button>
           </li>
           <li>
-            <Link to="/departments" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+            <button 
+              onClick={() => setActiveTab("departments")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
               Departments
-            </Link>
+            </button>
           </li>
         </ul>
       </div>
@@ -75,6 +96,44 @@ const AdminSidebar = () => {
           </div>
         </div>
       )}
+      {/* Display the active tab content */}
+      <div className="ml-64 p-6">
+        {activeTab === "adminpanel" && (
+          <div id="admins">
+           
+            <AdminPanel />
+          </div>
+        )}
+
+        {activeTab === "doctorpanel" && (
+          <div id="doctors">
+      
+            <DoctorPanel />
+          </div>
+        )}
+
+        {activeTab === "patientpanel" && (
+          <div id="patients">
+          
+            <PatientPanel />
+          </div>
+        )}
+
+        {activeTab === "contactlist" && (
+          <div id="contacts">
+  
+            <ContactList />
+          </div>
+        )}
+
+        {activeTab === "departments" && (
+          <div id="departments">
+         
+            <Departments />
+          </div>
+        )}
+      </div>
+
     </>
   );
 };
