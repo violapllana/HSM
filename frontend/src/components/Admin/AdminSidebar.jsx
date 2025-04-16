@@ -26,7 +26,7 @@ const AdminSidebar = () => {
       <div className="bg-gray-100 border-r-2 border-gray-300 p-4 h-screen fixed w-64 shadow-md">
         <ul className="space-y-2">
           <li>
-            <Link to="/admins" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+            <Link to="/adminpanel" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
               Manage Admins
             </Link>
           </li>

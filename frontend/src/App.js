@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Departments from './components/Departments/Index'; 
+import AdminPanel from './components/Admin/AdminPanel';
 
 import AdminSidebar from './components/Admin/AdminSidebar'; // Corrected path
 import PatientSidebar from './components/Patient/PatientSidebar'; // Corrected path
@@ -39,6 +40,8 @@ function App() {
         <Route path="/doctorsidebar" element={<DoctorSidebar />} />
 
         <Route path="/logout" element={<Logout />} />
+
+        <Route path="/adminpanel" element={<AdminPanel />} />
 
   
          <Route path="/contactus" element={<ContactUs />} />

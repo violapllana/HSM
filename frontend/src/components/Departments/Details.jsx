@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
 
 const DepartmentDetails = () => {
   const [department, setDepartment] = useState(null);
@@ -10,10 +10,12 @@ const DepartmentDetails = () => {
   useEffect(() => {
     const fetchDepartment = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/departments/${id}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/department/${id}`
+        );
         setDepartment(response.data);
       } catch (error) {
-        console.error('Error fetching department:', error);
+        console.error("Error fetching department:", error);
       }
     };
 
@@ -29,25 +31,31 @@ const DepartmentDetails = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="max-w-md w-full bg-white shadow-md rounded-lg p-6 border border-gray-200">
-        <h2 className="text-2xl font-bold text-blue-600 mb-4 text-center">
+    <div className="p-6 min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6">
+        <h1 className="text-3xl font-bold text-blue-800 mb-6 text-center">
           Department Details
-        </h2>
-        <div className="space-y-3 mb-6">
-          <p className="text-gray-800">
-            <span className="font-semibold">Name:</span> {department.name}
-          </p>
-          <p className="text-gray-800">
-            <span className="font-semibold">Description:</span> {department.description}
-          </p>
+        </h1>
+
+        <div className="space-y-6 text-gray-800 text-lg">
+          <div>
+            <span className="font-semibold">Name:</span>{" "}
+            {department.name}
+          </div>
+          <div>
+            <span className="font-semibold">Description:</span>{" "}
+            {department.description}
+          </div>
         </div>
-        <button
-          onClick={() => navigate('/departments')}
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
-        >
-          Go Back
-        </button>
+
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => navigate("/departments")}
+            className="bg-blue-500 text-white px-6 py-2 rounded text-sm hover:bg-blue-600 transition duration-300"
+          >
+            Back to Departments
+          </button>
+        </div>
       </div>
     </div>
   );

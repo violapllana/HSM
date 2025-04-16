@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/users/register:
+ * /register:
  *   post:
  *     summary: Regjistro një përdorues të ri
  *     requestBody:
@@ -36,7 +36,7 @@ router.post('/register', register);
 
 /**
  * @swagger
- * /api/users/login:
+ * /login:
  *   post:
  *     summary: Identifikohu në sistem
  *     requestBody:
