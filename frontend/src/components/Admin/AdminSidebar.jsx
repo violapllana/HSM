@@ -5,7 +5,9 @@ import DoctorPanel from './ManageDoctors';
 import PatientPanel from './ManagePatients';
 import ContactList from '../ContactUs/ContactList';
 import HospitalSurveyChart from './AdminDashboard';
-import DepartmentsPanel from '../Admin/Departments';
+import DepartmentsPanel from '../Department/Departments';
+import PatientAndDoctorPanel from './ManageConnections';
+import ReportList from '../Report/ReportsList';
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -65,6 +67,14 @@ const AdminSidebar = () => {
           </li>
           <li>
             <button 
+              onClick={() => setActiveTab("connect")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+              Connection
+            </button>
+          </li>
+          <li>
+            <button 
               onClick={() => setActiveTab("contactlist")}
               className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
             >
@@ -77,6 +87,14 @@ const AdminSidebar = () => {
               className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
             >
               Departments
+            </button>
+          </li>
+          <li>
+            <button 
+              onClick={() => setActiveTab("report")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+         Reports
             </button>
           </li>
         </ul>
@@ -130,10 +148,24 @@ const AdminSidebar = () => {
             <PatientPanel />
           </div>
         )}
+        
+        {activeTab === "connect" && (
+          <div id="connect">
+            <PatientAndDoctorPanel />
+          </div>
+        )}
+        
 
         {activeTab === "contactlist" && (
           <div id="contacts">
             <ContactList />
+          </div>
+        )}
+
+        
+{activeTab === "report" && (
+          <div id="report">
+            <ReportList />
           </div>
         )}
 

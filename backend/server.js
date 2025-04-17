@@ -19,6 +19,9 @@ const departmentRoutes = require('./routes/departmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const doctorRoutes = require('./routes/doctorRoutes');
 const patientRoutes = require('./routes/patientRoutes');
+const reportRoutes = require('./routes/reportRoutes');
+const connectRoutes = require('./routes/connectRoutes');
+const models = require('./models'); // Kjo ngarkon modelet dhe lidhjet
 
 const app = express();
 
@@ -118,6 +121,8 @@ app.use('/api/patient', patientRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/contact', contactRoutes);
 app.use("/api/department", departmentRoutes);
+app.use('/api/report', reportRoutes);
+app.use('/api/connect', connectRoutes);
 
 
 
