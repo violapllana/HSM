@@ -1,12 +1,11 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminPanel from './ManageAdmins';
 import DoctorPanel from './ManageDoctors';
 import PatientPanel from './ManagePatients';
 import ContactList from '../ContactUs/ContactList';
-import DepartmentForm  from './ManageDepartment';
-import HospitalSurveyChart from '../HospitalSurveyChart';
+import HospitalSurveyChart from './AdminDashboard';
+import DepartmentsPanel from '../Admin/Departments';
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -74,7 +73,7 @@ const AdminSidebar = () => {
           </li>
           <li>
             <button 
-              onClick={() => setActiveTab("departmentForm")}
+              onClick={() => setActiveTab("departments")}
               className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
             >
               Departments
@@ -138,9 +137,9 @@ const AdminSidebar = () => {
           </div>
         )}
 
-        {activeTab === "departmentForm" && (
+        {activeTab === "departments" && (
           <div id="departments">
-            <DepartmentForm />
+            <DepartmentsPanel />
           </div>
         )}
       </div>
