@@ -8,7 +8,6 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-
 //CRUD operations for admin,doctor,patient
 import AdminPanel from "./components/Admin/ManageAdmins";
 import PatientPanel from "./components/Admin/ManagePatients"; 
@@ -23,7 +22,7 @@ import DoctorSidebar from "./components/Doctor/DoctorSidebar";
 //Dashboard for admin,doctor,patient
 import DoctorDashboard from "./components/Doctor/DoctorDashboard";
 import PatientDashboard from "./components/Patient/PatientDashboard";
-import HospitalSurveyChart from "./components/Admin/AdminDashboard";
+import AdminDashboard from "./components/Admin/AdminDashboard";
 
 //Department CRUD
 import DepartmentDetails from "./components/Department/DepartmentDetails";
@@ -36,7 +35,7 @@ import ContactUs from "./components/ContactUs/Form";
 
 //Report CRUD 
 import ReportList from "./components/Report/ReportsList";
-import PatientReportPanel from "./components/Report/PatientReport";
+import CreateReport from "./components/Report/CreateReport";
 import PatientViewReports from "./components/Report/PatientViewReport";
 
 import "./App.css";
@@ -50,29 +49,36 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
+        <Route path="/logout" element={<Logout />} />
+
 
         <Route path="/adminsidebar" element={<AdminSidebar />} />
         <Route path="/patientsidebar" element={<PatientSidebar />} />
         <Route path="/doctorsidebar" element={<DoctorSidebar />} />
-        <Route path="/logout" element={<Logout />} />
+
+
         <Route path="/adminpanel" element={<AdminPanel />} />
         <Route path="/doctorpanel" element={<DoctorPanel />} />
         <Route path="/patientpanel" element={<PatientPanel />} />
-        <Route path="/contactus" element={<ContactUs />} />
-        <Route path="/contactlist" element={<ContactList />} />
-        <Route path="/hospital-survey" element={<HospitalSurveyChart />} />
+    
+        <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/PatientDashboard" element={<PatientDashboard/>}/>
+        <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
    
         <Route path="/departments" element={<DepartmentsPanel />} />
         <Route path="/department/:id" element={<DepartmentDetails />} />
-        <Route path="/report" element={<ReportList />} />
         <Route path="/departmentslist" element={<DepartmentsList />} />
-        <Route path="/reportlist" element={<ReportList />} />
-      
-        <Route path="/createreport" element={<PatientReportPanel />}/> 
-        <Route path="/connect" element={<PatientAndDoctorPanel />} />
+
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/contactlist" element={<ContactList />} />
+
+        <Route path="/report" element={<ReportList />} />
+        <Route path="/createreport" element={<CreateReport />} />
         <Route path="/patient/viewreport" element={<PatientViewReports />} />
+
+
+        <Route path="/connect" element={<PatientAndDoctorPanel />} />
+      
       </Routes>
     </Router>
   );
