@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 const register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;  // Hiqim 'role' nga req.body
+    const { username, email, password } = req.body;  
 
     
     const existingUser = await User.findOne({ where: { email } });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DoctorDashboard from './DoctorDashboard';
+import CreateReport from '../Report/PatientReport'; 
 
 
 const DoctorSidebar = () => {
@@ -51,7 +52,15 @@ const DoctorSidebar = () => {
               Medical History
             </button>
           </li>
-        </ul>
+          <li>
+            <button 
+              onClick={() => setActiveTab("createreport")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+              Report
+            </button>
+          </li>        
+          </ul>
       </div>
 
       {/* Logout Confirmation Modal */}
@@ -77,14 +86,18 @@ const DoctorSidebar = () => {
         </div>
       )}
 
-      {/* Display the active tab content */}
-      <div className="ml-64 p-6">
+         {/* Display the active tab content */}
+         <div className="ml-64 p-6">
+        {activeTab === "createreport" && (
+          <div id="createreport">
+            <CreateReport />
+          </div>
+        )}
         {activeTab === "dashboard" && (
           <div id="dashboard">
             <DoctorDashboard />
           </div>
         )}
-
       </div>
     </>
   );

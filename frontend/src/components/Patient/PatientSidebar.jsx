@@ -91,7 +91,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PatientDashboard from '../Patient/PatientDashboard';
-import DepartmentsList from '../Admin/DepartmentsList'; // Ose një komponent i veçantë për pacientin nëse ekziston
+import DepartmentsList from '../Department/DepartmentsList'; 
+import PatientViewReports from '../Report/PatientViewReport'; 
 
 const PatientSidebar = () => {
   const navigate = useNavigate();
@@ -135,6 +136,14 @@ const PatientSidebar = () => {
               Departments
             </button>
           </li>
+          <li>
+            <button
+              onClick={() => setActiveTab("viewreports")}
+              className="block w-full text-left p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+              My Reports
+            </button>
+          </li>
           {/* Mund të shtosh më shumë seksione si "Appointments", "Prescriptions" etj. nëse ke komponentë për to */}
         </ul>
       </div>
@@ -173,6 +182,11 @@ const PatientSidebar = () => {
         {activeTab === "departmentslist" && (
           <div id="departmentslist">
             <DepartmentsList />
+          </div>
+        )}
+           {activeTab === "viewreports" && (
+          <div id="departmentslist">
+            < PatientViewReports/>
           </div>
         )}
       </div>

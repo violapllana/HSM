@@ -3,25 +3,41 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Logout from "./components/Logout"; 
 import Home from "./components/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
+
+//CRUD operations for admin,doctor,patient
 import AdminPanel from "./components/Admin/ManageAdmins";
 import PatientPanel from "./components/Admin/ManagePatients"; 
+import DoctorPanel from "./components/Admin/ManageDoctors";
+import PatientAndDoctorPanel from "./components/Admin/ManageConnections"; 
+
+//Sidebar for admin,doctor,patient
 import AdminSidebar from "./components/Admin/AdminSidebar";
 import PatientSidebar from "./components/Patient/PatientSidebar"; 
 import DoctorSidebar from "./components/Doctor/DoctorSidebar";
+
+//Dashboard for admin,doctor,patient
+import DoctorDashboard from "./components/Doctor/DoctorDashboard";
 import PatientDashboard from "./components/Patient/PatientDashboard";
-import DepartmentDetails from "./components/Admin/DepartmentDetails";
-import DoctorPanel from "./components/Admin/Departments";
-import DepartmentsPanel from "./components/Admin/Departments";
+import HospitalSurveyChart from "./components/Admin/AdminDashboard";
+
+//Department CRUD
+import DepartmentDetails from "./components/Department/DepartmentDetails";
+import DepartmentsPanel from "./components/Department/Departments";
+import DepartmentsList from "./components/Department/DepartmentsList";
+
+//Contact CRUD
 import ContactList from "./components/ContactUs/ContactList";
 import ContactUs from "./components/ContactUs/Form"; 
-import Logout from "./components/Logout"; 
-import HospitalSurveyChart from "./components/Admin/AdminDashboard";
-import DepartmentsList from "./components/Admin/DepartmentsList";
-import DoctorDashboard from "./components/Doctor/DoctorDashboard";
 
+//Report CRUD 
+import ReportList from "./components/Report/ReportsList";
+import PatientReportPanel from "./components/Report/PatientReport";
+import PatientViewReports from "./components/Report/PatientViewReport";
 
 import "./App.css";
 
@@ -47,9 +63,16 @@ function App() {
         <Route path="/contactlist" element={<ContactList />} />
         <Route path="/hospital-survey" element={<HospitalSurveyChart />} />
         <Route path="/PatientDashboard" element={<PatientDashboard/>}/>
+   
         <Route path="/departments" element={<DepartmentsPanel />} />
         <Route path="/department/:id" element={<DepartmentDetails />} />
+        <Route path="/report" element={<ReportList />} />
         <Route path="/departmentslist" element={<DepartmentsList />} />
+        <Route path="/reportlist" element={<ReportList />} />
+      
+        <Route path="/createreport" element={<PatientReportPanel />}/> 
+        <Route path="/connect" element={<PatientAndDoctorPanel />} />
+        <Route path="/patient/viewreport" element={<PatientViewReports />} />
       </Routes>
     </Router>
   );
