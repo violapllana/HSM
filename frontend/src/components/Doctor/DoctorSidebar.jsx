@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import DoctorDashboard from './DoctorDashboard';
+
 
 const DoctorSidebar = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [activeTab, setActiveTab] = useState("dashboard"); // default fillon me dashboard
 
   const handleLogout = () => {
-    // Add your logout logic here
     navigate('/logout');
   };
 
@@ -16,29 +18,38 @@ const DoctorSidebar = () => {
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">HSM</h1>
           <nav className="space-x-6">
-            <button onClick={() => setShowModal(true)} className="text-white-500 hover:text-red-700">
+            <button onClick={() => setShowModal(true)} className="text-white hover:text-red-300">
               Logout
             </button>
           </nav>
         </div>
       </header>
 
-      <div className="bg-gray-200 border-r-2 border-gray-300 p-4 h-screen fixed w-64 shadow-md">
+      <div className="bg-gray-100 border-r-2 border-gray-300 p-4 h-screen fixed w-64 shadow-md">
         <ul className="space-y-2">
           <li>
-            <Link to="/doctor/account" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
-              My Account
-            </Link>
+            <button 
+              onClick={() => setActiveTab("dashboard")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+              Dashboard
+            </button>
           </li>
           <li>
-            <Link to="/doctor/account" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+            <button 
+              onClick={() => setActiveTab("appointments")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
               My Appointments
-            </Link>
+            </button>
           </li>
           <li>
-            <Link to="/doctor/account" className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
-              Medical
-            </Link>
+            <button 
+              onClick={() => setActiveTab("medicalhistory")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+              Medical History
+            </button>
           </li>
         </ul>
       </div>
@@ -65,6 +76,16 @@ const DoctorSidebar = () => {
           </div>
         </div>
       )}
+
+      {/* Display the active tab content */}
+      <div className="ml-64 p-6">
+        {activeTab === "dashboard" && (
+          <div id="dashboard">
+            <DoctorDashboard />
+          </div>
+        )}
+
+      </div>
     </>
   );
 };

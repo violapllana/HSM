@@ -20,6 +20,7 @@ import ContactUs from "./components/ContactUs/Form";
 import Logout from "./components/Logout"; 
 import HospitalSurveyChart from "./components/Admin/AdminDashboard";
 import DepartmentsList from "./components/Admin/DepartmentsList";
+import DoctorDashboard from "./components/Doctor/DoctorDashboard";
 
 
 import "./App.css";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
 
         <Route path="/adminsidebar" element={<AdminSidebar />} />
         <Route path="/patientsidebar" element={<PatientSidebar />} />
