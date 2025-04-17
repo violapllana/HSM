@@ -4,7 +4,7 @@ import AdminPanel from './ManageAdmins';
 import DoctorPanel from './ManageDoctors';
 import PatientPanel from './ManagePatients';
 import ContactList from '../ContactUs/ContactList';
-import HospitalSurveyChart from './AdminDashboard';
+import AdminDashboard from './AdminDashboard';
 import DepartmentsPanel from '../Department/Departments';
 import PatientAndDoctorPanel from './ManageConnections';
 import ReportList from '../Report/ReportsList';
@@ -35,7 +35,7 @@ const AdminSidebar = () => {
         <ul className="space-y-2">
           <li>
             <button 
-              onClick={() => setActiveTab("dashboard")}
+              onClick={() => setActiveTab("admindashboard")}
               className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
             >
               Dashboard
@@ -125,9 +125,9 @@ const AdminSidebar = () => {
 
       {/* Display the active tab content */}
       <div className="ml-64 p-6">
-        {activeTab === "dashboard" && (
+        {activeTab === "admindashboard" && (
           <div id="dashboard">
-            <HospitalSurveyChart />
+            <AdminDashboard />
           </div>
         )}
 

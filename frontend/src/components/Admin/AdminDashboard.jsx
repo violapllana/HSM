@@ -30,7 +30,7 @@ const stats = [
   { label: 'Pharmacists', value: 2110, icon: <FaUserPlus className="text-teal-500" size={30} /> },
 ];
 
-const HospitalSurveyChart = () => {
+const AdminDashboard = () => {
   return (
     <div className="bg-white shadow-md rounded-lg p-6 mb-6">
       {/* Stat Cards */}
@@ -66,4 +66,4 @@ const HospitalSurveyChart = () => {
   );
 };
 
-export default HospitalSurveyChart;
+export default AdminDashboard;
