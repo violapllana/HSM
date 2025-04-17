@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
-const User = require('./models/user'); 
+const User = require('./user');
 
 const DoctorPatient = sequelize.define('DoctorPatient', {
   doctorId: {
@@ -11,17 +11,13 @@ const DoctorPatient = sequelize.define('DoctorPatient', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-});
-
-User.belongsToMany(User, {
-  through: DoctorPatient,
-  foreignKey: 'doctorId',
-  as: 'patients',
-});
-User.belongsToMany(User, {
-  through: DoctorPatient,
-  foreignKey: 'patientId',
-  as: 'doctors',
+}, {
+  indexes: [
+    {
+      unique: true,
+      fields: ['doctorId', 'patientId']
+    }
+  ]
 });
 
 module.exports = DoctorPatient;
