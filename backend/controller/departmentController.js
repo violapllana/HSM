@@ -31,17 +31,16 @@
 //   getDepartments,
 //   getDepartmentById,
 // };
-const Department = require('../models/department');
+const { Department, User } = require('../models'); // Sigurohuni që keni importuar modelet tuaja
 
 // Merr të gjithë departamentet
 const getDepartments = async (req, res) => {
   try {
-    const departments = await Department.findAll({
-      attributes: ['id', 'name', 'description'],
-    });
-    res.status(200).json(departments);
-  } catch (err) {
-    res.status(500).json({ message: 'Gabim në marrjen e departamenteve', error: err.message });
+    const departments = await Department.findAll();
+    res.json(departments);
+  } catch (error) {
+    console.error('Error fetching departments:', error);
+    res.status(500).send('Internal server error');
   }
 };
 
@@ -115,10 +114,36 @@ const deleteDepartment = async (req, res) => {
   }
 };
 
+// Funksioni për të marrë doktorët nga një departament
+const getDoctorsByDepartment = async (req, res) => {
+  const { id } = req.params; // ID e departamentit nga rruga
+
+  try {
+    // Kërkojmë departamentin me ID të dhënë dhe ngarkojmë doktorët që i përkasin
+    const department = await Department.findByPk(id, {
+      include: {
+        model: User, // Kjo është nëse doktorët janë të lidhur me modelin 'User'
+        as: 'doctors' // Ose një alias që përdorni për doktorët
+      }
+    });
+
+    if (!department) {
+      return res.status(404).json({ message: 'Departamenti nuk u gjet' });
+    }
+
+    // Dërgojmë listën e doktorëve
+    res.json(department.doctors);
+  } catch (error) {
+    console.error('Error fetching doctors:', error);
+    res.status(500).send('Gabim gjatë marrjes së doktorëve');
+  }
+};
+
 module.exports = {
   getDepartments,
   getDepartmentById,
   createDepartment,
   updateDepartment,
   deleteDepartment,
+  getDoctorsByDepartment, // Eksporto këtë funksion
 };

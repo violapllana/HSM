@@ -5,7 +5,8 @@ const {
   getDepartmentById,
   createDepartment,
   updateDepartment,
-  deleteDepartment
+  deleteDepartment,
+  getDoctorsByDepartment // Shtojmë këtë funksion të ri për të marrë doktorët nga departamenti
 } = require('../controller/departmentController');
 
 /**
@@ -62,6 +63,27 @@ router.get('/', getDepartments);
  *         description: Gabim në kërkesë
  */
 router.get('/:id', getDepartmentById);
+
+/**
+ * @swagger
+ * /department/{id}/doctors:
+ *   get:
+ *     summary: Merr doktorët për një departament të caktuar
+ *     tags: [Department]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID e departamentit
+ *     responses:
+ *       200:
+ *         description: Lista e doktorëve për departamentin
+ *       404:
+ *         description: Departamenti nuk u gjet
+ */
+router.get('/:id/doctors', getDoctorsByDepartment);  // Kjo është rruga e re për doktorët
 
 /**
  * @swagger

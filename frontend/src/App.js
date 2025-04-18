@@ -37,6 +37,9 @@ import ContactUs from "./components/ContactUs/Form";
 import ReportList from "./components/Report/ReportsList";
 import CreateReport from "./components/Report/CreateReport";
 import PatientViewReports from "./components/Report/PatientViewReport";
+import AppointmentForm from "./components/Patient/AppointmentForm";
+
+
 
 import "./App.css";
 
@@ -75,6 +78,9 @@ function App() {
         <Route path="/report" element={<ReportList />} />
         <Route path="/createreport" element={<CreateReport />} />
         <Route path="/patient/viewreport" element={<PatientViewReports />} />
+        <Route path="/AppointmentForm" element={<AppointmentForm />} />
+
+        
 
 
         <Route path="/connect" element={<PatientAndDoctorPanel />} />
