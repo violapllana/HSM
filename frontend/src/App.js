@@ -26,6 +26,9 @@ import DoctorDashboard from "./components/Doctor/DoctorDashboard";
 import PatientDashboard from "./components/Patient/PatientDashboard";
 import AdminDashboard from "./components/Admin/AdminDashboard";
 import AppointmentDoctor from "./components/Doctor/AppointmentDoctor";
+import AppointmentPatient from "./components/Patient/AppointmentPatient";
+
+
 
 
 
@@ -68,6 +71,11 @@ function App() {
         <Route path="/adminpanel" element={<AdminPanel />} />
         <Route path="/doctorpanel" element={<DoctorPanel />} />
         <Route path="/patientpanel" element={<PatientPanel />} />
+        <Route path="/AppointmentPatient" element={<AppointmentPatient />} />
+
+
+        
+
     
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/PatientDashboard" element={<PatientDashboard/>}/>

@@ -155,13 +155,14 @@ function Login() {
         localStorage.setItem('role', userRole);
         localStorage.setItem('user', JSON.stringify(data.user)); // Opsionale
 
-        // Ruaj ID vetëm nëse është doktor
+        // Ruaj ID në bazë të rolit
         if (userRole === 'doctor') {
           localStorage.setItem('doctorId', data.user.id.toString());
           navigate('/doctorsidebar');
         } else if (userRole === 'admin') {
           navigate('/adminsidebar');
         } else if (userRole === 'patient') {
+          localStorage.setItem('patientId', data.user.id.toString()); // <-- SHTESA
           navigate('/patientsidebar');
         } else {
           setErrorMessage('Unknown role!');
