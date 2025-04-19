@@ -13,6 +13,8 @@ import AdminPanel from "./components/Admin/ManageAdmins";
 import PatientPanel from "./components/Admin/ManagePatients"; 
 import DoctorPanel from "./components/Admin/ManageDoctors";
 import PatientAndDoctorPanel from "./components/Admin/ManageConnections"; 
+import AppointmentList from "./components/Admin/AppointmentList"; 
+
 
 //Sidebar for admin,doctor,patient
 import AdminSidebar from "./components/Admin/AdminSidebar";
@@ -37,7 +39,7 @@ import ContactUs from "./components/ContactUs/Form";
 import ReportList from "./components/Report/ReportsList";
 import CreateReport from "./components/Report/CreateReport";
 import PatientViewReports from "./components/Report/PatientViewReport";
-import AppointmentForm from "./components/Patient/AppointmentForm";
+import AppointmentForm from "./components/Admin/AppointmentForm";
 
 
 
@@ -67,6 +69,9 @@ function App() {
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/PatientDashboard" element={<PatientDashboard/>}/>
         <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
+        <Route path="/AppointmentList" element={<AppointmentList />} />
+
+        
    
         <Route path="/departments" element={<DepartmentsPanel />} />
         <Route path="/department/:id" element={<DepartmentDetails />} />

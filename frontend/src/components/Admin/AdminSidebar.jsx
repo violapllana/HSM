@@ -8,6 +8,11 @@ import AdminDashboard from './AdminDashboard';
 import DepartmentsPanel from '../Department/Departments';
 import PatientAndDoctorPanel from './ManageConnections';
 import ReportList from '../Report/ReportsList';
+import AppointmentList from './AppointmentList';
+import AppointmentForm from '../Admin/AppointmentForm';
+
+
+
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -90,6 +95,14 @@ const AdminSidebar = () => {
             </button>
           </li>
           <li>
+            <button
+              onClick={() => setActiveTab("AppointmentForm")}
+              className="block w-full text-left p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+              My AppointmentForm
+            </button>
+          </li>
+          <li>
             <button 
               onClick={() => setActiveTab("report")}
               className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
@@ -148,10 +161,16 @@ const AdminSidebar = () => {
             <PatientPanel />
           </div>
         )}
+          {activeTab === "AppointmentList" && (
+          <div id="AppointmentList">
+            <AppointmentList />
+          </div>
+        )}
         
-        {activeTab === "connect" && (
-          <div id="connect">
-            <PatientAndDoctorPanel />
+        
+        {activeTab === "AppointmentForm" && (
+          <div id="AppointmentForm">
+            <AppointmentForm />
           </div>
         )}
         

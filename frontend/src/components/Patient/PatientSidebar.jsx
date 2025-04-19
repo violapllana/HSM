@@ -93,7 +93,7 @@ import { useNavigate } from 'react-router-dom';
 import PatientDashboard from '../Patient/PatientDashboard';
 import DepartmentsList from '../Department/DepartmentsList'; 
 import PatientViewReports from '../Report/PatientViewReport'; 
-import AppointmentForm from '../Patient/AppointmentForm';
+// import AppointmentForm from '../Admin/AppointmentForm';
 
 const PatientSidebar = () => {
   const navigate = useNavigate();
@@ -145,14 +145,14 @@ const PatientSidebar = () => {
               My Reports
             </button>
           </li>
-          <li>
+          {/* <li>
             <button
               onClick={() => setActiveTab("AppointmentForm")}
               className="block w-full text-left p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
             >
               My AppointmentForm
             </button>
-          </li>
+          </li> */}
           
           {/* Mund të shtosh më shumë seksione si "Appointments", "Prescriptions" etj. nëse ke komponentë për to */}
         </ul>
@@ -195,11 +195,11 @@ const PatientSidebar = () => {
           </div>
         )}
         
-        {activeTab === "AppointmentForm" && (
+        {/* {activeTab === "AppointmentForm" && (
           <div id="AppointmentForm">
             <AppointmentForm />
           </div>
-        )}
+        )} */}
         
            {activeTab === "viewreports" && (
           <div id="departmentslist">
