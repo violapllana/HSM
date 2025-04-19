@@ -25,6 +25,9 @@ import DoctorSidebar from "./components/Doctor/DoctorSidebar";
 import DoctorDashboard from "./components/Doctor/DoctorDashboard";
 import PatientDashboard from "./components/Patient/PatientDashboard";
 import AdminDashboard from "./components/Admin/AdminDashboard";
+import AppointmentDoctor from "./components/Doctor/AppointmentDoctor";
+
+
 
 //Department CRUD
 import DepartmentDetails from "./components/Department/DepartmentDetails";
@@ -70,6 +73,9 @@ function App() {
         <Route path="/PatientDashboard" element={<PatientDashboard/>}/>
         <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
         <Route path="/AppointmentList" element={<AppointmentList />} />
+        <Route path="/AppointmentDoctor" element={<AppointmentDoctor />} />
+
+        
 
         
    

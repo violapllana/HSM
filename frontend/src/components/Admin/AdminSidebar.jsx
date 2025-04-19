@@ -11,13 +11,10 @@ import ReportList from '../Report/ReportsList';
 import AppointmentList from './AppointmentList';
 import AppointmentForm from '../Admin/AppointmentForm';
 
-
-
-
 const AdminSidebar = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState("dashboard"); // default fillon me dashboard
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   const handleLogout = () => {
     navigate('/logout');
@@ -107,7 +104,7 @@ const AdminSidebar = () => {
               onClick={() => setActiveTab("report")}
               className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
             >
-         Reports
+              Reports
             </button>
           </li>
         </ul>
@@ -161,19 +158,12 @@ const AdminSidebar = () => {
             <PatientPanel />
           </div>
         )}
-          {activeTab === "AppointmentList" && (
-          <div id="AppointmentList">
-            <AppointmentList />
+
+        {activeTab === "connect" && (
+          <div id="connection">
+            <PatientAndDoctorPanel />
           </div>
         )}
-        
-        
-        {activeTab === "AppointmentForm" && (
-          <div id="AppointmentForm">
-            <AppointmentForm />
-          </div>
-        )}
-        
 
         {activeTab === "contactlist" && (
           <div id="contacts">
@@ -181,16 +171,27 @@ const AdminSidebar = () => {
           </div>
         )}
 
-        
-{activeTab === "report" && (
-          <div id="report">
-            <ReportList />
-          </div>
-        )}
-
         {activeTab === "departments" && (
           <div id="departments">
             <DepartmentsPanel />
+          </div>
+        )}
+
+        {activeTab === "AppointmentForm" && (
+          <div id="AppointmentForm">
+            <AppointmentForm />
+          </div>
+        )}
+
+        {activeTab === "AppointmentList" && (
+          <div id="AppointmentList">
+            <AppointmentList />
+          </div>
+        )}
+
+        {activeTab === "report" && (
+          <div id="report">
+            <ReportList />
           </div>
         )}
       </div>

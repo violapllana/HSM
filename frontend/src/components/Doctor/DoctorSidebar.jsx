@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import DoctorDashboard from './DoctorDashboard';
 import CreateReport from '../Report/CreateReport'; 
 import DepartmentsList from '../Department/DepartmentsList'; 
+import AppointmentDoctor from './AppointmentDoctor'; 
+
+
 
 
 const DoctorSidebar = () => {
@@ -45,7 +48,18 @@ const DoctorSidebar = () => {
           Departments
             </button>
           </li>
+
+          <li>
+            <button 
+              onClick={() => setActiveTab("AppointmentDoctor")}
+              className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+          AppointmentDoctor
+            </button>
+          </li>
        
+
+          
           <li>
             <button 
               onClick={() => setActiveTab("createreport")}
@@ -92,6 +106,12 @@ const DoctorSidebar = () => {
             <DepartmentsList />
           </div>
         )}
+        {activeTab === "AppointmentDoctor" && (
+          <div id="AppointmentDoctor">
+            <AppointmentDoctor />
+          </div>
+        )}
+        
         
         {activeTab === "dashboard" && (
           <div id="dashboard">
