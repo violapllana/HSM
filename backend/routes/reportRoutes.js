@@ -167,4 +167,5 @@ router.get('/patient/:patientId', getReportsByPatientId);
 router.get('/myreports', isAuthenticated, authorizeRoles('patient'), getMyReports);
 
 
+
 module.exports = router;

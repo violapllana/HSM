@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+
 const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;  
@@ -37,10 +38,29 @@ const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
-    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
     
-    // Ensure the response includes the user data
-    res.json({ message: 'Login successful', token, user: { id: user.id, role: user.role } }); // Include 'user' object explicitly
+    // // Ensure the response includes the user data
+    // res.json({ message: 'Login successful', token, user: { id: user.id, role: user.role } }); // Include 'user' object explicitly
+
+
+    const token = jwt.sign(
+      { id: user.id, username: user.username, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+    
+    // Vendos tokenin në cookie
+    res.cookie('ubtsecured', token, {
+      httpOnly: true,
+      secure: false, // Bëje true në production
+      sameSite: 'Lax',
+      maxAge: 60 * 60 * 1000 // 1 orë
+    });
+    
+    // Dërgo vetëm user-in në response, jo tokenin
+    res.json({ message: 'Login successful', user: { id: user.id, username: user.username, role: user.role } });
+    
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: error.message });

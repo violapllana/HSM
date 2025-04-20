@@ -45,6 +45,8 @@ import ContactUs from "./components/ContactUs/Form";
 import ReportList from "./components/Report/ReportsList";
 import CreateReport from "./components/Report/CreateReport";
 import PatientViewReports from "./components/Report/PatientViewReport";
+
+//Appointment CRUD
 import AppointmentForm from "./components/Admin/AppointmentForm";
 
 

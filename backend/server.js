@@ -222,6 +222,10 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+
+app.use(cookieParser());
+
+
 // Session Configuration
 app.use(session({
   secret: process.env.SESSION_SECRET || 'supersecret',

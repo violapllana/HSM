@@ -4,7 +4,7 @@ import axios from 'axios';
 const PatientReportPanel = () => {
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState('');
-  const [doctorId, setDoctorId] = useState(''); // mund të merret nga auth nëse e ke
+  const [doctorId, setDoctorId] = useState(''); // ID e doktorit që do të merret automatikisht
   const [reportData, setReportData] = useState({
     title: '',
     diagnosis: '',
@@ -27,6 +27,12 @@ const PatientReportPanel = () => {
         console.error('Error fetching patients:', error);
       }
     };
+
+    // Merrni ID-në e doktorit nga localStorage (ose nga cookies)
+    const doctor = JSON.parse(localStorage.getItem('user')); // Mendohet që 'user' është objekti që përmban të dhënat e doktorit
+    if (doctor && doctor.id) {
+      setDoctorId(doctor.id); // Vendosni ID-në automatikisht në doctorId
+    }
 
     fetchPatients();
   }, []);
@@ -87,13 +93,14 @@ const PatientReportPanel = () => {
         </select>
       </div>
 
+      {/* Doctor ID now automatically set */}
       <div className="mb-4">
         <label className="block font-semibold mb-1">Doctor ID:</label>
         <input
           type="text"
           value={doctorId}
-          onChange={(e) => setDoctorId(e.target.value)}
-          className="w-full p-2 border rounded"
+          readOnly // Nuk lejohet të ndryshohet manualisht
+          className="w-full p-2 border rounded bg-gray-100"
         />
       </div>
 
@@ -178,70 +185,3 @@ const PatientReportPanel = () => {
 };
 
 export default PatientReportPanel;
-// import { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-
-// const PatientReport = () => {
-//   const [reports, setReports] = useState([]);
-//   const [statusMessage, setStatusMessage] = useState('');
-  
-
-//   const patientId = req.user.id; 
-
-
-//   const fetchReports = async () => {
-//     try {
-//       const response = await axios.get(`http://localhost:5000/api/report/patient/${patientId}`);
-//       setReports(response.data);
-//     } catch (error) {
-//       console.error('Error fetching reports:', error);
-//       setStatusMessage('Failed to load reports.');
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchReports();
-//   }, []);
-
-//   return (
-//     <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow">
-//       <h2 className="text-2xl font-bold mb-4">My Health Reports</h2>
-
-//       {statusMessage && <p className="text-red-500 mb-4">{statusMessage}</p>}
-
-//       {reports.length === 0 ? (
-//         <p>No reports found.</p>
-//       ) : (
-//         <div className="overflow-x-auto">
-//           <table className="min-w-full table-auto border border-gray-300">
-//             <thead className="bg-gray-100">
-//               <tr>
-//                 <th className="border px-4 py-2">Title</th>
-//                 <th className="border px-4 py-2">Diagnosis</th>
-//                 <th className="border px-4 py-2">Treatment</th>
-//                 <th className="border px-4 py-2">Doctor</th>
-//                 <th className="border px-4 py-2">Status</th>
-//                 <th className="border px-4 py-2">Comments</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {reports.map((report) => (
-//                 <tr key={report.id} className="text-sm text-gray-700">
-//                   <td className="border px-4 py-2">{report.title}</td>
-//                   <td className="border px-4 py-2">{report.diagnosis}</td>
-//                   <td className="border px-4 py-2">{report.treatment}</td>
-//                   <td className="border px-4 py-2">{report.doctor?.username || 'Unknown'}</td>
-//                   <td className="border px-4 py-2">{report.status}</td>
-//                   <td className="border px-4 py-2">{report.comments}</td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default PatientReport;
