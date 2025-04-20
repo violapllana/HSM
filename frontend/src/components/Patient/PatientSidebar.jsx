@@ -4,6 +4,7 @@ import PatientDashboard from '../Patient/PatientDashboard';
 import DepartmentsList from '../Department/DepartmentsList'; 
 import PatientViewReports from '../Report/PatientViewReport'; 
 import AppointmentPatient from './AppointmentPatient'; 
+import ConnectDoctor from './ConnectDoctor';
 
 const PatientSidebar = () => {
   const navigate = useNavigate();
@@ -57,6 +58,16 @@ const PatientSidebar = () => {
           </li>
           <li>
             <button
+              onClick={() => setActiveTab("connectdoctor")}
+              className="block w-full text-left p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+            >
+              Connect Doctor
+            </button>
+          </li>          
+          
+          
+              <li>
+            <button
               onClick={() => setActiveTab("viewreports")}
               className="block w-full text-left p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
             >
@@ -108,6 +119,15 @@ const PatientSidebar = () => {
             <DepartmentsList />
           </div>
         )}
+        {activeTab === "connectdoctor" && (
+          <div id="connectdoctor">
+            <ConnectDoctor />
+          </div>
+        )}
+
+          
+
+
 
         {activeTab === "viewreports" && (
           <div id="viewreports">

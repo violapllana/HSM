@@ -196,27 +196,30 @@ const PatientAndDoctorPanel = () => {
           <p className="mt-4 text-red-500">{connectionStatus}</p>
         )}
       </div>
-
       <div className="mt-8">
-        <h3 className="text-xl font-semibold">Existing Connections</h3>
-        <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md mt-4">
-          <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
-            <tr>
-              <th className="px-6 py-3">Doctor</th>
-              <th className="px-6 py-3">Patient</th>
-            </tr>
-          </thead>
-          <tbody className="text-sm text-gray-700">
-  {connections.map((connection) => (
-    <tr key={connection.id} className="border-b hover:bg-gray-50">
-      <td className="px-6 py-4">{connection.doctor ? connection.doctor.username : connection.doctorId}</td>
-      <td className="px-6 py-4">{connection.patient ? connection.patient.username : connection.patientId}</td>
-    </tr>
-  ))}
-</tbody>
+  <h3 className="text-xl font-semibold">Existing Connections</h3>
+  <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md mt-4">
+    <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
+      <tr>
+        <th className="px-6 py-3">Doctor</th>
+        <th className="px-6 py-3">Patient</th>
+      </tr>
+    </thead>
+    <tbody className="text-sm text-gray-700">
+      {connections.map((connection) => (
+        <tr key={connection.id} className="border-b hover:bg-gray-50">
+          <td className="px-6 py-4">
+            {connection.doctor ? `${connection.doctor.username} (${connection.doctor.email})` : 'No doctor'}
+          </td>
+          <td className="px-6 py-4">
+            {connection.patient ? `${connection.patient.username} (${connection.patient.email})` : 'No patient'}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
-        </table>
-      </div>
     </div>
   );
 };

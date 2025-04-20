@@ -2,6 +2,8 @@ const express = require('express');
 const User = require('../models/user');
 const DoctorPatient = require('../models/doctorpatient');  // Për modelin e lidhjes
 const router = express.Router();
+
+
 /**
  * @swagger
  * tags:
@@ -61,33 +63,107 @@ router.post('/', async (req, res) => {
   }
 });
 
+// /**
+//  * @swagger
+//  * /connect:
+//  *   get:
+//  *     summary: Merr të gjitha lidhjet mes mjekëve dhe pacientëve
+//  *     description: Kjo rrugë mundëson marrjen e të gjitha lidhjeve mes mjekëve dhe pacientëve.
+//  *     responses:
+//  *       200:
+//  *         description: Lidhjet mes mjekëve dhe pacientëve u morën me sukses
+//  *       500:
+//  *         description: Gabim në server
+//  */
+// // Adjust the route to fetch connections with doctor and patient data
+// router.get('/', async (req, res) => {
+//   try {
+//     const connections = await DoctorPatient.findAll({
+//       include: [
+//         {
+//           model: User,
+//           as: 'doctor', // Alias for the doctor relationship
+//           attributes: ['username', 'email'] // Specify the fields you need
+//         },
+//         {
+//           model: User,
+//           as: 'patient', // Alias for the patient relationship
+//           attributes: ['username', 'email'] // Specify the fields you need
+//         }
+//       ]
+//     });
+
+//     if (!connections || connections.length === 0) {
+//       return res.status(404).json({ message: 'No connections found.' });
+//     }
+
+//     res.status(200).json(connections);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Internal server error.' });
+//   }
+// });
+
+
+
+
+
 /**
  * @swagger
- * /connect:
+ * /api/connect:
  *   get:
- *     summary: Merr të gjitha lidhjet mes mjekëve dhe pacientëve
- *     description: Kjo rrugë mundëson marrjen e të gjitha lidhjeve mes mjekëve dhe pacientëve.
+ *     summary: Get all doctor-patient connections with usernames and emails
+ *     tags: [DoctorPatient]
  *     responses:
  *       200:
- *         description: Lidhjet mes mjekëve dhe pacientëve u morën me sukses
- *       500:
- *         description: Gabim në server
+ *         description: List of doctor-patient connections
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   doctor:
+ *                     type: object
+ *                     properties:
+ *                       username:
+ *                         type: string
+ *                       email:
+ *                         type: string
+ *                   patient:
+ *                     type: object
+ *                     properties:
+ *                       username:
+ *                         type: string
+ *                       email:
+ *                         type: string
  */
 router.get('/', async (req, res) => {
   try {
-    const connections = await DoctorPatient.findAll();
-    
-    // Kontrollo nëse ka lidhje
-    if (!connections || connections.length === 0) {
-      return res.status(404).json({ message: 'No connections found.' });
-    }
+    const connections = await DoctorPatient.findAll({
+      include: [
+        {
+          model: User,
+          as: 'doctor',
+          attributes: ['username', 'email'],
+        },
+        {
+          model: User,
+          as: 'patient',
+          attributes: ['username', 'email'],
+        },
+      ],
+    });
 
     res.status(200).json(connections);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error.' });
+    console.error('Error fetching connections:', error);
+    res.status(500).json({ error: 'Failed to fetch connections' });
   }
 });
+
+
 
 /**
  * @swagger

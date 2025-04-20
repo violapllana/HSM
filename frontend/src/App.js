@@ -30,7 +30,7 @@ import AppointmentPatient from "./components/Patient/AppointmentPatient";
 
 
 
-
+import ConnectDoctor from "./components/Patient/ConnectDoctor";
 
 //Department CRUD
 import DepartmentDetails from "./components/Department/DepartmentDetails";
@@ -105,6 +105,7 @@ function App() {
 
 
         <Route path="/connect" element={<PatientAndDoctorPanel />} />
+        <Route path="/connectdoctor" element={<ConnectDoctor />} />
       
       </Routes>
     </Router>
