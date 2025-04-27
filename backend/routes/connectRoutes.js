@@ -1,299 +1,189 @@
 const express = require('express');
-const User = require('../models/user');
-const DoctorPatient = require('../models/doctorpatient');  // Për modelin e lidhjes
 const router = express.Router();
 
+const {
+  createConnection,
+  getPatientsByDoctor,
+  getConnectedPatients,
+  getAllConnections,
+  getConnectionById,
+  updateConnection,
+  deleteConnection,
+    getConnectedPatientsByPatientId
+} = require('../controller/connectionController');
 
-/**
- * @swagger
- * tags:
- *   name: Connection
- *   description: Menaxhimi i lidhjeve mes mjekëve dhe pacientëve
- */
 /**
  * @swagger
  * /connect:
+ *   get:
+ *     summary: Merr të gjitha lidhjet mes mjekëve dhe pacientëve
+ *     tags: [Connection]
+ *     responses:
+ *       200:
+ *         description: Lista e lidhjeve u mor me sukses
+ *       500:
+ *         description: Gabim në server
+ */
+router.get('/', getAllConnections); // Get all connections
+
+/**
+ * @swagger
+ * /connect/{doctorId}/{patientId}:
+ *   get:
+ *     summary: Merr një lidhje specifike mes mjekut dhe pacientit
+ *     tags: [Connection]
+ *     parameters:
+ *       - in: path
+ *         name: doctorId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID e mjekut
+ *       - in: path
+ *         name: patientId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID e pacientit
+ *     responses:
+ *       200:
+ *         description: Lidhja u gjet me sukses
+ *       404:
+ *         description: Lidhja nuk ekziston
+ *       500:
+ *         description: Gabim në server
+ */
+router.get('/:doctorId/:patientId', getConnectionById); // Get specific connection by doctor and patient ID
+
+/**
+ * @swagger
+ * /connect/{doctorId}/{patientId}:
  *   post:
  *     summary: Krijo një lidhje mes mjekut dhe pacientit
- *     description: Kjo rrugë mundëson lidhjen mes një mjeku dhe një pacienti.
+ *     tags: [Connection]
  *     parameters:
- *       - in: body
- *         name: connect
- *         description: Lidhja mes mjekut dhe pacientit
+ *       - in: path
+ *         name: doctorId
  *         required: true
  *         schema:
- *           type: object
- *           properties:
- *             doctorId:
- *               type: integer
- *               description: ID e mjekut
- *             patientId:
- *               type: integer
- *               description: ID e pacientit
+ *           type: integer
+ *         description: ID e mjekut
+ *       - in: path
+ *         name: patientId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID e pacientit
  *     responses:
  *       200:
- *         description: Lidhja mes mjekut dhe pacientit u krijua me sukses
+ *         description: Lidhja u krijua me sukses
  *       400:
- *         description: Mjeku ose pacienti janë të pasaktë
+ *         description: Gabim në të dhëna
  *       500:
  *         description: Gabim në server
  */
-router.post('/', async (req, res) => {
-  const { doctorId, patientId } = req.body;
-
-  try {
-    const doctor = await User.findByPk(doctorId);
-    const patient = await User.findByPk(patientId);
-
-    if (!doctor || doctor.role !== 'doctor') {
-      return res.status(400).json({ message: 'Invalid doctor.' });
-    }
-
-    if (!patient || patient.role !== 'patient') {
-      return res.status(400).json({ message: 'Invalid patient.' });
-    }
-
-    // Krijo lidhjen
-    await doctor.addPatient(patient);
-
-    return res.status(200).json({ message: 'Successfully connected doctor and patient.' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error.' });
-  }
-});
-
-// /**
-//  * @swagger
-//  * /connect:
-//  *   get:
-//  *     summary: Merr të gjitha lidhjet mes mjekëve dhe pacientëve
-//  *     description: Kjo rrugë mundëson marrjen e të gjitha lidhjeve mes mjekëve dhe pacientëve.
-//  *     responses:
-//  *       200:
-//  *         description: Lidhjet mes mjekëve dhe pacientëve u morën me sukses
-//  *       500:
-//  *         description: Gabim në server
-//  */
-// // Adjust the route to fetch connections with doctor and patient data
-// router.get('/', async (req, res) => {
-//   try {
-//     const connections = await DoctorPatient.findAll({
-//       include: [
-//         {
-//           model: User,
-//           as: 'doctor', // Alias for the doctor relationship
-//           attributes: ['username', 'email'] // Specify the fields you need
-//         },
-//         {
-//           model: User,
-//           as: 'patient', // Alias for the patient relationship
-//           attributes: ['username', 'email'] // Specify the fields you need
-//         }
-//       ]
-//     });
-
-//     if (!connections || connections.length === 0) {
-//       return res.status(404).json({ message: 'No connections found.' });
-//     }
-
-//     res.status(200).json(connections);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Internal server error.' });
-//   }
-// });
-
-
-
-
+router.post('/:doctorId/:patientId', createConnection); // Create a new connection
 
 /**
  * @swagger
- * /api/connect:
- *   get:
- *     summary: Get all doctor-patient connections with usernames and emails
- *     tags: [DoctorPatient]
- *     responses:
- *       200:
- *         description: List of doctor-patient connections
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   doctor:
- *                     type: object
- *                     properties:
- *                       username:
- *                         type: string
- *                       email:
- *                         type: string
- *                   patient:
- *                     type: object
- *                     properties:
- *                       username:
- *                         type: string
- *                       email:
- *                         type: string
- */
-router.get('/', async (req, res) => {
-  try {
-    const connections = await DoctorPatient.findAll({
-      include: [
-        {
-          model: User,
-          as: 'doctor',
-          attributes: ['username', 'email'],
-        },
-        {
-          model: User,
-          as: 'patient',
-          attributes: ['username', 'email'],
-        },
-      ],
-    });
-
-    res.status(200).json(connections);
-  } catch (error) {
-    console.error('Error fetching connections:', error);
-    res.status(500).json({ error: 'Failed to fetch connections' });
-  }
-});
-
-
-
-/**
- * @swagger
- * /connect/{id}:
- *   get:
- *     summary: Merr një lidhje mes mjekut dhe pacientit me ID
- *     description: Kjo rrugë mundëson marrjen e lidhjes mes një mjeku dhe një pacienti bazuar në ID.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: ID e lidhjes mes mjekut dhe pacientit
- *     responses:
- *       200:
- *         description: Lidhja mes mjekut dhe pacientit u gjet me sukses
- *       404:
- *         description: Lidhja nuk u gjet
- *       500:
- *         description: Gabim në server
- */
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const connection = await DoctorPatient.findByPk(id);
-    if (!connection) {
-      return res.status(404).json({ message: 'Connection not found.' });
-    }
-
-    res.status(200).json(connection);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error.' });
-  }
-});
-
-/**
- * @swagger
- * /connect/{id}:
+ * /connect/{doctorId}/{patientId}:
  *   put:
- *     summary: Përditëso një lidhje mes mjekut dhe pacientit
- *     description: Kjo rrugë mundëson përditësimin e lidhjes mes një mjeku dhe një pacienti bazuar në ID.
+ *     summary: Përditëso një lidhje ekzistuese
+ *     tags: [Connection]
  *     parameters:
  *       - in: path
- *         name: id
- *         required: true
- *         description: ID e lidhjes mes mjekut dhe pacientit
- *       - in: body
- *         name: connect
- *         description: Lidhja që do të përditësohet
+ *         name: doctorId
  *         required: true
  *         schema:
- *           type: object
- *           properties:
- *             doctorId:
- *               type: integer
- *               description: ID e mjekut
- *             patientId:
- *               type: integer
- *               description: ID e pacientit
+ *           type: integer
+ *         description: ID e mjekut
+ *       - in: path
+ *         name: patientId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID e pacientit
  *     responses:
  *       200:
  *         description: Lidhja u përditësua me sukses
  *       400:
- *         description: Lidhja nuk mund të përditësohet
+ *         description: Të dhënat e gabuara
  *       404:
- *         description: Lidhja nuk u gjet
+ *         description: Lidhja nuk ekziston
  *       500:
  *         description: Gabim në server
  */
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { doctorId, patientId } = req.body;
-
-  try {
-    const connection = await DoctorPatient.findByPk(id);
-
-    if (!connection) {
-      return res.status(404).json({ message: 'Connection not found.' });
-    }
-
-    // Përditëso lidhjen
-    connection.doctorId = doctorId;
-    connection.patientId = patientId;
-
-    await connection.save();
-
-    return res.status(200).json({ message: 'Connection updated successfully.' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error.' });
-  }
-});
+router.put('/:doctorId/:patientId', updateConnection); // Update an existing connection
 
 /**
  * @swagger
- * /connect/{id}:
+ * /connect/{doctorId}/{patientId}:
  *   delete:
  *     summary: Fshi një lidhje mes mjekut dhe pacientit
- *     description: Kjo rrugë mundëson fshirjen e lidhjes mes një mjeku dhe një pacienti bazuar në ID.
+ *     tags: [Connection]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: doctorId
  *         required: true
- *         description: ID e lidhjes mes mjekut dhe pacientit
+ *         schema:
+ *           type: integer
+ *         description: ID e mjekut
+ *       - in: path
+ *         name: patientId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID e pacientit
  *     responses:
  *       200:
  *         description: Lidhja u fshi me sukses
  *       404:
- *         description: Lidhja nuk u gjet
+ *         description: Lidhja nuk ekziston
  *       500:
  *         description: Gabim në server
  */
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
+router.delete('/:doctorId/:patientId', deleteConnection); // Delete an existing connection
 
-  try {
-    const connection = await DoctorPatient.findByPk(id);
+/**
+ * @swagger
+ * /connect/doctor:
+ *   get:
+ *     summary: Merr të gjithë pacientët e lidhur me një mjek të caktuar
+ *     tags: [Connection]
+ *     responses:
+ *       200:
+ *         description: Lista e pacientëve të lidhur me mjekun u mor me sukses
+ *       500:
+ *         description: Gabim në server
+ */
+router.get('/doctor', getConnectedPatients); // Get all connected patients
 
-    if (!connection) {
-      return res.status(404).json({ message: 'Connection not found.' });
-    }
+/**
+ * @swagger
+ * /connect/doctor/{doctorId}:
+ *   get:
+ *     summary: Merr pacientët e lidhur me një mjek të caktuar
+ *     tags: [Connection]
+ *     parameters:
+ *       - in: path
+ *         name: doctorId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID e mjekut
+ *     responses:
+ *       200:
+ *         description: Lista e pacientëve të lidhur me mjekun u mor me sukses
+ *       404:
+ *         description: Nuk ka pacientë të lidhur me këtë mjek
+ *       500:
+ *         description: Gabim në server
+ */
+router.get('/doctor/:doctorId', getPatientsByDoctor); // Get patients by doctor ID
 
-    await connection.destroy();
 
-    return res.status(200).json({ message: 'Connection deleted successfully.' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error.' });
-  }
-});
+// In your routes (Express)
+router.get('/patients/:patientId', getConnectedPatientsByPatientId);
+
 
 module.exports = router;

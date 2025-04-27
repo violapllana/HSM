@@ -31,6 +31,7 @@ import AppointmentPatient from "./components/Patient/AppointmentPatient";
 
 
 import ConnectDoctor from "./components/Patient/ConnectDoctor";
+import ConnectedList from "./components/Doctor/ConnectedList";
 
 //Department CRUD
 import DepartmentDetails from "./components/Department/DepartmentDetails";
@@ -39,7 +40,7 @@ import DepartmentsList from "./components/Department/DepartmentsList";
 
 //Contact CRUD
 import ContactList from "./components/ContactUs/ContactList";
-import ContactUs from "./components/ContactUs/Form"; 
+import ContactUs from "./components/ContactUs/ContactForm"; 
 
 //Report CRUD 
 import ReportList from "./components/Report/ReportsList";
@@ -85,10 +86,7 @@ function App() {
         <Route path="/AppointmentList" element={<AppointmentList />} />
         <Route path="/AppointmentDoctor" element={<AppointmentDoctor />} />
 
-        
-
-        
-   
+    
         <Route path="/departments" element={<DepartmentsPanel />} />
         <Route path="/department/:id" element={<DepartmentDetails />} />
         <Route path="/departmentslist" element={<DepartmentsList />} />
@@ -101,11 +99,9 @@ function App() {
         <Route path="/patient/viewreport" element={<PatientViewReports />} />
         <Route path="/AppointmentForm" element={<AppointmentForm />} />
 
-        
-
-
         <Route path="/connect" element={<PatientAndDoctorPanel />} />
         <Route path="/connectdoctor" element={<ConnectDoctor />} />
+        <Route path="/connected" element={<ConnectedList />} />
       
       </Routes>
     </Router>

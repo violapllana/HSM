@@ -38,7 +38,7 @@ const PatientAndDoctorPanel = () => {
   const fetchConnections = async () => {
     try {
       const response = await axios.get(apiUrlConnections);
-      setConnections(response.data);
+      setConnections(response.data); // Assuming you use setConnections to update the state
     } catch (error) {
       console.error('Error fetching connections:', error);
     }
@@ -80,24 +80,68 @@ const PatientAndDoctorPanel = () => {
       doctor.email.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Handle doctor-patient connection
   const handleConnect = async () => {
     if (!selectedDoctor || !selectedPatient) {
       setConnectionStatus('Please select both a doctor and a patient.');
       return;
     }
 
+    // Check if the connection already exists
+    const existingConnection = connections.find(
+      (conn) =>
+        conn.doctor.id === selectedDoctor && conn.patient.id === selectedPatient
+    );
+
+    if (existingConnection) {
+      setConnectionStatus('This doctor and patient are already connected.');
+      return;
+    }
+
     try {
-      const response = await axios.post(apiUrlConnect, {
-        doctorId: selectedDoctor,
-        patientId: selectedPatient,
-      });
+      // Make the API call to create the connection
+      const response = await axios.post(
+        `${apiUrlConnect}/${selectedDoctor}/${selectedPatient}`
+      );
+
       setConnectionStatus(response.data.message || 'Successfully connected.');
-      fetchConnections();
+      fetchConnections(); // Refresh the connections list after successful connection
+      setSelectedDoctor(null); // Reset selections
+      setSelectedPatient(null);
     } catch (error) {
-      setConnectionStatus('Error connecting patient and doctor.');
+      if (error.response && error.response.data && error.response.data.message) {
+        setConnectionStatus(error.response.data.message);
+      } else {
+        setConnectionStatus('Error connecting patient and doctor.');
+      }
       console.error(error);
     }
   };
+
+  const handleDeleteConnection = async (doctorId, patientId) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this connection?');
+  
+    if (!isConfirmed) {
+      return;
+    }
+  
+    try {
+      await axios.delete(`${apiUrlConnect}/${doctorId}/${patientId}`);
+      setConnectionStatus('Connection deleted successfully.');
+  
+      // Directly update the connections state to remove the deleted connection
+      setConnections((prevConnections) =>
+        prevConnections.filter(
+          (connection) =>
+            connection.doctor.id !== doctorId || connection.patient.id !== patientId
+        )
+      );
+    } catch (error) {
+      console.error('Error deleting connection:', error);
+      setConnectionStatus('Failed to delete connection.');
+    }
+  };
+  
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -137,15 +181,13 @@ const PatientAndDoctorPanel = () => {
           </tr>
         </thead>
         <tbody className="text-sm text-gray-700">
-          {(filterBy === 'patient' ? filteredPatients : filteredDoctors).map(
-            (person) => (
-              <tr key={person.id} className="border-b hover:bg-gray-50">
-                <td className="px-6 py-4">{person.id}</td>
-                <td className="px-6 py-4">{person.username}</td>
-                <td className="px-6 py-4">{person.email}</td>
-              </tr>
-            )
-          )}
+          {(filterBy === 'patient' ? filteredPatients : filteredDoctors).map((person) => (
+            <tr key={person.id} className="border-b hover:bg-gray-50">
+              <td className="px-6 py-4">{person.id}</td>
+              <td className="px-6 py-4">{person.username}</td>
+              <td className="px-6 py-4">{person.email}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
@@ -157,7 +199,7 @@ const PatientAndDoctorPanel = () => {
           <select
             id="doctor"
             className="p-2 border rounded"
-            onChange={(e) => setSelectedDoctor(e.target.value)}
+            onChange={(e) => setSelectedDoctor(Number(e.target.value))}
           >
             <option value="">Select a doctor</option>
             {doctors.map((doctor) => (
@@ -175,7 +217,7 @@ const PatientAndDoctorPanel = () => {
           <select
             id="patient"
             className="p-2 border rounded"
-            onChange={(e) => setSelectedPatient(e.target.value)}
+            onChange={(e) => setSelectedPatient(Number(e.target.value))}
           >
             <option value="">Select a patient</option>
             {patients.map((patient) => (
@@ -196,30 +238,39 @@ const PatientAndDoctorPanel = () => {
           <p className="mt-4 text-red-500">{connectionStatus}</p>
         )}
       </div>
-      <div className="mt-8">
-  <h3 className="text-xl font-semibold">Existing Connections</h3>
-  <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md mt-4">
-    <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
-      <tr>
-        <th className="px-6 py-3">Doctor</th>
-        <th className="px-6 py-3">Patient</th>
-      </tr>
-    </thead>
-    <tbody className="text-sm text-gray-700">
-      {connections.map((connection) => (
-        <tr key={connection.id} className="border-b hover:bg-gray-50">
-          <td className="px-6 py-4">
-            {connection.doctor ? `${connection.doctor.username} (${connection.doctor.email})` : 'No doctor'}
-          </td>
-          <td className="px-6 py-4">
-            {connection.patient ? `${connection.patient.username} (${connection.patient.email})` : 'No patient'}
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
 
+      <div className="mt-8">
+        <h3 className="text-xl font-semibold">Existing Connections</h3>
+        <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md mt-4">
+          <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
+            <tr>
+              <th className="px-6 py-3">Doctor</th>
+              <th className="px-6 py-3">Patient</th>
+              <th className="px-6 py-3">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="text-sm text-gray-700">
+            {connections.map((connection) => (
+              <tr key={connection.doctorId + "-" + connection.patientId}>
+                <td className="px-6 py-4">
+                  {connection.doctor ? `${connection.doctor.username} (${connection.doctor.email})` : 'No doctor'}
+                </td>
+                <td className="px-6 py-4">
+                  {connection.patient ? `${connection.patient.username} (${connection.patient.email})` : 'No patient'}
+                </td>
+                <td className="px-6 py-4">
+                  <button
+                    onClick={() => handleDeleteConnection(connection.doctorId, connection.patientId)}
+                    className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
