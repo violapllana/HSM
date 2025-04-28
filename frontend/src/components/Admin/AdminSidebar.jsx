@@ -280,11 +280,7 @@ const AdminSidebar = () => {
                   Create Appointment
                 </button>
               </li>
-              <li>
-                <button onClick={() => setActiveTab('appointmentlist')} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
-                  Appointment List
-                </button>
-              </li>
+            
               <li>
                 <button onClick={() => setActiveTab('contactlist')} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
                   Contacts
@@ -307,7 +303,7 @@ const AdminSidebar = () => {
             {activeTab === 'connect' && <PatientAndDoctorPanel />}
             {activeTab === 'departments' && <DepartmentsPanel />}
             {activeTab === 'appointmentform' && <AppointmentForm />}
-            {activeTab === 'appointmentlist' && <AppointmentList />}
+      
             {activeTab === 'contactlist' && <ContactList />}
             {activeTab === 'reportlist' && <ReportList />}
           </main>
