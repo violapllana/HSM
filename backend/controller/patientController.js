@@ -1,4 +1,4 @@
-const User = require('../models/user'); // Supozojmë që modelin "User" mund ta përdorim gjithashtu për pacientët
+const User = require('../models/user'); 
 
 const createPatient = async (req, res) => {
   try {
@@ -23,7 +23,7 @@ const createPatient = async (req, res) => {
 
 const getPatients = async (req, res) => {
   try {
-    // Merr vetëm përdoruesit me rolin "patient"
+
     const patients = await User.findAll({ where: { role: "patient" } });
     res.status(200).json(patients);
   } catch (error) {

@@ -11,7 +11,7 @@ const DoctorDepartment = sequelize.define('DoctorDepartment', {
     allowNull: false,
   },
 }, {
-  timestamps: false, // nëse nuk dëshiron createdAt dhe updatedAt
+  timestamps: false, 
 });
 
 module.exports = DoctorDepartment;

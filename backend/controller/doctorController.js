@@ -1,4 +1,4 @@
-const User = require('../models/user');  // Përdor modelin për doktorin
+const User = require('../models/user'); 
 
 const createDoctor = async (req, res) => {
   try {
@@ -8,21 +8,21 @@ const createDoctor = async (req, res) => {
       username,
       email,
       password,
-      role: "doctor",  // Role është "doctor"
+      role: "doctor",  
       specialty,
       phone
     });
 
     res.status(201).json(newDoctor);
   } catch (error) {
-    console.error("Error details:", error);  // Log error to server console
+    console.error("Error details:", error); 
     res.status(500).json({ message: 'Gabim në krijimin e doktorit', error: error.message });
   }
 };
 
 const getDoctors = async (req, res) => {
   try {
-    // Merr vetëm përdoruesit me rolin "doctor"
+
     const doctors = await User.findAll({ where: { role: "doctor" } });
     res.status(200).json(doctors);
   } catch (error) {

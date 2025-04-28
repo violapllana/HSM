@@ -34,11 +34,11 @@ const sequelize = new Sequelize(
 
 const connectDB = async () => {
   try {
-    await createDatabase(); // Krijon databazën nëse nuk ekziston
+    await createDatabase(); 
     await sequelize.authenticate();
     console.log('Lidhja me bazën e të dhënave është e suksesshme.');
 
-    await sequelize.sync(); // Krijon tabelat nëse nuk ekzistojnë
+    await sequelize.sync(); 
     console.log('Tabela(t) janë krijuar.');
   } catch (error) {
     console.error('Gabim gjatë lidhjes me databazën:', error);

@@ -50,15 +50,15 @@ const login = async (req, res) => {
       { expiresIn: '1h' }
     );
     
-    // Vendos tokenin në cookie
+   
     res.cookie('ubtsecured', token, {
       httpOnly: true,
-      secure: false, // Bëje true në production
+      secure: false, 
       sameSite: 'Lax',
-      maxAge: 60 * 60 * 1000 // 1 orë
+      maxAge: 60 * 60 * 1000 
     });
     
-    // Dërgo vetëm user-in në response, jo tokenin
+
     res.json({ message: 'Login successful', user: { id: user.id, username: user.username, role: user.role } });
     
   } catch (error) {

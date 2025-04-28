@@ -13,7 +13,7 @@ const createAdmin = async (req, res) => {
 
     res.status(201).json(newAdmin);
   } catch (error) {
-    console.error("Error details:", error);  // Log error to server console
+    console.error("Error details:", error); 
     res.status(500).json({ message: 'Gabim në krijimin e adminit', error: error.message });
   }
 };
@@ -21,7 +21,7 @@ const createAdmin = async (req, res) => {
 
 const getAdmins = async (req, res) => {
   try {
-    // Merr vetëm përdoruesit me rolin "admin"
+
     const admins = await User.findAll({ where: { role: "admin" } });
     res.status(200).json(admins);
   } catch (error) {

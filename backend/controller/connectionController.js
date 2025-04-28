@@ -115,7 +115,7 @@ const getPatientsByDoctor = async (req, res) => {
   const doctorId = req.params.doctorId;
 
   try {
-    // Fetching all connections where the doctor is the one the patient is connected to
+
     const connections = await DoctorPatient.findAll({
       where: { doctorId },
       include: [{ model: User, as: 'patient', attributes: ['username', 'email'] }]
@@ -159,18 +159,18 @@ const deleteConnection = async (req, res) => {
 const getConnectedPatientsByPatientId = (req, res) => {
   const { patientId } = req.params;
 
-  // Find connections where the patientId matches
+
   Connection.find({ patientId: patientId })
     .then(connections => {
       if (!connections || connections.length === 0) {
-        // If no connections are found
+   
         return res.status(404).json({ message: 'No connections found for this patient.' });
       }
-      // Return the list of connections for the patient
+     
       res.status(200).json(connections);
     })
     .catch(error => {
-      // Handle errors such as database issues
+  
       console.error(error);
       res.status(500).json({ message: 'An error occurred while fetching connections.', error });
     });

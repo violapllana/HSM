@@ -1,39 +1,6 @@
-// const Department  = require('../models/department');
+const { Department, User } = require('../models'); 
 
-// const getDepartments = async (req, res) => {
-//   try {
-//     const departments = await Department.findAll({
-//       attributes: ['id', 'name', 'description'], // Vetëm 'name' dhe 'description' do të kthehen
-//     });
-//     res.status(200).json(departments);
-//   } catch (err) {
-//     res.status(500).json({ message: 'Gabim në marrjen e departamenteve', error: err.message });
-//   }
-// };
 
-// const getDepartmentById = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const department = await Department.findByPk(id);
-
-//     if (!department) {
-//       return res.status(404).json({ message: 'Departamenti nuk u gjet' });
-//     }
-
-//     res.status(200).json(department); // Kthejme të gjitha të dhënat për departamentin
-//   } catch (err) {
-//     res.status(400).json({ message: 'Gabim në marrjen e departamentit', error: err.message });
-//   }
-// };
-
-// // Kthejme edhe funksionet e tjera si create, update dhe delete, por nuk do t'i përdorim për këtë detyrë.
-// module.exports = {
-//   getDepartments,
-//   getDepartmentById,
-// };
-const { Department, User } = require('../models'); // Sigurohuni që keni importuar modelet tuaja
-
-// Merr të gjithë departamentet
 const getDepartments = async (req, res) => {
   try {
     const departments = await Department.findAll();
@@ -44,7 +11,7 @@ const getDepartments = async (req, res) => {
   }
 };
 
-// Merr një departament sipas ID
+
 const getDepartmentById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -60,7 +27,7 @@ const getDepartmentById = async (req, res) => {
   }
 };
 
-// Krijo një departament të ri
+
 const createDepartment = async (req, res) => {
   try {
     const { name, description } = req.body;
@@ -76,7 +43,7 @@ const createDepartment = async (req, res) => {
   }
 };
 
-// Përditëso një departament ekzistues
+
 const updateDepartment = async (req, res) => {
   try {
     const { id } = req.params;
@@ -97,7 +64,7 @@ const updateDepartment = async (req, res) => {
   }
 };
 
-// Fshij një departament
+
 const deleteDepartment = async (req, res) => {
   try {
     const { id } = req.params;
@@ -114,16 +81,16 @@ const deleteDepartment = async (req, res) => {
   }
 };
 
-// Funksioni për të marrë doktorët nga një departament
+
 const getDoctorsByDepartment = async (req, res) => {
-  const { id } = req.params; // ID e departamentit nga rruga
+  const { id } = req.params;
 
   try {
-    // Kërkojmë departamentin me ID të dhënë dhe ngarkojmë doktorët që i përkasin
+
     const department = await Department.findByPk(id, {
       include: {
-        model: User, // Kjo është nëse doktorët janë të lidhur me modelin 'User'
-        as: 'doctors' // Ose një alias që përdorni për doktorët
+        model: User, 
+        as: 'doctors' 
       }
     });
 
@@ -131,7 +98,7 @@ const getDoctorsByDepartment = async (req, res) => {
       return res.status(404).json({ message: 'Departamenti nuk u gjet' });
     }
 
-    // Dërgojmë listën e doktorëve
+
     res.json(department.doctors);
   } catch (error) {
     console.error('Error fetching doctors:', error);
@@ -145,5 +112,5 @@ module.exports = {
   createDepartment,
   updateDepartment,
   deleteDepartment,
-  getDoctorsByDepartment, // Eksporto këtë funksion
+  getDoctorsByDepartment,
 };

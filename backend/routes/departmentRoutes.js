@@ -6,7 +6,7 @@ const {
   createDepartment,
   updateDepartment,
   deleteDepartment,
-  getDoctorsByDepartment // Shtojmë këtë funksion të ri për të marrë doktorët nga departamenti
+  getDoctorsByDepartment 
 } = require('../controller/departmentController');
 
 /**
