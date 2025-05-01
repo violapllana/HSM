@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const AdminPanel = () => {
+  const [adminId, setAdminId] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -63,6 +64,7 @@ const AdminPanel = () => {
   const handleEdit = async (id) => {
     try {
       const response = await axios.get(`${apiUrl}/${id}`);
+    
       setUsername(response.data.username);
       setEmail(response.data.email);
       setPassword('');
@@ -133,32 +135,34 @@ const AdminPanel = () => {
             <th className="px-6 py-3">Actions</th>
           </tr>
         </thead>
+       
         <tbody className="text-sm text-gray-700">
-          {admins.map((admin, index) => (
-            <tr key={admin.id} className="border-b hover:bg-gray-50">
-              <td className="px-6 py-4">{index + 1}</td>
-              <td className="px-6 py-4">{admin.username}</td>
-              <td className="px-6 py-4">{admin.email}</td>
-              <td className="px-6 py-4 flex items-center space-x-2">
-                <button
-                  onClick={() => handleEdit(admin.id)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => {
-                    setAdminToDelete(admin.id);
-                    setShowDeleteModal(true);
-                  }}
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {admins.map((admin) => (
+    <tr key={admin.id} className="border-b hover:bg-gray-50">
+      <td className="px-6 py-4">{admin.id}</td> {/* Këtu u bë ndryshimi */}
+      <td className="px-6 py-4">{admin.username}</td>
+      <td className="px-6 py-4">{admin.email}</td>
+      <td className="px-6 py-4 flex items-center space-x-2">
+        <button
+          onClick={() => handleEdit(admin.id)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => {
+            setAdminToDelete(admin.id);
+            setShowDeleteModal(true);
+          }}
+          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </table>
 
       {/* Delete Confirmation Modal */}

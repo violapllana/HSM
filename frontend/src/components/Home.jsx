@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+
 const departments = [
   { name: "Emergency Department", icon: "/images/emergency-img.png" },
   { name: "Pediatric Department", icon: "/images/pediatrics-img.png" },
@@ -16,8 +17,9 @@ const doctors = [
   { name: "Dr. Suela", position: "Pediatrician", image: "/images/suela-img.png" },
   { name: "Dr. Joni", position: "Neuro Specialist", image: "/images/joni-img.png" },
 ];
-
 const Home = () => {
+ 
+
   return (
     <>
       <Header />
@@ -165,62 +167,6 @@ const Home = () => {
           <img src="/images/Ellipse13.png" alt="Doctor" className="w-40 mt-6 md:mt-0 md:w-52 rounded-full" />
         </div>
       </section>
-
-      {/* Appointment Form */}
-  {/* Appointment Section */}
-<section className="py-10 bg-white">
-  <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 px-4">
-    
-    {/* Left Side - Form */}
-    <div className="w-full md:w-1/2 flex justify-center">
-      <form className="grid grid-cols-1 gap-3 w-full max-w-md"> {/* max width */}
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">Book an Appointment</h2>
-        <input
-          placeholder="Full Name"
-          className="p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          placeholder="Phone Number"
-          className="p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="date"
-          className="p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="time"
-          className="p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <select className="p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="">Reason for Visit</option>
-          <option value="consultation">Consultation</option>
-          <option value="follow-up">Follow-up</option>
-        </select>
-        <select className="p-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="">Department</option>
-          <option value="cardiology">Cardiology</option>
-          <option value="neurology">Neurology</option>
-        </select>
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-5 py-2.5 rounded-full text-sm hover:bg-blue-700 transition"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
-
-    {/* Right Side - Image */}
-    <div className="w-full md:w-1/2 flex justify-center">
-      <img
-        src="/images/appointment1.png"
-        alt="Book Appointment"
-        className="w-full max-w-xs object-contain"
-      />
-    </div>
-  </div>
-</section>
-
 
 {/* Testimonials Section */}
 <section className="py-12 bg-gray-50">

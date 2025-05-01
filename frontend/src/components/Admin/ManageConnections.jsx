@@ -4,7 +4,7 @@ import axios from 'axios';
 const PatientAndDoctorPanel = () => {
   const [patients, setPatients] = useState([]);
   const [doctors, setDoctors] = useState([]);
-  const [connections, setConnections] = useState([]); // State to store connections
+  const [connections, setConnections] = useState([]); 
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('asc');
   const [filterBy, setFilterBy] = useState('patient');

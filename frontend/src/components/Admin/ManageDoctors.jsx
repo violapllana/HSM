@@ -133,32 +133,34 @@ const DoctorPanel = () => {
             <th className="px-6 py-3">Actions</th>
           </tr>
         </thead>
+ 
         <tbody className="text-sm text-gray-700">
-          {doctors.map((doctor, index) => (
-            <tr key={doctor.id} className="border-b hover:bg-gray-50">
-              <td className="px-6 py-4">{index + 1}</td>
-              <td className="px-6 py-4">{doctor.username}</td>
-              <td className="px-6 py-4">{doctor.email}</td>
-              <td className="px-6 py-4 flex items-center space-x-2">
-                <button
-                  onClick={() => handleEdit(doctor.id)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => {
-                    setDoctorToDelete(doctor.id);
-                    setShowDeleteModal(true);
-                  }}
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {doctors.map((doctor) => (
+    <tr key={doctor.id} className="border-b hover:bg-gray-50">
+      <td className="px-6 py-4">{doctor.id}</td>
+      <td className="px-6 py-4">{doctor.username}</td>
+      <td className="px-6 py-4">{doctor.email}</td>
+      <td className="px-6 py-4 flex items-center space-x-2">
+        <button
+          onClick={() => handleEdit(doctor.id)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => {
+            setDoctorToDelete(doctor.id);
+            setShowDeleteModal(true);
+          }}
+          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </table>
 
       {/* Delete Confirmation Modal */}

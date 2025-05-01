@@ -133,32 +133,34 @@ const PatientPanel = () => {
             <th className="px-6 py-3">Actions</th>
           </tr>
         </thead>
+      
         <tbody className="text-sm text-gray-700">
-          {patients.map((patient, index) => (
-            <tr key={patient.id} className="border-b hover:bg-gray-50">
-              <td className="px-6 py-4">{index + 1}</td>
-              <td className="px-6 py-4">{patient.username}</td>
-              <td className="px-6 py-4">{patient.email}</td>
-              <td className="px-6 py-4 flex items-center space-x-2">
-                <button
-                  onClick={() => handleEdit(patient.id)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => {
-                    setPatientToDelete(patient.id);
-                    setShowDeleteModal(true);
-                  }}
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {patients.map((patient) => (
+    <tr key={patient.id} className="border-b hover:bg-gray-50">
+      <td className="px-6 py-4">{patient.id}</td> {/* Shfaq ID-në reale */}
+      <td className="px-6 py-4">{patient.username}</td>
+      <td className="px-6 py-4">{patient.email}</td>
+      <td className="px-6 py-4">{patient.dob}</td>
+      <td className="px-6 py-4 flex items-center space-x-2">
+        <button
+          onClick={() => handleEdit(patient.id)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => {
+            setPatientToDelete(patient.id);
+            setShowDeleteModal(true);
+          }}
+          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
       </table>
 
       {/* Delete Confirmation Modal */}

@@ -1,6 +1,6 @@
 const express = require('express');
 const { register, login, getUserProfile, getAdmins, deleteAdmin } = require('../controller/userController');
-const { isAuthenticated, authorizeRoles } = require('../middleware/authMiddleware');
+
 
 const router = express.Router();
 
@@ -46,12 +46,12 @@ router.post('/register', register);
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               email:
  *                 type: string
  *               password:
  *                 type: string
  *             required:
- *               - username
+ *               - email
  *               - password
  *     responses:
  *       200:
