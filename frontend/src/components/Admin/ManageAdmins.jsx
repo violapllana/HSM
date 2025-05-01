@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const AdminPanel = () => {
   const [username, setUsername] = useState('');
@@ -11,6 +12,8 @@ const AdminPanel = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [adminToDelete, setAdminToDelete] = useState(null);
   const [showFormModal, setShowFormModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false); 
 
   const apiUrl = 'http://localhost:5000/api/admin';
 
@@ -27,8 +30,25 @@ const AdminPanel = () => {
     fetchAdmins();
   }, []);
 
+  const validateForm = () => {
+    if (!username || !email || !password) {
+      setErrorMessage('All fields are required.');
+      return false;
+    }
+
+    const passwordRegex = /^[A-Z](?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMessage('Password must start with an uppercase letter, contain at least 8 characters, a number, and a special character.');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     try {
       const newAdmin = { username, email, password };
       await axios.post(apiUrl, newAdmin);
@@ -45,7 +65,7 @@ const AdminPanel = () => {
       const response = await axios.get(`${apiUrl}/${id}`);
       setUsername(response.data.username);
       setEmail(response.data.email);
-      setPassword(response.data.password);
+      setPassword('');
       setCurrentAdminId(id);
       setIsEditMode(true);
       setShowFormModal(true);
@@ -56,6 +76,8 @@ const AdminPanel = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     try {
       const updatedAdmin = { username, email, password };
       await axios.put(`${apiUrl}/${currentAdminId}`, updatedAdmin);
@@ -83,6 +105,7 @@ const AdminPanel = () => {
     setEmail('');
     setPassword('');
     setCurrentAdminId(null);
+    setErrorMessage('');
   };
 
   return (
@@ -189,21 +212,28 @@ const AdminPanel = () => {
                   required
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4 relative">
                 <label className="block text-sm font-medium text-gray-700">Password</label>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="mt-1 p-2 w-full border border-gray-300 rounded-md"
                   required
                 />
-              </div>
-              <div className="flex justify-end space-x-4">
                 <button
                   type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-10 text-gray-500"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+              {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+              <div className="mt-4 flex justify-end">
+                <button
                   onClick={() => setShowFormModal(false)}
-                  className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700"
+                  className="mr-4 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700"
                 >
                   Cancel
                 </button>

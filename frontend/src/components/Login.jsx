@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); 
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -31,19 +33,17 @@ function Login() {
           return;
         }
 
-        // Ruaj të dhënat në localStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('role', userRole);
-        localStorage.setItem('user', JSON.stringify(data.user)); // Opsionale
+        localStorage.setItem('user', JSON.stringify(data.user));
 
-        // Ruaj ID në bazë të rolit
         if (userRole === 'doctor') {
           localStorage.setItem('doctorId', data.user.id.toString());
           navigate('/doctorsidebar');
         } else if (userRole === 'admin') {
           navigate('/adminsidebar');
         } else if (userRole === 'patient') {
-          localStorage.setItem('patientId', data.user.id.toString()); // <-- SHTESA
+          localStorage.setItem('patientId', data.user.id.toString());
           navigate('/patientsidebar');
         } else {
           setErrorMessage('Unknown role!');
@@ -80,17 +80,23 @@ function Login() {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 relative">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 name="password"
-                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <div
+                className="absolute inset-y-0 right-3 top-8 flex items-center cursor-pointer text-gray-600"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </div>
             </div>
 
             <div className="flex items-center mb-6">
