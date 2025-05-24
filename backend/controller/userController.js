@@ -1,91 +1,124 @@
-const bcrypt = require('bcryptjs'); 
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const bcrypt = require('bcryptjs');
 
-
-
-const register = async (req, res) => {
+// Regex për validimin e password-it (fillon me shkronjë të madhe, numër, karakter special, min 8 karaktere)
+const passwordRegex = /^[A-Z](?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+// Create a new user (patient, doctor, or admin)
+const createUser = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
-    // Validimi bazik në backend (regex për fjalëkalimin)
-    if (!username || !email || !password) {
-      return res.status(400).json({ error: 'All fields are required.' });
+    if (!username || !email || !password || !role) {
+      return res.status(400).json({ message: 'Të gjitha fushat janë të detyrueshme (username, email, password, role).' });
     }
 
-    const passwordRegex = /^[A-Z](?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+    if (!['patient', 'doctor', 'admin'].includes(role)) {
+      return res.status(400).json({ message: 'Roli duhet të jetë patient, doctor ose admin.' });
+    }
+
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
-        error: 'Password must start with an uppercase letter, contain at least 8 characters, a number, and a special character.'
+        message: 'Passwordi duhet të fillojë me shkronjë të madhe, të ketë të paktën 8 karaktere, një numër dhe një karakter special.',
       });
     }
 
-    const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) {
-      return res.status(400).json({ error: 'Email already in use' });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10); 
-    const user = await User.create({ username, email, password: hashedPassword, role: 'patient' });
-
-    res.status(201).json({ message: 'User registered successfully', user });
+    // ... pjesa tjetër e kodit
   } catch (error) {
-    console.error('Registration error:', error);  
-    res.status(400).json({ error: error.message });
+    // handle error
   }
 };
-const login = async (req, res) => {
+
+// Update user by ID
+const updateUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { id } = req.params;
+    const { username, email, password, role } = req.body;
 
-    if (!process.env.JWT_SECRET) {
-      return res.status(500).json({ error: 'JWT_SECRET is not defined in environment variables' });
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+      return res.status(404).json({ message: 'Përdoruesi nuk u gjet' });
     }
 
-    // Validim bazik për email dhe fjalëkalim
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required.' });
+    if (role && !['patient', 'doctor', 'admin'].includes(role)) {
+      return res.status(400).json({ message: 'Roli i dhënë nuk është valid.' });
     }
 
-   
-    // Regex për password (njësoj si në regjistrim)
-    const passwordRegex = /^[A-Z](?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      return res.status(400).json({
-        error: 'Invalid password format. Must start with an uppercase letter, contain at least 8 characters, a number, and a special character.'
-      });
+    user.username = username || user.username;
+    user.email = email || user.email;
+    user.role = role || user.role;
+
+    if (password) {
+      if (!passwordRegex.test(password)) {
+        return res.status(400).json({
+          message: 'Passwordi duhet të fillojë me shkronjë të madhe, të ketë të paktën 8 karaktere, një numër dhe një karakter special.',
+        });
+      }
+      user.password = await bcrypt.hash(password, 10);
     }
 
-    const user = await User.findOne({ where: { email } });
-    if (!user) return res.status(404).json({ error: 'User not found' });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
-
-    const token = jwt.sign(
-      { id: user.id, username: user.username, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
-
-    res.cookie('ubtsecured', token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: 'Lax',
-      maxAge: 60 * 60 * 1000 
-    });
-
-    res.json({ 
-      message: 'Login successful', 
-      token,
-      user: { id: user.id, username: user.username, role: user.role } 
-    });
-
+    await user.save();
+    res.status(200).json(user);
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: 'Gabim në përditësimin e përdoruesit', error });
+  }
+};
+
+// Get all users or filter by role (optional query param: role)
+const getUsers = async (req, res) => {
+  try {
+    const { role } = req.query;
+    let whereCondition = {};
+    if (role) {
+      if (!['patient', 'doctor', 'admin'].includes(role)) {
+        return res.status(400).json({ message: 'Roli i dhënë nuk është valid.' });
+      }
+      whereCondition.role = role;
+    }
+    const users = await User.findAll({ where: whereCondition });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Gabim në marrjen e përdoruesve', error });
+  }
+};
+
+// Get user by ID and optionally check role
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({ where: { id } });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Përdoruesi nuk u gjet' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Gabim në marrjen e përdoruesit', error });
   }
 };
 
 
-module.exports = { register, login };
+// Delete user by ID
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({ where: { id } });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Përdoruesi nuk u gjet' });
+    }
+
+    await user.destroy();
+    res.status(200).json({ message: 'Përdoruesi u fshi me sukses' });
+  } catch (error) {
+    res.status(500).json({ message: 'Gabim në fshirjen e përdoruesit', error });
+  }
+};
+
+module.exports = {
+  createUser,
+  getUsers,
+  getUserById,
+  updateUser,
+  deleteUser,
+};

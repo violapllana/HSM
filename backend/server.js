@@ -11,8 +11,8 @@ const passport = require('passport');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const sequelize = require('./db');
-
 const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const departmentRoutes = require('./routes/departmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
@@ -98,12 +98,13 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/admin', adminRoutes);
 app.use('/api/doctor', doctorRoutes);
 app.use('/api/patient', patientRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/users', authRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/department', departmentRoutes);
 app.use('/api/report', reportRoutes);
 app.use('/api/connect', connectRoutes);
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/users', userRoutes);
 
 // Initialize Database and Start Server
 const initializeDatabase = async () => {

@@ -6,8 +6,8 @@ const ConnectDoctor = () => {
   const [connections, setConnections] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-  const patientId = 1; 
-  
+  const patientId = 1;  // Mund ta bësh dinamik në të ardhmen
+
   const apiUrlDoctors = 'http://localhost:5000/api/doctor';
   const apiUrlConnections = 'http://localhost:5000/api/connect/';
 
@@ -23,7 +23,6 @@ const ConnectDoctor = () => {
     }
   };
 
-
   const fetchConnections = async () => {
     try {
       const response = await axios.get(`${apiUrlConnections}patients/${patientId}`);
@@ -33,38 +32,42 @@ const ConnectDoctor = () => {
     }
   };
 
-
   const handleConnect = async (doctorId) => {
     try {
       await axios.post(`${apiUrlConnections}${doctorId}/${patientId}`);
-      fetchConnections(); 
+      await fetchConnections();  // Prisni të rifreskohen lidhjet
     } catch (error) {
       console.error('Error connecting:', error);
     }
   };
 
-
   const handleDisconnect = async (doctorId) => {
     try {
       await axios.delete(`${apiUrlConnections}${doctorId}/${patientId}`);
-      fetchConnections(); 
+      await fetchConnections();  // Rifresko lidhjet
     } catch (error) {
       console.error('Error disconnecting:', error);
     }
   };
 
-
+  // Kontrollo lidhjen duke parë nëse lidhja ekziston në listë
   const isConnected = (doctorId) =>
-    connections.some((conn) => conn.doctor.id === doctorId && conn.patient.id === patientId);
+    connections.some(
+      (conn) =>
+        // Në varësi të formës së të dhënave nga API, mund ta ndryshosh këtë:
+        (conn.doctor?.id === doctorId || conn.doctorId === doctorId) &&
+        (conn.patient?.id === patientId || conn.patientId === patientId)
+    );
 
   const filteredDoctors = doctors.filter((doctor) =>
     doctor.username.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Kaloja vetëm një herë në ngarkim, pasi patientId është konstant
   useEffect(() => {
     fetchDoctors();
     fetchConnections();
-  }, [patientId]); 
+  }, []); 
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -79,6 +82,12 @@ const ConnectDoctor = () => {
           onChange={(e) => setSearch(e.target.value)}
           className="w-full p-3 border rounded shadow"
         />
+        <button
+          onClick={fetchConnections}
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Refresh Connections
+        </button>
       </div>
 
       <hr className="mb-6 border-gray-400" />
@@ -91,6 +100,10 @@ const ConnectDoctor = () => {
         </p>
       ) : (
         <p className="text-center text-lg text-gray-500">You are not connected to any doctors.</p>
+      )}
+
+      {filteredDoctors.length === 0 && !loading && (
+        <p className="text-center text-lg text-gray-600">No doctors found.</p>
       )}
 
       {filteredDoctors.map((doctor) => (

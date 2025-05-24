@@ -212,6 +212,7 @@ import DepartmentsPanel from '../Department/Departments';
 import AppointmentForm from './AppointmentForm';
 import AppointmentList from './AppointmentList';
 import ReportList from '../Report/ReportsList';
+import ManageUsers from './ManageUsers';
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -248,6 +249,11 @@ const AdminSidebar = () => {
               <li>
                 <button onClick={() => setActiveTab('dashboard')} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
                   Dashboard
+                </button>
+              </li>
+                  <li>
+                <button onClick={() => setActiveTab('manageusers')} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                  Users
                 </button>
               </li>
               <li>
@@ -303,7 +309,7 @@ const AdminSidebar = () => {
             {activeTab === 'connect' && <PatientAndDoctorPanel />}
             {activeTab === 'departments' && <DepartmentsPanel />}
             {activeTab === 'appointmentform' && <AppointmentForm />}
-      
+            {activeTab === 'manageusers' && <ManageUsers />}
             {activeTab === 'contactlist' && <ContactList />}
             {activeTab === 'reportlist' && <ReportList />}
           </main>

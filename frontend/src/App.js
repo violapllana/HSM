@@ -12,6 +12,8 @@ import Footer from "./components/Footer";
 import AdminPanel from "./components/Admin/ManageAdmins";
 import PatientPanel from "./components/Admin/ManagePatients"; 
 import DoctorPanel from "./components/Admin/ManageDoctors";
+import ManageUsers from "./components/Admin/ManageUsers";
+
 import PatientAndDoctorPanel from "./components/Admin/ManageConnections"; 
 import AppointmentList from "./components/Admin/AppointmentList"; 
 
@@ -69,16 +71,13 @@ function App() {
         <Route path="/adminsidebar" element={<AdminSidebar />} />
         <Route path="/patientsidebar" element={<PatientSidebar />} />
         <Route path="/doctorsidebar" element={<DoctorSidebar />} />
+        <Route path="/manageusers" element={<ManageUsers />} />
 
 
         <Route path="/adminpanel" element={<AdminPanel />} />
         <Route path="/doctorpanel" element={<DoctorPanel />} />
         <Route path="/patientpanel" element={<PatientPanel />} />
         <Route path="/AppointmentPatient" element={<AppointmentPatient />} />
-
-
-        
-
     
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/PatientDashboard" element={<PatientDashboard/>}/>
