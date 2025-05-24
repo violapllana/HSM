@@ -8,7 +8,7 @@ const router = express.Router();
  * @swagger
  * /register:
  *   post:
- *     summary: Regjistro një përdorues të ri
+ *     summary: 
  *     requestBody:
  *       required: true
  *       content:
@@ -38,7 +38,7 @@ router.post('/register', register);
  * @swagger
  * /login:
  *   post:
- *     summary: Identifikohu në sistem
+ *     summary: 
  *     requestBody:
  *       required: true
  *       content:

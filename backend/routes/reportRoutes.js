@@ -8,7 +8,7 @@ const { isAuthenticated, authorizeRoles } = require('../middleware/authMiddlewar
  * @swagger
  * /report:
  *   post:
- *     summary: Krijo një raport të ri shëndetësor
+ *     summary: 
  *     tags: [Report]
  *     requestBody:
  *       required: true
@@ -52,7 +52,7 @@ router.post('/', createReport);
  * @swagger
  * /report:
  *   get:
- *     summary: Merr të gjitha raportet shëndetësore
+ *     summary: 
  *     tags: [Report]
  *     responses:
  *       200:
@@ -66,7 +66,7 @@ router.get('/', getReports);
  * @swagger
  * /report/{id}:
  *   get:
- *     summary: Merr një raport shëndetësor sipas ID
+ *     summary: 
  *     tags: [Report]
  *     parameters:
  *       - in: path
@@ -87,7 +87,7 @@ router.get('/:id', getReportById);
  * @swagger
  * /report/{id}:
  *   put:
- *     summary: Përditëso një raport shëndetësor
+ *     summary: 
  *     tags: [Report]
  *     parameters:
  *       - in: path
@@ -108,7 +108,7 @@ router.put('/:id', updateReport);
  * @swagger
  * /report/{id}:
  *   delete:
- *     summary: Fshij një raport shëndetësor
+ *     summary: 
  *     tags: [Report]
  *     parameters:
  *       - in: path
@@ -129,7 +129,7 @@ router.delete('/:id', deleteReport);
  * @swagger
  * /report/patient/{patientId}:
  *   get:
- *     summary: Merr të gjitha raportet për një pacient të caktuar
+ *     summary:
  *     tags: [Report]
  *     parameters:
  *       - in: path
@@ -152,10 +152,10 @@ router.get('/patient/:patientId', getReportsByPatientId);
  * @swagger
  * /myreports:
  *   get:
- *     summary: Merr raportet e pacientit të loguar
+ *     summary: 
  *     tags: [Report]
  *     security:
- *       - bearerAuth: []  // Sigurimi me token JWT
+ *       - bearerAuth: []  
  *     responses:
  *       200:
  *         description: Lista e raporteve për pacientin

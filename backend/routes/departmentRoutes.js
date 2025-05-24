@@ -13,14 +13,14 @@ const {
  * @swagger
  * tags:
  *   name: Department
- *   description: Menaxhimi i departamenteve
+ *   description: 
  */
 
 /**
  * @swagger
  * /department:
  *   get:
- *     summary: Merr të gjithë departamentet
+ *     summary: 
  *     tags: [Department]
  *     parameters:
  *       - in: query
@@ -45,7 +45,7 @@ router.get('/', getDepartments);
  * @swagger
  * /department/{id}:
  *   get:
- *     summary: Merr një departament sipas ID
+ *     summary: 
  *     tags: [Department]
  *     parameters:
  *       - in: path
@@ -68,7 +68,7 @@ router.get('/:id', getDepartmentById);
  * @swagger
  * /department/{id}/doctors:
  *   get:
- *     summary: Merr doktorët për një departament të caktuar
+ *     summary: 
  *     tags: [Department]
  *     parameters:
  *       - in: path
@@ -89,7 +89,7 @@ router.get('/:id/doctors', getDoctorsByDepartment);  // Kjo është rruga e re p
  * @swagger
  * /department:
  *   post:
- *     summary: Krijo një departament të ri
+ *     summary: 
  *     tags: [Department]
  *     requestBody:
  *       required: true
@@ -119,7 +119,7 @@ router.post('/', createDepartment);
  * @swagger
  * /department/{id}:
  *   put:
- *     summary: Përditëso një departament ekzistues
+ *     summary: 
  *     tags: [Department]
  *     parameters:
  *       - in: path
@@ -153,7 +153,7 @@ router.put('/:id', updateDepartment);
  * @swagger
  * /department/{id}:
  *   delete:
- *     summary: Fshij një departament
+ *     summary: 
  *     tags: [Department]
  *     parameters:
  *       - in: path

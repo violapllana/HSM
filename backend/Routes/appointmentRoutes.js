@@ -12,14 +12,14 @@ const {
  * @swagger
  * tags:
  *   name: Appointment
- *   description: Menaxhimi i takimeve
+ *   description:
  */
 
 /**
  * @swagger
  * /appointments:
  *   get:
- *     summary: Merr të gjitha takimet
+ *     summary: 
  *     tags: [Appointment]
  *     responses:
  *       200:
@@ -33,7 +33,7 @@ router.get('/', getAppointments);
  * @swagger
  * /appointments/{id}:
  *   get:
- *     summary: Merr një takim sipas ID
+ *     summary: 
  *     tags: [Appointment]
  *     parameters:
  *       - in: path
@@ -54,7 +54,7 @@ router.get('/:id', getAppointmentById);
  * @swagger
  * /appointments:
  *   post:
- *     summary: Krijo një takim të ri
+ *     summary: 
  *     tags: [Appointment]
  *     requestBody:
  *       required: true
@@ -92,7 +92,7 @@ router.post('/', createAppointment);
  * @swagger
  * /appointments/{id}:
  *   put:
- *     summary: Përditëso një takim ekzistues
+ *     summary:
  *     tags: [Appointment]
  *     parameters:
  *       - in: path
@@ -132,7 +132,7 @@ router.put('/:id', updateAppointment);
  * @swagger
  * /appointments/{id}:
  *   delete:
- *     summary: Fshij një takim
+ *     summary: 
  *     tags: [Appointment]
  *     parameters:
  *       - in: path

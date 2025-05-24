@@ -12,14 +12,14 @@ const {
  * @swagger
  * tags:
  *   name: Doctor
- *   description: Doctor management
+ *   description: 
  */
 
 /**
  * @swagger
  * /doctor:
  *   post:
- *     summary: Krijo një doktor të ri
+ *     summary: 
  *     tags: [Doctor]
  *     requestBody:
  *       required: true
@@ -58,7 +58,7 @@ router.post('/', createDoctor);
  * @swagger
  * /doctor:
  *   get:
- *     summary: Merr të gjithë doktorët
+ *     summary: 
  *     tags: [Doctor]
  *     responses:
  *       200:
@@ -72,7 +72,7 @@ router.get('/', getDoctors);
  * @swagger
  * /doctor/{id}:
  *   get:
- *     summary: Merr një doktor sipas ID
+ *     summary: 
  *     tags: [Doctor]
  *     parameters:
  *       - in: path
@@ -93,7 +93,7 @@ router.get('/:id', getDoctorById);
  * @swagger
  * /doctor/{id}:
  *   put:
- *     summary: Përditëso një doktor sipas ID
+ *     summary: 
  *     tags: [Doctor]
  *     parameters:
  *       - in: path
@@ -114,7 +114,7 @@ router.put('/:id', updateDoctor);
  * @swagger
  * /doctor/{id}:
  *   delete:
- *     summary: Fshij një doktor sipas ID
+ *     summary:
  *     tags: [Doctor]
  *     parameters:
  *       - in: path

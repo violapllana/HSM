@@ -12,14 +12,14 @@ const {
  * @swagger
  * tags:
  *   name: Admin
- *   description: Admin management
+ *   description: 
  */
 
 /**
  * @swagger
  * /admin:
  *   post:
- *     summary: Krijo një admin të ri
+ *     summary: 
  *     tags: [Admin]
  *     requestBody:
  *       required: true
@@ -52,7 +52,7 @@ router.post('/', createAdmin);
  * @swagger
  * /admin:
  *   get:
- *     summary: Merr të gjithë adminët
+ *     summary: 
  *     tags: [Admin]
  *     responses:
  *       200:
@@ -66,7 +66,7 @@ router.get('/', getAdmins);
  * @swagger
  * /admin/{id}:
  *   get:
- *     summary: Merr një admin sipas ID
+ *     summary: 
  *     tags: [Admin]
  *     parameters:
  *       - in: path
@@ -87,7 +87,7 @@ router.get('/:id', getAdminById);
  * @swagger
  * /admin/{id}:
  *   put:
- *     summary: Përditëso një admin sipas ID
+ *     summary:
  *     tags: [Admin]
  *     parameters:
  *       - in: path
@@ -108,7 +108,7 @@ router.put('/:id', updateAdmin);
  * @swagger
  * /admin/{id}:
  *   delete:
- *     summary: Fshij një admin sipas ID
+ *     summary: 
  *     tags: [Admin]
  *     parameters:
  *       - in: path

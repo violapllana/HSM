@@ -11,14 +11,14 @@ const {
  * @swagger
  * tags:
  *   name: Contact
- *   description: Contact form management
+ *   description: 
  */
 
 /**
  * @swagger
  * /contact:
  *   post:
- *     summary: Krijo një mesazh të ri nga contact form
+ *     summary: 
  *     tags: [Contact]
  *     requestBody:
  *       required: true
@@ -60,7 +60,7 @@ router.post('/', createContact);
  * @swagger
  * /contact:
  *   get:
- *     summary: Merr të gjithë mesazhet
+ *     summary: 
  *     tags: [Contact]
  *     parameters:
  *       - in: query
@@ -85,7 +85,7 @@ router.get('/', getContacts);
  * @swagger
  * /contact/{id}:
  *   get:
- *     summary: Merr një mesazh sipas ID
+ *     summary: 
  *     tags: [Contact]
  *     parameters:
  *       - in: path
@@ -108,7 +108,7 @@ router.get('/:id', getContactById);
  * @swagger
  * /contact/{id}:
  *   delete:
- *     summary: Fshij një mesazh sipas ID
+ *     summary: 
  *     tags: [Contact]
  *     parameters:
  *       - in: path

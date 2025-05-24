@@ -12,14 +12,14 @@ const {
  * @swagger
  * tags:
  *   name: Patient
- *   description: Patient management
+ *   description: 
  */
 
 /**
  * @swagger
  * /patient:
  *   post:
- *     summary: Krijo një pacient të ri
+ *     summary:
  *     tags: [Patient]
  *     requestBody:
  *       required: true
@@ -60,7 +60,7 @@ router.post('/', createPatient);
  * @swagger
  * /patient:
  *   get:
- *     summary: Merr të gjithë pacientët
+ *     summary: 
  *     tags: [Patient]
  *     responses:
  *       200:
@@ -74,7 +74,7 @@ router.get('/', getPatients);
  * @swagger
  * /patient/{id}:
  *   get:
- *     summary: Merr një pacient sipas ID
+ *     summary:
  *     tags: [Patient]
  *     parameters:
  *       - in: path
@@ -95,7 +95,7 @@ router.get('/:id', getPatientById);
  * @swagger
  * /patient/{id}:
  *   put:
- *     summary: Përditëso një pacient sipas ID
+ *     summary: 
  *     tags: [Patient]
  *     parameters:
  *       - in: path
@@ -116,7 +116,7 @@ router.put('/:id', updatePatient);
  * @swagger
  * /patient/{id}:
  *   delete:
- *     summary: Fshij një pacient sipas ID
+ *     summary: 
  *     tags: [Patient]
  *     parameters:
  *       - in: path
