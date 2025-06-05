@@ -4,7 +4,7 @@ import axios from 'axios';
 const PatientReportPanel = () => {
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState('');
-  const [doctorId, setDoctorId] = useState(''); // ID e doktorit që do të merret automatikisht
+  const [doctorId, setDoctorId] = useState(''); 
   const [reportData, setReportData] = useState({
     title: '',
     diagnosis: '',
@@ -28,10 +28,10 @@ const PatientReportPanel = () => {
       }
     };
 
-    // Merrni ID-në e doktorit nga localStorage (ose nga cookies)
-    const doctor = JSON.parse(localStorage.getItem('user')); // Mendohet që 'user' është objekti që përmban të dhënat e doktorit
+
+    const doctor = JSON.parse(localStorage.getItem('user')); 
     if (doctor && doctor.id) {
-      setDoctorId(doctor.id); // Vendosni ID-në automatikisht në doctorId
+      setDoctorId(doctor.id); 
     }
 
     fetchPatients();
@@ -93,13 +93,13 @@ const PatientReportPanel = () => {
         </select>
       </div>
 
-      {/* Doctor ID now automatically set */}
+
       <div className="mb-4">
         <label className="block font-semibold mb-1">Doctor ID:</label>
         <input
           type="text"
           value={doctorId}
-          readOnly // Nuk lejohet të ndryshohet manualisht
+          readOnly 
           className="w-full p-2 border rounded bg-gray-100"
         />
       </div>

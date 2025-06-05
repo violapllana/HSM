@@ -223,7 +223,7 @@ const DepartmentsPanel = () => {
               value={selectedDepName}
               onChange={handleDepNameChange}
               required
-              disabled={isEditMode} // Nuk lejo ndryshim emri në edit (nëse dëshiron)
+              disabled={isEditMode} 
               className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
             >
               <option value="" disabled>{isEditMode ? selectedDepName : 'Select Department'}</option>

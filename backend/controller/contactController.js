@@ -5,34 +5,41 @@ const createContact = async (req, res) => {
     const { firstName, lastName, email, phoneNumber, reason, messageContent } = req.body;
 
     if (!firstName || !lastName || !email || !phoneNumber || !reason || !messageContent) {
-      return res.status(400).json({ message: 'Të gjitha fushat janë të nevojshme!' });
+      return res.status(400).json({ message: 'All fields are required!' });
     }
 
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!emailPattern.test(email)) {
-      return res.status(400).json({ message: 'Email nuk është në formatin e duhur!' });
+      return res.status(400).json({ message: 'Invalid email format!' });
     }
 
-    const newContact = await ContactForm.create({ firstName, lastName, email, phoneNumber, reason, messageContent });
-    res.status(201).json({ message: 'Mesazhi u krijua me sukses!', contact: newContact });
+    const newContact = await ContactForm.create({
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      reason,
+      messageContent,
+    });
+
+    res.status(201).json({ message: 'Message created successfully!', contact: newContact });
   } catch (err) {
-    res.status(500).json({ message: 'Gabim në krijimin e mesazhit', error: err.message });
+    res.status(500).json({ message: 'Error creating message', error: err.message });
   }
 };
 
 const getContacts = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query; 
+    const { page = 1, limit = 10 } = req.query;
     const contacts = await ContactForm.findAll({
       offset: (page - 1) * limit,
-      limit: parseInt(limit), 
+      limit: parseInt(limit),
     });
     res.status(200).json(contacts);
   } catch (err) {
-    res.status(500).json({ message: 'Gabim në marrjen e mesazheve', error: err.message });
+    res.status(500).json({ message: 'Error retrieving messages', error: err.message });
   }
 };
-
 
 const deleteContact = async (req, res) => {
   try {
@@ -40,16 +47,15 @@ const deleteContact = async (req, res) => {
     const contact = await ContactForm.findByPk(id);
 
     if (!contact) {
-      return res.status(404).json({ message: 'Mesazhi nuk u gjet' });
+      return res.status(404).json({ message: 'Message not found' });
     }
 
     await contact.destroy();
-    res.status(200).json({ message: 'Mesazhi u fshi me sukses', contact });
+    res.status(200).json({ message: 'Message deleted successfully', contact });
   } catch (err) {
-    res.status(400).json({ message: 'Gabim në fshirjen e mesazhit', error: err.message });
+    res.status(400).json({ message: 'Error deleting message', error: err.message });
   }
 };
-
 
 const getContactById = async (req, res) => {
   try {
@@ -57,12 +63,12 @@ const getContactById = async (req, res) => {
     const contact = await ContactForm.findByPk(id);
 
     if (!contact) {
-      return res.status(404).json({ message: 'Mesazhi nuk u gjet' });
+      return res.status(404).json({ message: 'Message not found' });
     }
 
     res.status(200).json(contact);
   } catch (err) {
-    res.status(400).json({ message: 'Gabim në marrjen e mesazhit', error: err.message });
+    res.status(400).json({ message: 'Error retrieving message', error: err.message });
   }
 };
 

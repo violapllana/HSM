@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -10,10 +9,10 @@ function Logout() {
     const logoutUser = async () => {
       try {
         await axios.post('http://localhost:5000/api/auth/logout', {}, {
-          withCredentials: true, // shumë e rëndësishme për të përfshirë cookie-t
+          withCredentials: true, 
         });
 
-        // Opsionale: fshi çka ke ruajtur në localStorage
+  
         localStorage.removeItem('role');
         
         navigate('/');
@@ -26,7 +25,7 @@ function Logout() {
     logoutUser();
   }, [navigate]);
 
-  return null; // ose mund të kthesh një mesazh si "Logging out..."
+  return null; 
 }
 
 export default Logout;

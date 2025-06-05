@@ -7,14 +7,14 @@ const AppointmentList = () => {
   const [doctors, setDoctors] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState('');
-  const [editingAppointment, setEditingAppointment] = useState(null); // State për edituar takimin
+  const [editingAppointment, setEditingAppointment] = useState(null); 
 
   const apiUrlAppointments = 'http://localhost:5000/api/appointments';
   const apiUrlPatients = 'http://localhost:5000/api/patient';
   const apiUrlDoctors = 'http://localhost:5000/api/doctor';
   const apiUrlDepartments = 'http://localhost:5000/api/department';
 
-  // Fetch data
+
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(apiUrlAppointments);
@@ -58,33 +58,33 @@ const AppointmentList = () => {
     fetchDepartments();
   }, []);
 
-  // Handle deleting an appointment
+
   const handleDelete = async (appointmentId) => {
     try {
       await axios.delete(`${apiUrlAppointments}/${appointmentId}`);
       setConnectionStatus('Appointment successfully deleted.');
-      fetchAppointments(); // Refresh appointments after delete
+      fetchAppointments(); 
     } catch (error) {
       setConnectionStatus('Error deleting appointment.');
       console.error(error.message);
     }
   };
 
-  // Handle editing an appointment
+
   const handleEdit = (appointment) => {
-    setEditingAppointment(appointment); // Set the appointment to edit
+    setEditingAppointment(appointment); 
   };
 
-  // Handle updating the appointment
+
   const handleUpdate = async () => {
     try {
       const updatedAppointment = {
-        ...editingAppointment, // Preserve existing data
+        ...editingAppointment,
       };
       await axios.put(`${apiUrlAppointments}/${editingAppointment.id}`, updatedAppointment);
       setConnectionStatus('Appointment successfully updated.');
-      fetchAppointments(); // Refresh appointments after update
-      setEditingAppointment(null); // Close the modal
+      fetchAppointments(); 
+      setEditingAppointment(null); 
     } catch (error) {
       setConnectionStatus('Error updating appointment.');
       console.error(error.message);
@@ -184,13 +184,13 @@ const AppointmentList = () => {
             <div className="flex justify-end space-x-4">
               <button
                 className="px-6 py-2 bg-green-500 text-white rounded-lg"
-                onClick={handleUpdate} // Call handleUpdate on Save Changes
+                onClick={handleUpdate} 
               >
                 Save Changes
               </button>
               <button
                 className="px-6 py-2 bg-gray-500 text-white rounded-lg"
-                onClick={() => setEditingAppointment(null)} // Close modal on Cancel
+                onClick={() => setEditingAppointment(null)} 
               >
                 Cancel
               </button>

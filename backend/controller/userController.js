@@ -1,9 +1,9 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 
-// Regex për validimin e password-it (fillon me shkronjë të madhe, numër, karakter special, min 8 karaktere)
+
 const passwordRegex = /^[A-Z](?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
-// Create a new user (patient, doctor, or admin)
+
 const createUser = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
@@ -22,13 +22,12 @@ const createUser = async (req, res) => {
       });
     }
 
-    // ... pjesa tjetër e kodit
+
   } catch (error) {
-    // handle error
+ 
   }
 };
 
-// Update user by ID
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -63,7 +62,6 @@ const updateUser = async (req, res) => {
   }
 };
 
-// Get all users or filter by role (optional query param: role)
 const getUsers = async (req, res) => {
   try {
     const { role } = req.query;
@@ -81,7 +79,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-// Get user by ID and optionally check role
+
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -98,7 +96,7 @@ const getUserById = async (req, res) => {
 };
 
 
-// Delete user by ID
+
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;

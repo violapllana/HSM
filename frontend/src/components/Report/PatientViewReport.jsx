@@ -38,7 +38,7 @@ const PatientViewReports = () => {
             <div className="mt-2 text-blue-600">
               <strong>Doctor:</strong> {report.doctor?.username} <br />
               <strong>Email:</strong> {report.doctor?.email} <br />
-              {/* If you have other fields like specialization or name, you can add them here */}
+           
               
             </div>
           </div>

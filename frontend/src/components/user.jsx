@@ -13,7 +13,7 @@ const UserProfile = () => {
         setUser(response.data.user);
       } catch (error) {
         if (error.response && error.response.status === 401) {
-          // Shembull, nëse përdoruesi nuk është i autentikuar
+
           setMessage('Ju lutem logohuni për të parë profilin tuaj.');
         } else {
           setMessage('Gabim gjatë ngarkimit të të dhënave të përdoruesit.');
@@ -27,7 +27,7 @@ const UserProfile = () => {
   }, []);
 
   if (loading) {
-    return <div>Po ngarkohet...</div>; // Mund të shtoni një spinner këtu për të përmirësuar përvojën
+    return <div>Po ngarkohet...</div>; 
   }
 
   if (message) {

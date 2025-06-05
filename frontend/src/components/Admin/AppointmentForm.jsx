@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';  // Importimi i Link nga react-router-dom
+import { Link } from 'react-router-dom';  
 
 const AppointmentForm = () => {
   const [departments, setDepartments] = useState([]);

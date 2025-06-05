@@ -97,7 +97,7 @@ export default function ReportList() {
         </tbody>
       </table>
 
-      {/* Delete Confirmation Modal */}
+
       {showDeleteModal && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
@@ -120,7 +120,7 @@ export default function ReportList() {
         </div>
       )}
 
-      {/* Details Modal */}
+
       {showDetailsModal && selectedReport && (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] md:w-[500px]">

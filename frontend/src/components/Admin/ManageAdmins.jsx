@@ -187,7 +187,7 @@ const filteredAdmins = admins
         <tbody className="text-sm text-gray-700">
   {filteredAdmins.map((admin) => (
     <tr key={admin.id} className="border-b hover:bg-gray-50">
-      <td className="px-6 py-4">{admin.id}</td> {/* Këtu u bë ndryshimi */}
+      <td className="px-6 py-4">{admin.id}</td> 
       <td className="px-6 py-4">{admin.username}</td>
       <td className="px-6 py-4">{admin.email}</td>
       <td className="px-6 py-4 flex items-center space-x-2">

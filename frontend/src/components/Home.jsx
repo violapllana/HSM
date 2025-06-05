@@ -26,7 +26,6 @@ const Home = () => {
      <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-      {/* Hero Section */}
       <section className="bg-gradient-to-r from-sky-200 to-blue-300 text-blue-900 px-4 py-20 relative">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
           <div>
@@ -44,8 +43,6 @@ const Home = () => {
           <img src="/images/doctor_home1.png" alt="Doctors" className="w-80 mt-10 md:mt-0" />
         </div>
       </section>
-
-      {/* Values Section */}
       <section className="relative py-6 bg-gray-50">
         <h2 className="text-3xl font-bold text-center text-blue-900 mb-6">Our Values</h2>
 
@@ -118,8 +115,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Departments */}
       <section className="py-12 bg-white">
         <h2 className="text-3xl font-bold text-center mb-10">Departments</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto px-4">
@@ -134,8 +129,6 @@ const Home = () => {
           ))}
         </div>
       </section>
-
-      {/* Doctors */}
       <section className="py-12 bg-gradient-to-r from-blue-100 to-purple-100">
         <h2 className="text-3xl font-bold text-center mb-10">Our Dedicated Doctors Team</h2>
         <div className="flex justify-center gap-10 flex-wrap">
@@ -149,8 +142,6 @@ const Home = () => {
           ))}
         </div>
       </section>
-
-      {/* CTA Section */}
       <section className="py-12 px-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white relative">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div>
@@ -168,7 +159,6 @@ const Home = () => {
       </section>
       </main>
       <Footer />
-      
       </div>
   );
 };

@@ -6,7 +6,7 @@ const ConnectDoctor = () => {
   const [connections, setConnections] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-  const patientId = 1;  // Mund ta bësh dinamik në të ardhmen
+  const patientId = 1;  
 
   const apiUrlDoctors = 'http://localhost:5000/api/doctor';
   const apiUrlConnections = 'http://localhost:5000/api/connect/';
@@ -35,7 +35,7 @@ const ConnectDoctor = () => {
   const handleConnect = async (doctorId) => {
     try {
       await axios.post(`${apiUrlConnections}${doctorId}/${patientId}`);
-      await fetchConnections();  // Prisni të rifreskohen lidhjet
+      await fetchConnections();  
     } catch (error) {
       console.error('Error connecting:', error);
     }
@@ -44,17 +44,16 @@ const ConnectDoctor = () => {
   const handleDisconnect = async (doctorId) => {
     try {
       await axios.delete(`${apiUrlConnections}${doctorId}/${patientId}`);
-      await fetchConnections();  // Rifresko lidhjet
+      await fetchConnections(); 
     } catch (error) {
       console.error('Error disconnecting:', error);
     }
   };
 
-  // Kontrollo lidhjen duke parë nëse lidhja ekziston në listë
   const isConnected = (doctorId) =>
     connections.some(
       (conn) =>
-        // Në varësi të formës së të dhënave nga API, mund ta ndryshosh këtë:
+  
         (conn.doctor?.id === doctorId || conn.doctorId === doctorId) &&
         (conn.patient?.id === patientId || conn.patientId === patientId)
     );
@@ -63,7 +62,7 @@ const ConnectDoctor = () => {
     doctor.username.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Kaloja vetëm një herë në ngarkim, pasi patientId është konstant
+
   useEffect(() => {
     fetchDoctors();
     fetchConnections();

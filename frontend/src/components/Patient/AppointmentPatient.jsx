@@ -67,12 +67,12 @@ const AppointmentPatient = () => {
       });
       setConnectionStatus(response.data.message || 'Appointment successfully created.');
 
-      // Clear form and refresh appointments
+
       setSelectedDepartment('');
       setSelectedDoctor('');
       setAppointmentDate('');
       setAppointmentReason('');
-      fetchPatientAppointments(); // Refresh the appointment list
+      fetchPatientAppointments(); 
     } catch (error) {
       setConnectionStatus('Error creating appointment.');
       console.error(error.response?.data || error.message);
@@ -88,7 +88,7 @@ const AppointmentPatient = () => {
       ) : (
         <>
           <div className="mt-6">
-            {/* Department Selection */}
+ 
             <div className="mb-4">
               <label htmlFor="department" className="block font-semibold">Choose a Department:</label>
               <select
@@ -104,7 +104,7 @@ const AppointmentPatient = () => {
               </select>
             </div>
 
-            {/* Doctor Selection */}
+    
             <div className="mb-4">
               <label htmlFor="doctor" className="block font-semibold">Choose a Doctor:</label>
               <select
@@ -120,7 +120,7 @@ const AppointmentPatient = () => {
               </select>
             </div>
 
-            {/* Appointment Date */}
+  
             <div className="mb-4">
               <label htmlFor="appointmentDate" className="block font-semibold">Appointment Date:</label>
               <input
@@ -132,7 +132,6 @@ const AppointmentPatient = () => {
               />
             </div>
 
-            {/* Appointment Reason */}
             <div className="mb-4">
               <label htmlFor="appointmentReason" className="block font-semibold">Reason for Appointment:</label>
               <textarea
@@ -156,7 +155,7 @@ const AppointmentPatient = () => {
             )}
           </div>
 
-          {/* Show list of patient appointments */}
+         
           <div className="mt-10">
             <h3 className="text-xl font-semibold mb-3">Your Appointments</h3>
             {patientAppointments.length === 0 ? (

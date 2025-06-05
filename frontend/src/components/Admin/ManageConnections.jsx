@@ -38,7 +38,7 @@ const PatientAndDoctorPanel = () => {
   const fetchConnections = async () => {
     try {
       const response = await axios.get(apiUrlConnections);
-      setConnections(response.data); // Assuming you use setConnections to update the state
+      setConnections(response.data); 
     } catch (error) {
       console.error('Error fetching connections:', error);
     }
@@ -80,14 +80,14 @@ const PatientAndDoctorPanel = () => {
       doctor.email.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Handle doctor-patient connection
+
   const handleConnect = async () => {
     if (!selectedDoctor || !selectedPatient) {
       setConnectionStatus('Please select both a doctor and a patient.');
       return;
     }
 
-    // Check if the connection already exists
+  
     const existingConnection = connections.find(
       (conn) =>
         conn.doctor.id === selectedDoctor && conn.patient.id === selectedPatient
@@ -99,14 +99,14 @@ const PatientAndDoctorPanel = () => {
     }
 
     try {
-      // Make the API call to create the connection
+
       const response = await axios.post(
         `${apiUrlConnect}/${selectedDoctor}/${selectedPatient}`
       );
 
       setConnectionStatus(response.data.message || 'Successfully connected.');
-      fetchConnections(); // Refresh the connections list after successful connection
-      setSelectedDoctor(null); // Reset selections
+      fetchConnections(); 
+      setSelectedDoctor(null); 
       setSelectedPatient(null);
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
@@ -129,7 +129,7 @@ const PatientAndDoctorPanel = () => {
       await axios.delete(`${apiUrlConnect}/${doctorId}/${patientId}`);
       setConnectionStatus('Connection deleted successfully.');
   
-      // Directly update the connections state to remove the deleted connection
+
       setConnections((prevConnections) =>
         prevConnections.filter(
           (connection) =>

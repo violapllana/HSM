@@ -1,31 +1,30 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const PatientPanel = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [patients, setPatients] = useState([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentPatientId, setCurrentPatientId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [patientToDelete, setPatientToDelete] = useState(null);
   const [showFormModal, setShowFormModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-    const [sortOrder, setSortOrder] = useState('default');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState("default");
 
-
-  const apiUrl = 'http://localhost:5000/api/patient'; // Përdor URL për pacientë
+  const apiUrl = "http://localhost:5000/api/patient";
 
   const fetchPatients = async () => {
     try {
       const response = await axios.get(apiUrl);
       setPatients(response.data);
     } catch (error) {
-      console.error('Error fetching patients:', error);
+      console.error("Error fetching patients:", error);
     }
   };
 
@@ -35,13 +34,16 @@ const PatientPanel = () => {
 
   const validateForm = () => {
     if (!username || !email || !password) {
-      setErrorMessage('All fields are required.');
+      setErrorMessage("All fields are required.");
       return false;
     }
 
-    const passwordRegex = /^[A-Z](?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+    const passwordRegex =
+      /^[A-Z](?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
     if (!passwordRegex.test(password)) {
-      setErrorMessage('Password must start with an uppercase letter, contain at least 8 characters, a number, and a special character.');
+      setErrorMessage(
+        "Password must start with an uppercase letter, contain at least 8 characters, a number, and a special character."
+      );
       return false;
     }
 
@@ -59,7 +61,7 @@ const PatientPanel = () => {
       setShowFormModal(false);
       resetForm();
     } catch (error) {
-      console.error('Error creating patient:', error);
+      console.error("Error creating patient:", error);
     }
   };
 
@@ -68,12 +70,12 @@ const PatientPanel = () => {
       const response = await axios.get(`${apiUrl}/${id}`);
       setUsername(response.data.username);
       setEmail(response.data.email);
-      setPassword('');
+      setPassword("");
       setCurrentPatientId(id);
       setIsEditMode(true);
       setShowFormModal(true);
     } catch (error) {
-      console.error('Error fetching patient for edit:', error);
+      console.error("Error fetching patient for edit:", error);
     }
   };
 
@@ -89,7 +91,7 @@ const PatientPanel = () => {
       setShowFormModal(false);
       resetForm();
     } catch (error) {
-      console.error('Error updating patient:', error);
+      console.error("Error updating patient:", error);
     }
   };
 
@@ -99,33 +101,35 @@ const PatientPanel = () => {
       fetchPatients();
       setShowDeleteModal(false);
     } catch (error) {
-      console.error('Error deleting patient:', error);
+      console.error("Error deleting patient:", error);
     }
   };
 
   const resetForm = () => {
-    setUsername('');
-    setEmail('');
-    setPassword('');
+    setUsername("");
+    setEmail("");
+    setPassword("");
     setCurrentPatientId(null);
-    setErrorMessage('');
+    setErrorMessage("");
   };
-const filteredPatients = patients.filter((patient) =>
-  patient.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  patient.email.toLowerCase().includes(searchQuery.toLowerCase())
-)
-.sort((a, b) => {
-      if (sortOrder === 'a-z-username') {
+  const filteredPatients = patients
+    .filter(
+      (patient) =>
+        patient.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        patient.email.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOrder === "a-z-username") {
         return a.username.localeCompare(b.username);
-      } else if (sortOrder === 'z-a-username') {
+      } else if (sortOrder === "z-a-username") {
         return b.username.localeCompare(a.username);
-      } else if (sortOrder === 'a-z-email') {
+      } else if (sortOrder === "a-z-email") {
         return a.email.localeCompare(b.email);
-      } else if (sortOrder === 'z-a-email') {
+      } else if (sortOrder === "z-a-email") {
         return b.email.localeCompare(a.email);
-      } else if (sortOrder === 'newest') {
+      } else if (sortOrder === "newest") {
         return b.id - a.id;
-      } else if (sortOrder === 'oldest') {
+      } else if (sortOrder === "oldest") {
         return a.id - b.id;
       }
       return 0; // default
@@ -146,7 +150,7 @@ const filteredPatients = patients.filter((patient) =>
           Add Patient
         </button>
       </h2>
-   <div className="flex flex-wrap gap-4 mb-4">
+      <div className="flex flex-wrap gap-4 mb-4">
         <input
           type="text"
           placeholder="Search by username or email..."
@@ -179,41 +183,44 @@ const filteredPatients = patients.filter((patient) =>
             <th className="px-6 py-3">Actions</th>
           </tr>
         </thead>
-      
+
         <tbody className="text-sm text-gray-700">
-  {filteredPatients.map((patient) => (
-    <tr key={patient.id} className="border-b hover:bg-gray-50">
-      <td className="px-6 py-4">{patient.id}</td> {/* Shfaq ID-në reale */}
-      <td className="px-6 py-4">{patient.username}</td>
-      <td className="px-6 py-4">{patient.email}</td>
-      <td className="px-6 py-4">{patient.dob}</td>
-      <td className="px-6 py-4 flex items-center space-x-2">
-        <button
-          onClick={() => handleEdit(patient.id)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => {
-            setPatientToDelete(patient.id);
-            setShowDeleteModal(true);
-          }}
-          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ))}
-</tbody>
+          {filteredPatients.map((patient) => (
+            <tr key={patient.id} className="border-b hover:bg-gray-50">
+              <td className="px-6 py-4">{patient.id}</td>{" "}
+              {/* Shfaq ID-në reale */}
+              <td className="px-6 py-4">{patient.username}</td>
+              <td className="px-6 py-4">{patient.email}</td>
+              <td className="px-6 py-4">{patient.dob}</td>
+              <td className="px-6 py-4 flex items-center space-x-2">
+                <button
+                  onClick={() => handleEdit(patient.id)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => {
+                    setPatientToDelete(patient.id);
+                    setShowDeleteModal(true);
+                  }}
+                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h3 className="text-lg font-semibold">Are you sure you want to delete this patient?</h3>
+            <h3 className="text-lg font-semibold">
+              Are you sure you want to delete this patient?
+            </h3>
             <div className="mt-4 flex justify-end">
               <button
                 onClick={() => setShowDeleteModal(false)}
@@ -237,11 +244,13 @@ const filteredPatients = patients.filter((patient) =>
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
             <h2 className="text-xl font-semibold mb-4">
-              {isEditMode ? 'Update Patient' : 'Create New Patient'}
+              {isEditMode ? "Update Patient" : "Create New Patient"}
             </h2>
             <form onSubmit={isEditMode ? handleUpdate : handleCreate}>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Username</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Username
+                </label>
                 <input
                   type="text"
                   value={username}
@@ -251,7 +260,9 @@ const filteredPatients = patients.filter((patient) =>
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
                 <input
                   type="email"
                   value={email}
@@ -261,9 +272,11 @@ const filteredPatients = patients.filter((patient) =>
                 />
               </div>
               <div className="mb-4 relative">
-                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="mt-1 p-2 w-full border border-gray-300 rounded-md"
@@ -277,7 +290,9 @@ const filteredPatients = patients.filter((patient) =>
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
-              {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+              {errorMessage && (
+                <p className="text-red-500 text-sm">{errorMessage}</p>
+              )}
               <div className="mt-4 flex justify-end">
                 <button
                   onClick={() => setShowFormModal(false)}
@@ -289,7 +304,7 @@ const filteredPatients = patients.filter((patient) =>
                   type="submit"
                   className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
                 >
-                  {isEditMode ? 'Update Patient' : 'Create Patient'}
+                  {isEditMode ? "Update Patient" : "Create Patient"}
                 </button>
               </div>
             </form>
