@@ -15,6 +15,9 @@ const AdminPanel = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false); 
+  const [searchTerm, setSearchTerm] = useState('');
+const [sortOrder, setSortOrder] = useState('default');
+
 
   const apiUrl = 'http://localhost:5000/api/admin';
 
@@ -109,6 +112,27 @@ const AdminPanel = () => {
     setCurrentAdminId(null);
     setErrorMessage('');
   };
+const filteredAdmins = admins
+  .filter((admin) =>
+    admin.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    admin.email.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+  .sort((a, b) => {
+    if (sortOrder === 'a-z-username') {
+      return a.username.localeCompare(b.username);
+    } else if (sortOrder === 'z-a-username') {
+      return b.username.localeCompare(a.username);
+    } else if (sortOrder === 'a-z-email') {
+      return a.email.localeCompare(b.email);
+    } else if (sortOrder === 'z-a-email') {
+      return b.email.localeCompare(a.email);
+    } else if (sortOrder === 'newest') {
+      return b.id - a.id;
+    } else if (sortOrder === 'oldest') {
+      return a.id - b.id;
+    }
+    return 0; // default
+  });
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -125,6 +149,30 @@ const AdminPanel = () => {
           Add Admin
         </button>
       </h2>
+      <div className="flex flex-wrap gap-4 mb-4">
+  <input
+    type="text"
+    placeholder="Search by username or email..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="p-2 border border-gray-300 rounded-md flex-1"
+  />
+  
+  <select
+    value={sortOrder}
+    onChange={(e) => setSortOrder(e.target.value)}
+    className="p-2 border border-gray-300 rounded-md"
+  >
+    <option value="default">Default</option>
+    <option value="a-z-username">A-Z (Username)</option>
+    <option value="z-a-username">Z-A (Username)</option>
+    <option value="a-z-email">A-Z (Email)</option>
+    <option value="z-a-email">Z-A (Email)</option>
+    <option value="newest">Newest</option>
+    <option value="oldest">Oldest</option>
+  </select>
+</div>
+
 
       <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
         <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
@@ -137,7 +185,7 @@ const AdminPanel = () => {
         </thead>
        
         <tbody className="text-sm text-gray-700">
-  {admins.map((admin) => (
+  {filteredAdmins.map((admin) => (
     <tr key={admin.id} className="border-b hover:bg-gray-50">
       <td className="px-6 py-4">{admin.id}</td> {/* Këtu u bë ndryshimi */}
       <td className="px-6 py-4">{admin.username}</td>

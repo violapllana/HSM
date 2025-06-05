@@ -15,6 +15,10 @@ const ManageUsers = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [roleFilter, setRoleFilter] = useState('');
+  const [sortOption, setSortOption] = useState('');
+
+
 
   // Shtojmë state për search term
   const [searchTerm, setSearchTerm] = useState('');
@@ -116,10 +120,32 @@ const ManageUsers = () => {
     }
   };
 
-  // Filtrimi i përdoruesve bazuar në searchTerm (username)
-  const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+const filteredUsers = users
+  .filter((user) => {
+    const matchesSearch = user.username.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesRole = roleFilter ? user.role.toLowerCase() === roleFilter.toLowerCase() : true;
+    return matchesSearch && matchesRole;
+  })
+.sort((a, b) => {
+  switch (sortOption) {
+    case 'az':
+      return a.username.localeCompare(b.username);
+    case 'za':
+      return b.username.localeCompare(a.username);
+    case 'email-az':
+      return a.email.localeCompare(b.email);
+    case 'email-za':
+      return b.email.localeCompare(a.email);
+    case 'newest':
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    case 'oldest':
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    default:
+      return 0;
+  }
+});
+
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -136,18 +162,41 @@ const ManageUsers = () => {
           Add User
         </button>
       </h2>
+<div className="mb-4 flex space-x-4">
+  <input
+    type="text"
+    placeholder="Search by username..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="p-2 border border-gray-300 rounded-md w-48"
+  />
+  <select
+    value={roleFilter}
+    onChange={(e) => setRoleFilter(e.target.value)}
+    className="p-2 border border-gray-300 rounded-md"
+  >
+    <option value="">All Roles</option>
+    <option value="Admin">Admin</option>
+    <option value="Doctor">Doctor</option>
+    <option value="Patient">Patient</option>
+  </select>
+ <select
+  value={sortOption}
+  onChange={(e) => setSortOption(e.target.value)}
+  className="p-2 border border-gray-300 rounded-md"
+>
+  <option value="">Default</option>
+  <option value="az">A-Z (Username)</option>
+  <option value="za">Z-A (Username)</option>
+  <option value="email-az">A-Z (Email)</option>
+  <option value="email-za">Z-A (Email)</option>
+  <option value="newest">Newest</option>
+  <option value="oldest">Oldest</option>
+</select>
 
-      {/* Input për kërkim */}
-      <div className="mb-4">
-       <input
-  type="text"
-  placeholder="Search by username..."
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-  className="p-2 border border-gray-300 rounded-md w-48"
-/>
 
-      </div>
+</div>
+
 
       <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
         <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">

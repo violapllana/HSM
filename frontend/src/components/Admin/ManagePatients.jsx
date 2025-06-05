@@ -14,6 +14,9 @@ const PatientPanel = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+    const [sortOrder, setSortOrder] = useState('default');
+
 
   const apiUrl = 'http://localhost:5000/api/patient'; // Përdor URL për pacientë
 
@@ -107,6 +110,26 @@ const PatientPanel = () => {
     setCurrentPatientId(null);
     setErrorMessage('');
   };
+const filteredPatients = patients.filter((patient) =>
+  patient.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  patient.email.toLowerCase().includes(searchQuery.toLowerCase())
+)
+.sort((a, b) => {
+      if (sortOrder === 'a-z-username') {
+        return a.username.localeCompare(b.username);
+      } else if (sortOrder === 'z-a-username') {
+        return b.username.localeCompare(a.username);
+      } else if (sortOrder === 'a-z-email') {
+        return a.email.localeCompare(b.email);
+      } else if (sortOrder === 'z-a-email') {
+        return b.email.localeCompare(a.email);
+      } else if (sortOrder === 'newest') {
+        return b.id - a.id;
+      } else if (sortOrder === 'oldest') {
+        return a.id - b.id;
+      }
+      return 0; // default
+    });
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -123,6 +146,29 @@ const PatientPanel = () => {
           Add Patient
         </button>
       </h2>
+   <div className="flex flex-wrap gap-4 mb-4">
+        <input
+          type="text"
+          placeholder="Search by username or email..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md flex-1"
+        />
+
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md"
+        >
+          <option value="default">Default</option>
+          <option value="a-z-username">A-Z (Username)</option>
+          <option value="z-a-username">Z-A (Username)</option>
+          <option value="a-z-email">A-Z (Email)</option>
+          <option value="z-a-email">Z-A (Email)</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
+      </div>
 
       <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-md">
         <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
@@ -135,7 +181,7 @@ const PatientPanel = () => {
         </thead>
       
         <tbody className="text-sm text-gray-700">
-  {patients.map((patient) => (
+  {filteredPatients.map((patient) => (
     <tr key={patient.id} className="border-b hover:bg-gray-50">
       <td className="px-6 py-4">{patient.id}</td> {/* Shfaq ID-në reale */}
       <td className="px-6 py-4">{patient.username}</td>
