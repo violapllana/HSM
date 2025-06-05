@@ -91,7 +91,7 @@ const DoctorList = () => {
   };
 
   const openModal = (action, doctor) => {
-    setModalAction(action); // 'connect' ose 'disconnect'
+    setModalAction(action); 
     setSelectedDoctor(doctor);
     setModalOpen(true);
   };
