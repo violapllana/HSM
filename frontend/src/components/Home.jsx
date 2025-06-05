@@ -2,7 +2,6 @@ import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-
 const departments = [
   { name: "Emergency Department", icon: "/images/emergency-img.png" },
   { name: "Pediatric Department", icon: "/images/pediatrics-img.png" },
@@ -17,25 +16,28 @@ const doctors = [
   { name: "Dr. Suela", position: "Pediatrician", image: "/images/suela-img.png" },
   { name: "Dr. Joni", position: "Neuro Specialist", image: "/images/joni-img.png" },
 ];
+
 const Home = () => {
- 
+  const handleBookingClick = () => {
+    alert("Please log in to book an appointment. If you have any questions, feel free to contact us.");
+  };
 
   return (
-    <>
+     <div className="min-h-screen flex flex-col">
       <Header />
-
+      <main className="flex-grow">
       {/* Hero Section */}
-     
       <section className="bg-gradient-to-r from-sky-200 to-blue-300 text-blue-900 px-4 py-20 relative">
-
-
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
           <div>
             <h1 className="text-4xl font-bold mb-4">Your Partner in Health and Wellness</h1>
             <p className="mb-6 text-lg max-w-md">
               We are committed to providing you with the best medical and healthcare services to help you live healthier and happier
             </p>
-            <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold shadow hover:bg-gray-100">
+            <button
+              onClick={handleBookingClick}
+              className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold shadow hover:bg-gray-100"
+            >
               BOOK AN APPOINTMENT
             </button>
           </div>
@@ -43,87 +45,79 @@ const Home = () => {
         </div>
       </section>
 
-
       {/* Values Section */}
-      <section className="relative py-6 bg-gray-50"> {/* Reduced padding */}
-  <h2 className="text-3xl font-bold text-center text-blue-900 mb-6">Our Values</h2> {/* Reduced margin-bottom */}
+      <section className="relative py-6 bg-gray-50">
+        <h2 className="text-3xl font-bold text-center text-blue-900 mb-6">Our Values</h2>
 
-  <div className="relative w-[700px] h-[450px] mx-auto"> {/* Reduced width and height */}
-    {/* Center Shield */}
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-      <img src="/images/healthh.png" alt="Health Shield" className="w-24 h-24" /> {/* Reduced shield size */}
-    </div>
-{/* Excellence - Top Center */}
-<div className="absolute top-0 left-1/2 transform -translate-x-1/2">
-  <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border"> {/* Njësoj si të tjerat */}
-    <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl"> {/* Ndryshuar nga bg-blue-500 në bg-blue-100 */}
-      <div className="relative w-6 h-6 mr-1">
-        <img src="/images/elipse.png" alt="Ellipse" className="w-6 h-6" />
-        <img src="/images/Vector.png" alt="Vector" className="absolute inset-0 m-auto w-3 h-3" />
-      </div>
-      <h3 className="font-bold text-sm text-blue-900">Excellence</h3> {/* Shto tekstin blu */}
-    </div>
-    <p className="p-3 text-sm text-gray-700">
-      We are committed to providing excellent care and services to our patients
-    </p>
-  </div>
-</div>
+        <div className="relative w-[700px] h-[450px] mx-auto">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+            <img src="/images/healthh.png" alt="Health Shield" className="w-24 h-24" />
+          </div>
 
-    {/* Respect - Top Left */}
-    <div className="absolute top-[120px] left-[0px]"> {/* Reduced top position */}
-      <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border"> {/* Reduced card width */}
-        <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
-          <img src="/images/respect-icon.png" alt="Respect" className="w-4 h-4 mr-1" />
-          <h3 className="font-bold text-sm text-blue-900">Respect</h3>
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
+            <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border">
+              <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
+                <div className="relative w-6 h-6 mr-1">
+                  <img src="/images/elipse.png" alt="Ellipse" className="w-6 h-6" />
+                  <img src="/images/Vector.png" alt="Vector" className="absolute inset-0 m-auto w-3 h-3" />
+                </div>
+                <h3 className="font-bold text-sm text-blue-900">Excellence</h3>
+              </div>
+              <p className="p-3 text-sm text-gray-700">
+                We are committed to providing excellent care and services to our patients
+              </p>
+            </div>
+          </div>
+
+          <div className="absolute top-[120px] left-[0px]">
+            <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border">
+              <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
+                <img src="/images/respect-icon.png" alt="Respect" className="w-4 h-4 mr-1" />
+                <h3 className="font-bold text-sm text-blue-900">Respect</h3>
+              </div>
+              <p className="p-3 text-sm text-gray-700">
+                We treat all individuals with respect and dignity. We believe that every person deserves to be treated with compassion and kindness.
+              </p>
+            </div>
+          </div>
+
+          <div className="absolute top-[120px] right-[0px]">
+            <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border">
+              <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
+                <img src="/images/teamwork.png" alt="Teamwork" className="w-4 h-4 mr-1" />
+                <h3 className="font-bold text-sm text-blue-900">Teamwork</h3>
+              </div>
+              <p className="p-3 text-sm text-gray-700">
+                We believe in working collaboratively with our team members and other healthcare providers to provide effective care to our patients.
+              </p>
+            </div>
+          </div>
+
+          <div className="absolute bottom-[30px] left-[130px]">
+            <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border">
+              <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
+                <img src="/images/compassion.png" alt="Compassion" className="w-4 h-4 mr-1" />
+                <h3 className="font-bold text-sm text-blue-900">Compassion</h3>
+              </div>
+              <p className="p-3 text-sm text-gray-700">
+                We strive to create a welcoming and supportive environment that puts our patients at ease.
+              </p>
+            </div>
+          </div>
+
+          <div className="absolute bottom-[10px] right-[80px]">
+            <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border">
+              <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
+                <img src="/images/integrity.png" alt="Integrity" className="w-4 h-4 mr-1" />
+                <h3 className="font-bold text-sm text-blue-900">Integrity</h3>
+              </div>
+              <p className="p-3 text-sm text-gray-700">
+                We believe in practicing medicine with integrity and honesty. We always put our patient interest first.
+              </p>
+            </div>
+          </div>
         </div>
-        <p className="p-3 text-sm text-gray-700">
-          We treat all individuals with respect and dignity. We believe that every person deserves to be treated with compassion and kindness.
-        </p>
-      </div>
-    </div>
-
-    {/* Teamwork - Top Right */}
-    <div className="absolute top-[120px] right-[0px]"> {/* Reduced top position */}
-      <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border"> {/* Reduced card width */}
-        <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
-          <img src="/images/teamwork.png" alt="Teamwork" className="w-4 h-4 mr-1" />
-          <h3 className="font-bold text-sm text-blue-900">Teamwork</h3>
-        </div>
-        <p className="p-3 text-sm text-gray-700">
-          We believe in working collaboratively with our team members and other healthcare providers to provide effective care to our patients.
-        </p>
-      </div>
-    </div>
-
-    {/* Compassion - Bottom Left */}
-    <div className="absolute bottom-[30px] left-[130px]">
-  <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border">
-
-        <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
-          <img src="/images/compassion.png" alt="Compassion" className="w-4 h-4 mr-1" />
-          <h3 className="font-bold text-sm text-blue-900">Compassion</h3>
-        </div>
-        <p className="p-3 text-sm text-gray-700">
-          We strive to create a welcoming and supportive environment that puts our patients at ease.
-        </p>
-      </div>
-    </div>
-
-    {/* Integrity - Bottom Right */}
-    <div className="absolute bottom-[10px] right-[80px]">{/* Reduced bottom position */}
-      <div className="w-56 bg-white rounded-xl shadow-md hover:shadow-lg transition text-center border"> {/* Reduced card width */}
-        <div className="flex justify-center items-center px-3 py-2 bg-blue-100 rounded-t-xl">
-          <img src="/images/integrity.png" alt="Integrity" className="w-4 h-4 mr-1" />
-          <h3 className="font-bold text-sm text-blue-900">Integrity</h3>
-        </div>
-        <p className="p-3 text-sm text-gray-700">
-          We believe in practicing medicine with integrity and honesty. We always put our patient interest first.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
+      </section>
 
       {/* Departments */}
       <section className="py-12 bg-white">
@@ -162,68 +156,20 @@ const Home = () => {
           <div>
             <h2 className="text-2xl font-bold mb-2">Don’t Let Your Health Take a Backseat!</h2>
             <p className="mb-4">Schedule an appointment with one of our experienced medical professionals today!</p>
-            <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100">Book Now</button>
+            <button
+              onClick={handleBookingClick}
+              className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100"
+            >
+              Book Now
+            </button>
           </div>
           <img src="/images/Ellipse13.png" alt="Doctor" className="w-40 mt-6 md:mt-0 md:w-52 rounded-full" />
         </div>
       </section>
-
-{/* Testimonials Section */}
-<section className="py-12 bg-gray-50">
-  <div className="max-w-6xl mx-auto px-4 text-center">
-    <h2 className="text-3xl font-bold text-blue-900 mb-8">What Our Patients Say</h2>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <p className="text-gray-700 italic mb-4">
-          “The staff were incredibly professional and kind. I felt truly cared for during my visit.”
-        </p>
-        <p className="font-semibold text-blue-800">- Arben M.</p>
-      </div>
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <p className="text-gray-700 italic mb-4">
-          “Great experience! Dr. Suela was amazing with my daughter. Highly recommended!”
-        </p>
-        <p className="font-semibold text-blue-800">- Elira D.</p>
-      </div>
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <p className="text-gray-700 italic mb-4">
-          “I had a thorough check-up with no rush. The environment was clean and comforting.”
-        </p>
-        <p className="font-semibold text-blue-800">- Mentor K.</p>
-      </div>
-    </div>
-  </div>
-</section>
-{/* FAQ Section */}
-<section className="py-12 bg-white">
-  <div className="max-w-5xl mx-auto px-4">
-    <h2 className="text-3xl font-bold text-center text-blue-900 mb-8">Frequently Asked Questions</h2>
-    <div className="space-y-6">
-      <div className="border border-gray-200 rounded-md p-4 hover:shadow-md transition">
-        <h3 className="font-semibold text-lg text-blue-700 mb-2">How do I book an appointment?</h3>
-        <p className="text-gray-700 text-sm">
-          You can book an appointment online through our form or call our reception for assistance.
-        </p>
-      </div>
-      <div className="border border-gray-200 rounded-md p-4 hover:shadow-md transition">
-        <h3 className="font-semibold text-lg text-blue-700 mb-2">Do you accept insurance?</h3>
-        <p className="text-gray-700 text-sm">
-          Yes, we accept a variety of insurance plans. Please contact us to confirm if your provider is included.
-        </p>
-      </div>
-      <div className="border border-gray-200 rounded-md p-4 hover:shadow-md transition">
-        <h3 className="font-semibold text-lg text-blue-700 mb-2">What are your opening hours?</h3>
-        <p className="text-gray-700 text-sm">
-          We are open Monday to Saturday from 8:00 AM to 6:00 PM.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
+      </main>
       <Footer />
-    </>
+      
+      </div>
   );
 };
 

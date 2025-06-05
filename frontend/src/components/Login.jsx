@@ -144,10 +144,8 @@ function Login() {
             </div>
 
             <div className="flex items-center mb-6">
-              <input type="checkbox" id="remember" className="mr-2" />
-              <label htmlFor="remember" className="text-sm text-gray-700">
-                Remember me?
-              </label>
+      
+      
             </div>
 
             <button
