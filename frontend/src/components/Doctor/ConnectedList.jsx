@@ -58,7 +58,7 @@ const ConnectedList = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-xl rounded-lg space-y-6">
-      <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">Your Patients</h2>
+      <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">Connected Patients</h2>
 
       <div className="mb-4">
         <input

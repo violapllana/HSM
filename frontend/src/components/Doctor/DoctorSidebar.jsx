@@ -87,8 +87,8 @@ const DoctorSidebar = () => {
           <main className="flex-1 overflow-y-auto p-6">
             {activeTab === "dashboard" && <DoctorDashboard />}
             {activeTab === "departments" && <DepartmentsList />}
-            {activeTab === "connected" && <ConnectedList />}
-            {activeTab === "appointments" && <AppointmentDoctor />}
+  {activeTab === "connected" && <ConnectedList setActiveTab={setActiveTab} />}
+  {activeTab === "appointments" && <AppointmentDoctor  />}
             {activeTab === "createreport" && <CreateReport />}
           </main>
         </div>

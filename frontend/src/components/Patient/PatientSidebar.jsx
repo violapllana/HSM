@@ -65,7 +65,7 @@ const PatientSidebar = () => {
                 </li>
                 <li>
                   <button onClick={() => handleTabChange("connectdoctor")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
-                    Connect Doctor
+                     Doctors
                   </button>
                 </li>
                 <li>

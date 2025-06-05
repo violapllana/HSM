@@ -263,7 +263,7 @@ const PatientAndDoctorPanel = () => {
                     onClick={() => handleDeleteConnection(connection.doctorId, connection.patientId)}
                     className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                   >
-                    Delete
+                    Disconnect
                   </button>
                 </td>
               </tr>

@@ -137,7 +137,7 @@ const Home = () => {
               <img src={image} alt={name} className="rounded-full w-24 h-24 mx-auto mb-2 object-cover" />
               <p className="font-semibold">{name}</p>
               <p className="text-sm text-gray-500">{position}</p>
-              <button className="mt-2 text-sm text-blue-500 underline">View Profile</button>
+    
             </div>
           ))}
         </div>
