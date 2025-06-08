@@ -95,7 +95,7 @@ function App() {
 
         <Route path="/report" element={<ReportList />} />
         <Route path="/createreport" element={<CreateReport />} />
-        <Route path="/patient/viewreport" element={<PatientViewReports />} />
+        <Route path="/viewreport" element={<PatientViewReports />} />
         <Route path="/AppointmentForm" element={<AppointmentForm />} />
 
         <Route path="/connect" element={<PatientAndDoctorPanel />} />

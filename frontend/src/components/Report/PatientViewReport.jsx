@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -8,8 +7,15 @@ const PatientViewReports = () => {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/report', {
-          withCredentials: true, // Ensure cookies are sent
+        const patientId = localStorage.getItem('patientId'); // Merr patientId nga localStorage
+
+        if (!patientId) {
+          console.error('Patient ID not found in localStorage');
+          return;
+        }
+
+        const response = await axios.get(`http://localhost:5000/api/report/patient/${patientId}`, {
+          withCredentials: true,
         });
 
         setReports(response.data);
@@ -37,9 +43,7 @@ const PatientViewReports = () => {
             <p><strong>Comments:</strong> {report.comments}</p>
             <div className="mt-2 text-blue-600">
               <strong>Doctor:</strong> {report.doctor?.username} <br />
-              <strong>Email:</strong> {report.doctor?.email} <br />
-           
-              
+              <strong>Email:</strong> {report.doctor?.email}
             </div>
           </div>
         ))
