@@ -7,6 +7,9 @@ import PatientViewReports from '../Report/PatientViewReport';
 import AppointmentPatient from './AppointmentPatient';
 import ConnectDoctor from './ConnectDoctor';
 import Footer from '../Footer';
+import PatientProfile from '../Patient/PatientProfile';
+
+
 
 const PatientSidebar = () => {
   const navigate = useNavigate();
@@ -73,6 +76,11 @@ const PatientSidebar = () => {
                     My Reports
                   </button>
                 </li>
+                <li>
+                  <button onClick={() => handleTabChange("patientProfile")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                    My Profile
+                  </button>
+                </li>
               </ul>
             </aside>
           )}
@@ -84,6 +92,9 @@ const PatientSidebar = () => {
             {activeTab === "AppointmentPatient" && <AppointmentPatient />}
             {activeTab === "connectdoctor" && <ConnectDoctor />}
             {activeTab === "viewreports" && <PatientViewReports />}
+             {activeTab === "patientProfile" && <PatientProfile />}
+
+         
           </main>
         </div>
       </div>

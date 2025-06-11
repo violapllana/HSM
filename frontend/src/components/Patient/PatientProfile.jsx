@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const Profile = () => {
-  const [admin, setAdmin] = useState(null);
+const PatientProfile = () => {
+  const [patient, setPatient] = useState(null);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,23 +11,23 @@ const Profile = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const apiUrl = 'http://localhost:5000/api/admin';
+  const apiUrl = 'http://localhost:5000/api/patient';
 
   useEffect(() => {
-    const loggedInAdmin = JSON.parse(localStorage.getItem('user'));
-    if (loggedInAdmin && loggedInAdmin.id) {
-      fetchAdmin(loggedInAdmin.id);
+    const loggedInUser = JSON.parse(localStorage.getItem('user'));
+    if (loggedInUser && loggedInUser.id) {
+      fetchPatient(loggedInUser.id);
     }
   }, []);
 
-  const fetchAdmin = async (id) => {
+  const fetchPatient = async (id) => {
     try {
       const response = await axios.get(`${apiUrl}/${id}`);
-      setAdmin(response.data);
+      setPatient(response.data);
       setUsername(response.data.username);
       setEmail(response.data.email);
     } catch (error) {
-      console.error('Error fetching admin:', error);
+      console.error('Error fetching patient:', error);
     }
   };
 
@@ -59,10 +58,10 @@ const Profile = () => {
     if (!validateForm()) return;
 
     try {
-      const updatedAdmin = { username, email };
-      if (password) updatedAdmin.password = password;
+      const updatedPatient = { username, email };
+      if (password) updatedPatient.password = password;
 
-      await axios.put(`${apiUrl}/${admin.id}`, updatedAdmin);
+      await axios.put(`${apiUrl}/${patient.id}`, updatedPatient);
       setSuccessMessage('Profile updated successfully.');
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -70,7 +69,7 @@ const Profile = () => {
     }
   };
 
-  if (!admin) return <p className="text-center mt-10">Loading your profile...</p>;
+  if (!patient) return <p className="text-center mt-10">Loading your profile...</p>;
 
   return (
     <div className="max-w-md mx-auto p-6 mt-10 bg-white shadow-lg rounded-lg">
@@ -125,5 +124,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
-
+export default PatientProfile;
