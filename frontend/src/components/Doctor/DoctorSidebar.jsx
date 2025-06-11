@@ -7,6 +7,7 @@ import DepartmentsList from "../Department/DepartmentsList";
 import AppointmentDoctor from "./AppointmentDoctor";
 import ConnectedList from "./ConnectedList";
 import Footer from "../Footer";
+import DoctorProfile from "./DoctorProfile";
 
 const DoctorSidebar = () => {
   const navigate = useNavigate();
@@ -79,6 +80,11 @@ const DoctorSidebar = () => {
                     Create Report
                   </button>
                 </li>
+                <li>
+                  <button onClick={() => handleTabChange("doctorProfile")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                    My Profile
+                  </button>
+                </li>
               </ul>
             </aside>
           )}
@@ -90,6 +96,7 @@ const DoctorSidebar = () => {
   {activeTab === "connected" && <ConnectedList setActiveTab={setActiveTab} />}
   {activeTab === "appointments" && <AppointmentDoctor  />}
             {activeTab === "createreport" && <CreateReport />}
+            {activeTab === "doctorProfile" && <DoctorProfile />}
           </main>
         </div>
       </div>

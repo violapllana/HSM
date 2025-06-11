@@ -54,6 +54,7 @@ import AppointmentForm from "./components/Admin/AppointmentForm";
 
 import Profile from "./components/Admin/Profile";
 import PatientProfile from "./components/Patient/PatientProfile";
+import DoctorProfile from "./components/Doctor/DoctorProfile";
 
 
 
@@ -108,6 +109,7 @@ function App() {
         <Route path="/connected" element={<ConnectedList />} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="/patientProfile" element={<PatientProfile/>} />
+         <Route path="/doctorProfile" element={<DoctorProfile/>} />
 
         
       
