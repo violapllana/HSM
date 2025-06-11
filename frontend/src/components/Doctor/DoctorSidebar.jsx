@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 import DoctorDashboard from "./DoctorDashboard";
@@ -14,6 +14,14 @@ const DoctorSidebar = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showSidebar, setShowSidebar] = useState(false);
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    if (loggedInUser && loggedInUser.username) {
+      setUsername(loggedInUser.username);
+    }
+  }, []);
 
   const handleLogout = () => {
     navigate("/logout");
@@ -34,12 +42,34 @@ const DoctorSidebar = () => {
               <button
                 onClick={() => setShowSidebar(!showSidebar)}
                 className="text-white focus:outline-none"
+                aria-label="Toggle sidebar"
               >
                 <Menu />
               </button>
               <h1 className="text-2xl font-bold">HSM - Doctor</h1>
             </div>
-            <nav className="space-x-6">
+            <nav className="flex items-center space-x-6">
+              {username && (
+                <div className="flex items-center space-x-3 bg-white bg-opacity-20 px-4 py-2 rounded-full shadow-sm backdrop-blur-sm">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 text-yellow-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5.121 17.804A9 9 0 1118.879 6.196M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <span className="text-white font-semibold text-lg">
+                    Welcome, {username}
+                  </span>
+                </div>
+              )}
               <button
                 onClick={() => setShowModal(true)}
                 className="text-white hover:text-red-300"
@@ -56,32 +86,50 @@ const DoctorSidebar = () => {
             <aside className="bg-gray-100 border-r-2 border-gray-300 p-4 w-64 overflow-y-auto fixed lg:static z-40 inset-y-0 left-0 transform transition-transform duration-200 ease-in-out">
               <ul className="space-y-2">
                 <li>
-                  <button onClick={() => handleTabChange("dashboard")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                  <button
+                    onClick={() => handleTabChange("dashboard")}
+                    className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+                  >
                     Dashboard
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleTabChange("departments")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                  <button
+                    onClick={() => handleTabChange("departments")}
+                    className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+                  >
                     Departments
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleTabChange("connected")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                  <button
+                    onClick={() => handleTabChange("connected")}
+                    className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+                  >
                     Connected List
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleTabChange("appointments")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                  <button
+                    onClick={() => handleTabChange("appointments")}
+                    className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+                  >
                     Appointments
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleTabChange("createreport")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                  <button
+                    onClick={() => handleTabChange("createreport")}
+                    className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+                  >
                     Create Report
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleTabChange("doctorProfile")} className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded">
+                  <button
+                    onClick={() => handleTabChange("doctorProfile")}
+                    className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+                  >
                     My Profile
                   </button>
                 </li>
@@ -93,8 +141,8 @@ const DoctorSidebar = () => {
           <main className="flex-1 overflow-y-auto p-6">
             {activeTab === "dashboard" && <DoctorDashboard />}
             {activeTab === "departments" && <DepartmentsList />}
-  {activeTab === "connected" && <ConnectedList setActiveTab={setActiveTab} />}
-  {activeTab === "appointments" && <AppointmentDoctor  />}
+            {activeTab === "connected" && <ConnectedList setActiveTab={setActiveTab} />}
+            {activeTab === "appointments" && <AppointmentDoctor />}
             {activeTab === "createreport" && <CreateReport />}
             {activeTab === "doctorProfile" && <DoctorProfile />}
           </main>
