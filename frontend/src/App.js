@@ -52,6 +52,8 @@ import PatientViewReports from "./components/Report/PatientViewReport";
 //Appointment CRUD
 import AppointmentForm from "./components/Admin/AppointmentForm";
 
+import Profile from "./components/Admin/Profile";
+
 
 
 import "./App.css";
@@ -101,6 +103,7 @@ function App() {
         <Route path="/connect" element={<PatientAndDoctorPanel />} />
         <Route path="/connectdoctor" element={<ConnectDoctor />} />
         <Route path="/connected" element={<ConnectedList />} />
+        <Route path="/profile" element={<Profile/>} />
       
       </Routes>
     </Router>

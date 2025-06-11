@@ -13,6 +13,7 @@ import AppointmentList from "./AppointmentList";
 import ReportList from "../Report/ReportsList";
 import ManageUsers from "./ManageUsers";
 import Footer from "../Footer";
+import Profile from "./Profile";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -141,6 +142,14 @@ const AdminSidebar = () => {
                     Reports
                   </button>
                 </li>
+                <li>
+                  <button
+                    onClick={() => handleTabChange("profile")}
+                    className="block p-2 font-bold text-gray-800 hover:bg-blue-500 hover:text-white rounded"
+                  >
+                    My profile
+                  </button>
+                </li>
               </ul>
             </aside>
           )}
@@ -157,6 +166,7 @@ const AdminSidebar = () => {
             {activeTab === "manageusers" && <ManageUsers />}
             {activeTab === "contactlist" && <ContactList />}
             {activeTab === "reportlist" && <ReportList />}
+            {activeTab === "profile" && <Profile />}
           </main>
         </div>
       </div>
