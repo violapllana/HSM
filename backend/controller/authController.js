@@ -86,6 +86,15 @@ const login = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const logout = (req, res) => {
+  res.clearCookie('ubtsecured', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Lax',
+  });
+
+  res.status(200).json({ message: 'Logout successful' });
+};
 
 
-module.exports = { register, login };
+module.exports = { register, login, logout};

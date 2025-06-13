@@ -8,6 +8,7 @@ import AppointmentPatient from './AppointmentPatient';
 import ConnectDoctor from './ConnectDoctor';
 import Footer from '../Footer';
 import PatientProfile from '../Patient/PatientProfile';
+import axios from 'axios';
 
 const PatientSidebar = () => {
   const navigate = useNavigate();
@@ -23,9 +24,22 @@ const PatientSidebar = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    navigate('/logout');
-  };
+const handleLogout = async () => {
+  try {
+    await axios.post('http://localhost:5000/api/users/logout', {}, {
+      withCredentials: true,
+    });
+
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+
+    navigate('/login'); // ose te faqja kryesore sipas nevojës
+  } catch (error) {
+    console.error('Logout failed:', error);
+    navigate('/');
+  }
+};
+
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);

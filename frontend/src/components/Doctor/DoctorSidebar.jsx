@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Menu } from "lucide-react";
 import DoctorDashboard from "./DoctorDashboard";
 import CreateReport from "../Report/CreateReport";
@@ -23,9 +24,21 @@ const DoctorSidebar = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    navigate("/logout");
-  };
+  const handleLogout = async () => {
+  try {
+    await axios.post('http://localhost:5000/api/users/logout', {}, {
+      withCredentials: true,
+    });
+
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+
+    navigate('/login'); // ose te faqja kryesore sipas nevojës
+  } catch (error) {
+    console.error('Logout failed:', error);
+    navigate('/');
+  }
+};
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);

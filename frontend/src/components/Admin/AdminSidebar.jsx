@@ -14,6 +14,7 @@ import ReportList from "../Report/ReportsList";
 import ManageUsers from "./ManageUsers";
 import Footer from "../Footer";
 import Profile from "./Profile";
+import axios from "axios";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
@@ -29,9 +30,22 @@ const AdminSidebar = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    navigate("/logout");
-  };
+  const handleLogout = async () => {
+  try {
+    await axios.post('http://localhost:5000/api/users/logout', {}, {
+      withCredentials: true,
+    });
+
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+
+    navigate('/login'); // ose te faqja kryesore sipas nevojës
+  } catch (error) {
+    console.error('Logout failed:', error);
+    navigate('/');
+  }
+};
+
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
