@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -48,8 +47,8 @@ function AppointmentDoctor() {
         <table className="min-w-full bg-white rounded-xl shadow">
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-              <th className="py-3 px-6 text-left">Patient ID</th>
-              <th className="py-3 px-6 text-left">Department ID</th>
+              <th className="py-3 px-6 text-left">Patient Name</th>
+              <th className="py-3 px-6 text-left">Department</th>
               <th className="py-3 px-6 text-left">Date</th>
               <th className="py-3 px-6 text-left">Reason</th>
               <th className="py-3 px-6 text-left">Appointment ID</th>
@@ -59,8 +58,12 @@ function AppointmentDoctor() {
             {filteredAppointments.length > 0 ? (
               filteredAppointments.map((appointment) => (
                 <tr key={appointment.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-3 px-6 text-left">{appointment.patientId}</td>
-                  <td className="py-3 px-6 text-left">{appointment.departmentId}</td>
+                  <td className="py-3 px-6 text-left">
+                    {appointment.patient?.username || 'Unknown'}
+                  </td>
+                  <td className="py-3 px-6 text-left">
+                    {appointment.department?.name || 'Unknown'}
+                  </td>
                   <td className="py-3 px-6 text-left">{appointment.date}</td>
                   <td className="py-3 px-6 text-left">{appointment.reason}</td>
                   <td className="py-3 px-6 text-left">{appointment.id}</td>

@@ -6,29 +6,29 @@ const Department = require('./department');
 const Appointment = sequelize.define('Appointment', {
   patientId: {
     type: DataTypes.INTEGER,
-    allowNull: false, 
+    allowNull: false,
   },
   doctorId: {
     type: DataTypes.INTEGER,
-    allowNull: false, 
+    allowNull: false,
   },
   departmentId: {
     type: DataTypes.INTEGER,
-    allowNull: false, 
+    allowNull: false,
   },
   date: {
     type: DataTypes.DATE,
-    allowNull: false, 
+    allowNull: false,
   },
   reason: {
     type: DataTypes.STRING,
-    allowNull: true,  
+    allowNull: true,
   },
 });
 
-
+// Relacionet
 Appointment.belongsTo(User, { as: 'patient', foreignKey: 'patientId' });
-Appointment.belongsTo(User, { as: 'doctor', foreignKey: 'doctorId' });
-Appointment.belongsTo(Department, { foreignKey: 'departmentId' });
+Appointment.belongsTo(User, { as: 'doctor', foreignKey: 'doctorId' }); // kjo është për emrin e doktorit
+Appointment.belongsTo(Department, { as: 'department', foreignKey: 'departmentId' }); // kjo për emrin e departamentit
 
 module.exports = Appointment;
